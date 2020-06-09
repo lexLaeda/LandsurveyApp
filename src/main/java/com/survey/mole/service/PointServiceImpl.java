@@ -42,7 +42,10 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public void delete(Point point) {
+    public Boolean delete(Point point) {
+        long beforeRemove = pointRepository.count();
         pointRepository.delete(point);
+        long afterRemove = pointRepository.count();
+        return afterRemove - beforeRemove == 1;
     }
 }

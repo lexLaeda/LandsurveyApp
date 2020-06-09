@@ -9,5 +9,5 @@ public interface PointService {
      Point update(Long id, Point point);
      Point findById(Long id);
      List<Point> findAll();
-     void delete(Point point);
+     Boolean delete(Point point);
 }
