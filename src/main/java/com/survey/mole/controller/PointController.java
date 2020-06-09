@@ -36,10 +36,10 @@ public class PointController {
         return pointMapper.toDto(save);
     }
 
-    @PostMapping("/edit")
-    public PointDto editPoint(PointDto pointDto){
+    @PostMapping("/edit/{id}")
+    public PointDto editPoint(@PathVariable("id") Long id, PointDto pointDto){
         Point point = pointMapper.toEntity(pointDto);
-        Point update = pointService.update(point.getId(), point);
+        Point update = pointService.update(id, point);
         return pointMapper.toDto(update);
     }
 

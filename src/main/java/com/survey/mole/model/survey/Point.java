@@ -33,4 +33,10 @@ public class Point extends AbstractEntity {
     @Column(name = "h")
     private Double h;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "baseline_point",
+            joinColumns = @JoinColumn(name = "baseline_id"),
+            inverseJoinColumns = @JoinColumn(name = "point_id"))
+    private Baseline baseline;
+
 }
