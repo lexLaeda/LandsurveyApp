@@ -17,12 +17,16 @@ import java.util.List;
 public class Baseline extends AbstractEntity {
 
     @Column(name = "baseline_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "baseline_point",
+            joinColumns = @JoinColumn(name = "baseline_id"),
+            inverseJoinColumns = @JoinColumn(name = "point_id"))
     private List<Point> points = new ArrayList<>();
-
 }
