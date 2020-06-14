@@ -34,11 +34,15 @@ public class BaselineController {
     public List<BaselineDto> findAll(){
         return baselineService.findAll().stream()
                 .map(baseline -> baselineMapper.toDto(baseline))
+                .peek(System.out::println)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/new")
-    public BaselineDto addNewBaseline(BaselineDto baselineDto){
+    @PostMapping("/add")
+    public BaselineDto addNewBaseline(@RequestBody BaselineDto baselineDto){
+        System.out.println(baselineDto.getName());
+        System.out.println(baselineDto.getPointStart());
+        System.out.println(baselineDto.getPointEnd());
         Baseline baseline = baselineMapper.toEntity(baselineDto);
         Baseline save = baselineService.save(baseline);
         return baselineMapper.toDto(save);

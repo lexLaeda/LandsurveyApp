@@ -1,16 +1,15 @@
 import React from 'react'
 
-export default function PointItem({point, index}) {
-    return (<tr>
-            <td>{index + 1}</td>
-            <td>{point.name}</td>
-            <td>{point.x}</td>
-            <td>{point.y}</td>
-            <td>{point.h}</td>
-            <td>{point.created}</td>
-            <td>{point.updated}</td>
+export default function BaselineTableItem(props) {
+    return (
+        <tr>
+            <td>{props.index + 1}</td>
+            <td>{props.levelReference.name}</td>
+            <td>{props.levelReference.elevation}</td>
+            <td>{props.levelReference.created}</td>
+            <td>{props.levelReference.updated}</td>
             <td>
-                <button type="button" className="btn btn-light">
+                <button onClick={()=>props.openDeleteModal({id : props.levelReference.id, name : props.levelReference.name})} type="button" className="btn btn-light">
                     <svg height="20px" viewBox="-40 0 427 427.00131" width="20px" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="m232.398438 154.703125c-5.523438 0-10 4.476563-10 10v189c0 5.519531 4.476562 10 10 10 5.523437 0 10-4.480469 10-10v-189c0-5.523437-4.476563-10-10-10zm0 0"/>

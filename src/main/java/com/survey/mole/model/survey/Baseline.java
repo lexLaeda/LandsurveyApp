@@ -24,7 +24,7 @@ public class Baseline extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "baseline_point",
             joinColumns = @JoinColumn(name = "baseline_id"),
             inverseJoinColumns = @JoinColumn(name = "point_id"))
