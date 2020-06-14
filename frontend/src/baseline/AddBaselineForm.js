@@ -10,6 +10,12 @@ class AddBaselineForm extends React.Component {
             pointStart: 0,
             pointEnd: 0
         };
+        if(props.baseline){
+            this.state.id = props.baseline.id;
+            this.state.name = props.baseline.name;
+            this.state.pointStart = props.baseline.pointStart.id;
+            this.state.pointEnd = props.baseline.pointEnd.id;
+        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }

@@ -26,10 +26,13 @@ public class BaselineServiceImpl implements BaselineService {
 
     @Override
     public Baseline update(Long id, Baseline baseline) {
+        System.out.println(baseline.getName());
         Baseline byId = findById(id);
-        Baseline save = baselineRepository.save(byId);
         baseline.setId(id);
-        return baseline;
+        Baseline save = baselineRepository.saveAndFlush(baseline);
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(save.getName());
+        return save;
     }
 
     @Override

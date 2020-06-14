@@ -18,6 +18,8 @@ class BaselinePage extends Component {
             baseline: {
                 id: '',
                 name: '',
+                pointStart: {},
+                pointEnd: {}
             }
         };
     }
@@ -43,10 +45,15 @@ class BaselinePage extends Component {
             });
     }
     saveBaseline(baseline) {
-
-        axios.post('/api/baseline/add',baseline).then(res => {
-            console.log(res.data);
-        })
+        if (baseline.id){
+            axios.post('/api/baseline/edit/' + baseline.id ,baseline).then(res => {
+                console.log(res.data);
+            });
+        } else {
+            axios.post('/api/baseline/add',baseline).then(res => {
+                console.log(res.data);
+            })
+        }
     }
 
     deleteBaseline(baseline) {
@@ -69,15 +76,15 @@ class BaselinePage extends Component {
         setTimeout(()=> this.setBaselines(),1000);
     };
 
-    openAddModal = () => {
+    openAddModal = (baseline) => {
+        if (baseline){
+            this.setState({baseline : baseline});
+        }
         this.setState({isActiveAddModal: true});
     };
 
     closeAddModal = (baseline, isEnable) => {
         if(isEnable){
-            console.log(baseline.name);
-            console.log(baseline.pointStart);
-            console.log(baseline.pointEnd);
             this.saveBaseline(baseline);
         }
         this.setState({isActiveAddModal : false});
@@ -94,7 +101,8 @@ class BaselinePage extends Component {
                         <div className="panel-heading">
                             <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
                             <BaseLineTable baselines={this.state.baselines} points={this.state.points}
-                                           setBaselines={this.setBaselines} openDeleteModal={this.openDeleteModal}/>
+                                           setBaselines={this.setBaselines} openAddModal={this.openAddModal}
+                                           openDeleteModal={this.openDeleteModal}/>
                         </div>
                     </div>
                     <div className="panel-body">
@@ -104,7 +112,8 @@ class BaselinePage extends Component {
                     </div>
                     <ModalAddBaseline isActiveAddModal={this.state.isActiveAddModal}
                                       closeAddModal={this.closeAddModal}
-                                      points={this.state.points}/>
+                                      points={this.state.points}
+                                      baseline={this.state.baseline}/>
 
                     <DeleteModal element={this.state.baseline}
                                  isActiveDeleteModal={this.state.isActiveDeleteModal}

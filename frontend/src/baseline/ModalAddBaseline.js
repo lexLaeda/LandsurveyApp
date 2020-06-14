@@ -26,7 +26,7 @@ export default class ModalAddBaseline extends React.Component {
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <AddBaselineForm points={this.props.points} closeAddModal={this.props.closeAddModal}/>
+                                    <AddBaselineForm points={this.props.points} closeAddModal={this.props.closeAddModal} baseline={this.props.baseline}/>
                                 </div>
                             </div>
                         </div>

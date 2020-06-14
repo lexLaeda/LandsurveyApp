@@ -40,16 +40,16 @@ public class BaselineController {
 
     @PostMapping("/add")
     public BaselineDto addNewBaseline(@RequestBody BaselineDto baselineDto){
-        System.out.println(baselineDto.getName());
-        System.out.println(baselineDto.getPointStart());
-        System.out.println(baselineDto.getPointEnd());
         Baseline baseline = baselineMapper.toEntity(baselineDto);
         Baseline save = baselineService.save(baseline);
         return baselineMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public BaselineDto editBaseline(@PathVariable("id") Long id, BaselineDto baselineDto){
+    public BaselineDto editBaseline(@PathVariable("id") Long id, @RequestBody BaselineDto baselineDto){
+        System.out.println(baselineDto.getName());
+        System.out.println(baselineDto.getPointStart());
+        System.out.println(baselineDto.getPointEnd());
         Baseline baseline = baselineMapper.toEntity(baselineDto);
         Baseline save = baselineService.update(id,baseline);
         return baselineMapper.toDto(save);

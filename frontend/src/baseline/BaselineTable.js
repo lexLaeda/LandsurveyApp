@@ -12,12 +12,15 @@ export default function BaseLineTable(props) {
                 <th>Point two</th>
                 <th>Created</th>
                 <th>Updated</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {props.baselines.map((baseline, index) => {
                 return <BaselineTableItem baseline={baseline} key={baseline.id} index={index}
-                                          openDeleteModal={props.openDeleteModal}/>
+                                          openDeleteModal={props.openDeleteModal}
+                                          openAddModal={props.openAddModal}/>
             })}
             </tbody>
         </table>
