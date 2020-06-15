@@ -1,4 +1,4 @@
-package com.survey.mole.model.worktracker;
+package com.survey.mole.model.worktracker.employee;
 
 import com.survey.mole.model.AbstractEntity;
 import lombok.EqualsAndHashCode;
@@ -6,23 +6,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "holiday")
+@Table(name = "post")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class Holiday extends AbstractEntity {
+public class Post extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "holiday_id")
+    @Column(name = "post_id")
     private Long id;
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "date")
-    private LocalDate date;
 }

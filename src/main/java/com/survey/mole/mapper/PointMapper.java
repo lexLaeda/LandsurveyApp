@@ -5,7 +5,6 @@ import com.survey.mole.model.survey.Point;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.PostConstruct;
 
@@ -21,10 +20,10 @@ public class PointMapper extends AbstractMapper<Point, PointDto> {
     }
 
     @PostConstruct
-    public void initMapper(){
-        modelMapper.createTypeMap(Point.class,PointDto.class)
+    public void initMapper() {
+        modelMapper.createTypeMap(Point.class, PointDto.class)
                 .setPostConverter(toDtoConverter());
-        modelMapper.createTypeMap(PointDto.class,Point.class)
+        modelMapper.createTypeMap(PointDto.class, Point.class)
                 .setPostConverter(toEntityConverter());
     }
 }

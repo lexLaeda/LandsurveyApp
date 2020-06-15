@@ -21,10 +21,10 @@ public class LevelReferenceMapper extends AbstractMapper<LevelReference, LevelRe
     }
 
     @PostConstruct
-    public void initMapper(){
-        modelMapper.createTypeMap(LevelReference.class,LevelReferenceDto.class)
+    public void initMapper() {
+        modelMapper.createTypeMap(LevelReference.class, LevelReferenceDto.class)
                 .setPostConverter(toDtoConverter());
-        modelMapper.createTypeMap(LevelReferenceDto.class,LevelReference.class)
+        modelMapper.createTypeMap(LevelReferenceDto.class, LevelReference.class)
                 .setPostConverter(toEntityConverter());
     }
 }

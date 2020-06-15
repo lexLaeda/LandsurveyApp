@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BaselineMapper extends AbstractMapper<Baseline, BaselineDto> {
@@ -36,8 +35,8 @@ public class BaselineMapper extends AbstractMapper<Baseline, BaselineDto> {
 
     @Override
     protected void mapSpecificFields(Baseline source, BaselineDto destination) {
-            destination.setPointStart(pointMapper.toDto(source.getPoints().get(0)));
-            destination.setPointEnd(pointMapper.toDto(source.getPoints().get(1)));
+        destination.setPointStart(pointMapper.toDto(source.getPoints().get(0)));
+        destination.setPointEnd(pointMapper.toDto(source.getPoints().get(1)));
     }
 
     @Override

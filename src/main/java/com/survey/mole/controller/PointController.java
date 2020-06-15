@@ -17,6 +17,7 @@ public class PointController {
     private PointService pointService;
 
     private PointMapper pointMapper;
+
     @Autowired
     public PointController(PointService pointService, PointMapper pointMapper) {
         this.pointService = pointService;
@@ -24,20 +25,20 @@ public class PointController {
     }
 
     @GetMapping("/list")
-    public List<PointDto> getPoints(){
+    public List<PointDto> getPoints() {
         return this.pointService.findAll().stream()
                 .map(point -> pointMapper.toDto(point)).collect(Collectors.toList());
     }
 
     @PostMapping("/new")
-    public PointDto savePoint(PointDto pointDto){
+    public PointDto savePoint(PointDto pointDto) {
         Point point = pointMapper.toEntity(pointDto);
         Point save = pointService.save(point);
         return pointMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public PointDto editPoint(@PathVariable("id") Long id, PointDto pointDto){
+    public PointDto editPoint(@PathVariable("id") Long id, PointDto pointDto) {
         Point point = pointMapper.toEntity(pointDto);
         Point update = pointService.update(id, point);
         return pointMapper.toDto(update);

@@ -25,13 +25,13 @@ public class BaselineController {
 
 
     @GetMapping("/{id}")
-    public BaselineDto findBaselineById(@PathVariable("id") Long id){
+    public BaselineDto findBaselineById(@PathVariable("id") Long id) {
         Baseline byId = baselineService.findById(id);
         return baselineMapper.toDto(byId);
     }
 
     @GetMapping("/list")
-    public List<BaselineDto> findAll(){
+    public List<BaselineDto> findAll() {
         return baselineService.findAll().stream()
                 .map(baseline -> baselineMapper.toDto(baseline))
                 .peek(System.out::println)
@@ -39,24 +39,24 @@ public class BaselineController {
     }
 
     @PostMapping("/add")
-    public BaselineDto addNewBaseline(@RequestBody BaselineDto baselineDto){
+    public BaselineDto addNewBaseline(@RequestBody BaselineDto baselineDto) {
         Baseline baseline = baselineMapper.toEntity(baselineDto);
         Baseline save = baselineService.save(baseline);
         return baselineMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public BaselineDto editBaseline(@PathVariable("id") Long id, @RequestBody BaselineDto baselineDto){
+    public BaselineDto editBaseline(@PathVariable("id") Long id, @RequestBody BaselineDto baselineDto) {
         System.out.println(baselineDto.getName());
         System.out.println(baselineDto.getPointStart());
         System.out.println(baselineDto.getPointEnd());
         Baseline baseline = baselineMapper.toEntity(baselineDto);
-        Baseline save = baselineService.update(id,baseline);
+        Baseline save = baselineService.update(id, baseline);
         return baselineMapper.toDto(save);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id")Long id){
+    public Boolean deleteBaseline(@PathVariable("id") Long id) {
         Baseline byId = baselineService.findById(id);
         return baselineService.delete(byId);
     }

@@ -1,6 +1,6 @@
 package com.survey.mole.exception;
 
-public class BaselineNotFoundException extends RuntimeException{
+public class BaselineNotFoundException extends RuntimeException {
 
     public BaselineNotFoundException() {
     }

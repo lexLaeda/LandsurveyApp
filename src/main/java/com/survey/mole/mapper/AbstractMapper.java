@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Objects;
 
-public abstract class AbstractMapper <E extends AbstractEntity, D extends AbstractDto> implements Mapper<E,D> {
+public abstract class AbstractMapper<E extends AbstractEntity, D extends AbstractDto> implements Mapper<E, D> {
 
     private ModelMapper modelMapper;
 
@@ -23,32 +23,35 @@ public abstract class AbstractMapper <E extends AbstractEntity, D extends Abstra
 
     @Override
     public E toEntity(D dto) {
-        return Objects.isNull(dto) ? null : modelMapper.map(dto,entityClass);
+        return Objects.isNull(dto) ? null : modelMapper.map(dto, entityClass);
     }
 
     @Override
     public D toDto(E entity) {
-        return Objects.isNull(entity) ? null : modelMapper.map(entity,dtoClass);
+        return Objects.isNull(entity) ? null : modelMapper.map(entity, dtoClass);
     }
 
-    Converter<E,D> toDtoConverter(){
+    Converter<E, D> toDtoConverter() {
         return mappingContext -> {
             E source = mappingContext.getSource();
             D destination = mappingContext.getDestination();
-            mapSpecificFields(source,destination);
+            mapSpecificFields(source, destination);
             return mappingContext.getDestination();
         };
     }
 
-    Converter<D,E> toEntityConverter(){
+    Converter<D, E> toEntityConverter() {
         return mappingContext -> {
             D source = mappingContext.getSource();
             E destination = mappingContext.getDestination();
-            mapSpecificFields(source,destination);
+            mapSpecificFields(source, destination);
             return mappingContext.getDestination();
         };
     }
 
-    protected void mapSpecificFields(E source, D destination){}
-    protected void mapSpecificFields(D source, E destination){}
+    protected void mapSpecificFields(E source, D destination) {
+    }
+
+    protected void mapSpecificFields(D source, E destination) {
+    }
 }

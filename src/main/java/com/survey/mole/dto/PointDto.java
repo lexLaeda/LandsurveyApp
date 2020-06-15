@@ -1,6 +1,5 @@
 package com.survey.mole.dto;
 
-import com.survey.mole.dto.AbstractDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
