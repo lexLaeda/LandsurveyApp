@@ -1,28 +1,46 @@
+import React from 'react'
 
-import React, {Component} from 'react'
-
-
-class Modal extends React.Component{
-    constructor(props){
-        super(props)
-    }
-
-    render() {
-        return(
-            <React.Fragment>
-                {this.props.isActiveModal && (
-                    <div>
-                        <div className="modal-backdrop fade show"></div>
-                        <div className="modal show" id="deleteBaseline" tabIndex="-1" role="dialog"
-                             style={{display: 'block'}}>
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">{this.props.children}</div>
-                            </div>
-                        </div>
-                    </div>)}
-            </React.Fragment>
-        )
-    }
+export function ModalBody(props) {
+    return (
+        <div className="modal-body">
+            {props.children}
+        </div>
+    );
 }
-export default Modal;
+export function ModalFooter(props) {
+    return (
+        <div className="modal-footer">
+            <button onClick={() => props.closeModal(props.element,false)} type="button"
+                    className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button onClick={() => props.closeModal(props.element,true)} type="button" className="btn btn-primary">Confirm delete</button>
+        </div>
+    )
+}
+export function ModalHeader(props) {
+    return (
+        <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLabel">{props.title}</h5>
+            <button onClick={() => props.closeModal(props.element,false)} type="button"
+                    className="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    );
+}
+export function ModalMain(props){
+    return(
+        <React.Fragment>
+            {props.isActiveModal && (
+                <div>
+                    <div className="modal-backdrop fade show"></div>
+                    <div className="modal show" id="deleteBaseline" tabIndex="-1" role="dialog"
+                         style={{display: 'block'}}>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">{props.children}</div>
+                        </div>
+                    </div>
+                </div>)}
+        </React.Fragment>
+    );
+}
 

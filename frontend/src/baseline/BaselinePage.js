@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import Menu from "../template/menu/Menu";
+import Menu from "../template/Menu";
 import BaseLineTable from "./BaselineTable";
 import '../App.css';
 import DeleteModal from "../template/modal/DeleteModal";
 import AddBaselineModal from "./AddBaselineModal";
+import {AddButton} from "../template/Control";
+
 
 class BaselinePage extends Component {
 
@@ -105,11 +107,7 @@ class BaselinePage extends Component {
                                            openDeleteModal={this.openDeleteModal}/>
                         </div>
                     </div>
-                    <div className="panel-body">
-                        <button type="button" className="btn btn-dark" data-toggle="modal"
-                                onClick={() => this.openAddModal()}>Add new
-                        </button>
-                    </div>
+                    <AddButton openAddModal={this.openAddModal}/>
                     <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
                                       closeModal={this.closeAddModal}
                                       points={this.state.points}

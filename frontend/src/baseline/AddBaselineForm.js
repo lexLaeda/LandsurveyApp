@@ -1,6 +1,6 @@
-import React from 'react'
-import TextInput from "../template/input/TextInput";
-import SelectInput from "../template/input/SelectInput";
+import React, {Component} from 'react';
+import {FormModalFooter, SelectInput, TextInput} from "../template/Control";
+
 
 class AddBaselineForm extends React.Component {
 
@@ -44,11 +44,7 @@ class AddBaselineForm extends React.Component {
                 <TextInput value={this.state.name} name="name" handleChange={this.handleChange}/>
                 <SelectInput value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
                 <SelectInput value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
-                <div className="modal-footer">
-                    <button onClick={() => this.props.closeModal(this.state, false)} type="button"
-                            className="btn btn-secondary">Close</button>
-                    <button type="submit" className="btn btn-primary">Save changes</button>
-                </div>
+                <FormModalFooter closeModal={this.props.closeModal}/>
             </form>
         )
     }

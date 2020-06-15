@@ -1,7 +1,8 @@
 import React from 'react'
-import '../../App.css';
+import '../App.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import {Link} from 'react-router-dom';
+
 
 export default function Menu() {
     return (
@@ -16,12 +17,12 @@ export default function Menu() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle active" id="navbarDropdown" role="button"
+                            <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Horizontal and vertical justification
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link className="dropdown-item" to="/pvo/baseline">Baselines</Link>
+                                <Link activeClassName="active" className="dropdown-item" to="/pvo/baseline">Baselines</Link>
                                 <Link className="dropdown-item" to="/">Points</Link>
                                 <Link className="dropdown-item" to="/pvo/level-reference">Level References</Link>
                             </div>
@@ -37,20 +38,11 @@ export default function Menu() {
                                 <a className="dropdown-item" href="/">Department holidays</a>
                             </div>
                         </li>
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/">Points list<span className="sr-only">(current)</span></a>
+                        <li className="nav-item">
+                            <Link activeClassName="active" className="nav-link" to="/pvo/baseline">Baselines</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+                            <Link activeClassName="active" className="nav-link" to="/">Points</Link>
                         </li>
                     </ul>
                 </div>

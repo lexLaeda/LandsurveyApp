@@ -1,16 +1,17 @@
-import Modal from "../template/modal/Modal";
+
 import React from 'react'
-import ModalHeader from "../template/modal/ModalHeader";
-import ModalBody from "../template/modal/ModalBody";
+
 import AddBaselineForm from "./AddBaselineForm";
+import {ModalBody, ModalHeader, ModalMain} from "../template/modal/Modal";
 
 export default function AddBaselineModal(props) {
+    let title = (props.baseline) ? 'Edit baseline' : 'Add new baseline';
     return (
-        <Modal isActiveModal={props.isActiveModal}>
-            <ModalHeader closeModal={props.closeModal}/>
+        <ModalMain isActiveModal={props.isActiveModal}>
+            <ModalHeader title={title} closeModal={props.closeModal}/>
             <ModalBody>
                 <AddBaselineForm points={props.points} closeModal={props.closeModal} baseline={props.baseline}/>
             </ModalBody>
-        </Modal>
+        </ModalMain>
     )
 }
