@@ -1,4 +1,6 @@
 import React from 'react'
+import TextInput from "../template/input/TextInput";
+import SelectInput from "../template/input/SelectInput";
 
 class AddBaselineForm extends React.Component {
 
@@ -34,35 +36,17 @@ class AddBaselineForm extends React.Component {
         const pointStart = this.props.points.filter((point)=> point.id == pointStartId)[0];
         const pointEnd = this.props.points.filter((point)=> point.id == pointEndId)[0];
         const baseline = {id,name,pointStart,pointEnd};
-        this.props.closeAddModal(baseline, true);
+        this.props.closeModal(baseline, true);
     }
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <div className="modal-body">
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input value={this.state.name} name="name" onChange={this.handleChange} type="text" className="form-control" id="name"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="firstPointSelect">Select start point</label>
-                        <select value={this.state.pointStart} name="pointStart" onChange={this.handleChange} className="form-control" id="firstPointSelect">
-                            <option>...</option>
-                            {this.props.points.map((point) => <option value={point.id}>{point.name}</option>)}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="firstPointSelect">Select end point</label>
-                        <select value={this.state.pointEnd} name="pointEnd" onChange={this.handleChange} className="form-control" id="firstPointSelect">
-                            <option>...</option>
-                            {this.props.points.map((point) => <option value={point.id}>{point.name}</option>)}
-                        </select>
-                    </div>
-                </div>
+                <TextInput value={this.state.name} name="name" handleChange={this.handleChange}/>
+                <SelectInput value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
+                <SelectInput value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
                 <div className="modal-footer">
-                    <button onClick={() => this.props.closeAddModal(this.state, false)} type="button"
-                            className="btn btn-secondary">Close
-                    </button>
+                    <button onClick={() => this.props.closeModal(this.state, false)} type="button"
+                            className="btn btn-secondary">Close</button>
                     <button type="submit" className="btn btn-primary">Save changes</button>
                 </div>
             </form>

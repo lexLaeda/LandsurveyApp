@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import Menu from "../menu/Menu";
+import Menu from "../template/menu/Menu";
 import LevelReferenceTable from "./LevelReferenceTable";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../template/modal/DeleteModal";
 
 class LevelReferencePage extends Component {
 

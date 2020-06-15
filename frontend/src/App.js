@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import PointTable from './point/PointTable';
-import Menu from './menu/Menu';
+import Menu from './template/menu/Menu';
 import './App.css';
 
 class App extends Component {
