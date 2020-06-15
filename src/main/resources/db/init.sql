@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS point,baseline,baseline_point,level_reference,code,holiday,post CASCADE;
+DROP TABLE IF EXISTS point,baseline,baseline_point,level_reference,code,holiday,post,address,contact,employee,department CASCADE;
 
 CREATE TABLE point
 (
@@ -397,3 +397,69 @@ INSERT INTO post (name, created)
 VALUES ('Designer', '2020-05-15');
 INSERT INTO post (name, created)
 VALUES ('Project manager', '2020-05-15');
+
+
+CREATE TABLE department
+(
+    department_id BIGSERIAL PRIMARY KEY NOT NULL,
+    name          CHARACTER VARYING(30),
+    label         CHARACTER VARYING(30),
+    created       TIMESTAMP             NOT NULL,
+    updated       TIMESTAMP
+);
+
+INSERT INTO department (name, created)
+VALUES ('Rocket Science Department', '2020-05-15');
+INSERT INTO department (name, created)
+VALUES ('Tesla Department', '2020-05-15');
+INSERT INTO department (name, created)
+VALUES ('HyperLoop Department', '2020-05-15');
+INSERT INTO department (name, created)
+VALUES ('Underground Department', '2020-05-15');
+INSERT INTO department (name, created)
+VALUES ('Social Department', '2020-05-15');
+INSERT INTO department (name, created)
+VALUES ('Game Dev Department', '2020-05-15');
+
+
+
+CREATE TABLE contact
+(
+    contact_id BIGSERIAL PRIMARY KEY NOT NULL,
+    email      CHARACTER VARYING(100),
+    phone      CHARACTER VARYING(100),
+    created    TIMESTAMP             NOT NULL,
+    updated    TIMESTAMP
+);
+
+CREATE TABLE address
+(
+    address_id BIGSERIAL PRIMARY KEY NOT NULL,
+    city       CHARACTER VARYING(100),
+    street     CHARACTER VARYING(100),
+    house      CHARACTER VARYING(100),
+    flat       CHARACTER VARYING(100),
+    created    TIMESTAMP             NOT NULL,
+    updated    TIMESTAMP
+);
+
+CREATE TABLE employee
+(
+    employee_id   BIGSERIAL PRIMARY KEY NOT NULL,
+    num           CHARACTER VARYING(100),
+    first_name    CHARACTER VARYING(100),
+    last_name     CHARACTER VARYING(100),
+    birthday      TIMESTAMP,
+    gender        CHARACTER VARYING(30),
+    is_remote     BOOLEAN,
+    address_id    BIGINT,
+    contact_id    BIGINT,
+    post_id       BIGINT,
+    department_id BIGINT,
+    created       TIMESTAMP             NOT NULL,
+    updated       TIMESTAMP,
+    FOREIGN KEY (address_id) REFERENCES address (address_id),
+    FOREIGN KEY (contact_id) REFERENCES contact (contact_id),
+    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    FOREIGN KEY (department_id) REFERENCES department (department_id)
+);

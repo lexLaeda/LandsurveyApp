@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -21,4 +23,8 @@ public class Post extends AbstractEntity {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY)
+    private List<Employee> employees = new ArrayList<>();
+
 }
