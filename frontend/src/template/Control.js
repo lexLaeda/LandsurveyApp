@@ -11,7 +11,7 @@ export function FormModalFooter(props){
     );
 }
 
-export  function SelectInput(props){
+export function SelectInput(props){
 
     return(
         <div className="form-group">

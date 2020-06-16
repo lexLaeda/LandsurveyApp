@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import Menu from "../template/Menu";
-import LevelReferenceTable from "./LevelReferenceTable";
+import LevelReferenceTable, {Table} from "./LevelReferenceTable";
 import DeleteModal from "../template/DeleteModal";
 import {AddButton} from "../template/Control";
 import Context from "../Context";
@@ -96,7 +96,7 @@ class LevelReferencePage extends Component {
                                 <h3 className="panel-title text-center mt-5 mb-5">
                                     LevelReference List
                                 </h3>
-                                <LevelReferenceTable levelReferenceList={this.state.levelReferenceList}/>
+                                <Table levelReferenceList={this.state.levelReferenceList}/>
                             </div>
                         </div>
                         <div className="panel-body">
