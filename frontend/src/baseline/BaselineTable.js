@@ -1,7 +1,7 @@
 import React from 'react';
 import BaselineTableItem from './BaselineTableItem';
 
-export default function BaseLineTable(props) {
+export default function BaseLineTable({ baselines }) {
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -17,10 +17,8 @@ export default function BaseLineTable(props) {
             </tr>
             </thead>
             <tbody>
-            {props.baselines.map((baseline, index) => {
-                return <BaselineTableItem baseline={baseline} key={baseline.id} index={index}
-                                          openDeleteModal={props.openDeleteModal}
-                                          openAddModal={props.openAddModal}/>
+            {baselines.map((baseline, index) => {
+                return <BaselineTableItem baseline={baseline} key={baseline.id} index={index}/>
             })}
             </tbody>
         </table>

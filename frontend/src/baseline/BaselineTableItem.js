@@ -1,7 +1,9 @@
-import React from 'react'
-import {Icons, Pencil, Trash} from "../template/Icons";
+import React, {useContext} from 'react'
+import {Pencil, Trash} from "../template/Icons";
+import Context from '../Context'
 
 export default function BaselineTableItem(props) {
+    const {openAddModal, openDeleteModal} = useContext(Context);
     return (
         <tr>
             <td>{props.index + 1}</td>
@@ -11,12 +13,12 @@ export default function BaselineTableItem(props) {
             <td>{props.baseline.created}</td>
             <td>{props.baseline.updated}</td>
             <td>
-                <button onClick={() => props.openAddModal(props.baseline)} type="button" className="btn btn-light">
+                <button onClick={() => openAddModal(props.baseline)} type="button" className="btn btn-light">
                     <Pencil/>
                 </button>
             </td>
             <td>
-                <button onClick={() => props.openDeleteModal({
+                <button onClick={() => openDeleteModal({
                     id: props.baseline.id,
                     name: props.baseline.name})}
                         type="button" className="btn btn-light">

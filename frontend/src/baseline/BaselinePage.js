@@ -3,10 +3,10 @@ import axios from 'axios';
 import Menu from "../template/Menu";
 import BaseLineTable from "./BaselineTable";
 import '../App.css';
-import DeleteModal from "../template/modal/DeleteModal";
+import DeleteModal from "../template/DeleteModal";
 import AddBaselineModal from "./AddBaselineModal";
 import {AddButton} from "../template/Control";
-
+import Context from "../Context"
 
 class BaselinePage extends Component {
 
@@ -74,37 +74,35 @@ class BaselinePage extends Component {
         if (isEnable) {
             this.deleteBaseline(baseline);
         }
-        this.setState({isActiveDeleteModal: false});
+        this.setState({isActiveDeleteModal: false, baseline : {} });
         setTimeout(()=> this.setBaselines(),1000);
     };
-
     openAddModal = (baseline) => {
-        if (baseline){
+        console.log('Приходит');
+        if (baseline && baseline.id){
             this.setState({baseline : baseline});
         }
         this.setState({isActiveAddModal: true});
     };
-
     closeAddModal = (baseline, isEnable) => {
         if(isEnable){
             this.saveBaseline(baseline);
         }
-        this.setState({isActiveAddModal : false});
+        this.setState({isActiveAddModal : false , baseline : {}});
         setTimeout(()=> this.setBaselines(),1000);
     };
 
 
     render() {
         return (
+            <Context.Provider value={{openAddModal : this.openAddModal, openDeleteModal : this.openDeleteModal}}>
             <div>
                 <Menu/>
                 <div className="container">
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
-                            <BaseLineTable baselines={this.state.baselines} points={this.state.points}
-                                           setBaselines={this.setBaselines} openAddModal={this.openAddModal}
-                                           openDeleteModal={this.openDeleteModal}/>
+                            <BaseLineTable baselines={this.state.baselines}/>
                         </div>
                     </div>
                     <AddButton openAddModal={this.openAddModal}/>
@@ -113,11 +111,13 @@ class BaselinePage extends Component {
                                       points={this.state.points}
                                       baseline={this.state.baseline}/>
 
-                    <DeleteModal element={this.state.baseline}
+                    <DeleteModal title="Delete baseline"
+                                 element={this.state.baseline}
                                  isActiveModal={this.state.isActiveDeleteModal}
                                  closeModal={this.closeDeleteModal}/>;
                 </div>
             </div>
+            </Context.Provider>
         );
     }
 }

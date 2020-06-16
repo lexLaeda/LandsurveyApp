@@ -12,7 +12,7 @@ class AddBaselineForm extends React.Component {
             pointStart: 0,
             pointEnd: 0
         };
-        if(props.baseline){
+        if(props.baseline && props.baseline.id){
             this.state.id = props.baseline.id;
             this.state.name = props.baseline.name;
             this.state.pointStart = props.baseline.pointStart.id;
@@ -41,9 +41,9 @@ class AddBaselineForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextInput value={this.state.name} name="name" handleChange={this.handleChange}/>
-                <SelectInput value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
-                <SelectInput value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
+                <TextInput label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
+                <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
+                <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
                 <FormModalFooter closeModal={this.props.closeModal}/>
             </form>
         )

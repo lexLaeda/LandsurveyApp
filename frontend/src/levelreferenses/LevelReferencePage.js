@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios';
 import Menu from "../template/Menu";
 import LevelReferenceTable from "./LevelReferenceTable";
-import DeleteModal from "../template/modal/DeleteModal";
+import DeleteModal from "../template/DeleteModal";
 
 class LevelReferencePage extends Component {
 

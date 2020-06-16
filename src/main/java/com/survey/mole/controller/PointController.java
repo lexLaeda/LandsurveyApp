@@ -30,7 +30,7 @@ public class PointController {
                 .map(point -> pointMapper.toDto(point)).collect(Collectors.toList());
     }
 
-    @PostMapping("/new")
+    @PostMapping("/add")
     public PointDto savePoint(PointDto pointDto) {
         Point point = pointMapper.toEntity(pointDto);
         Point save = pointService.save(point);

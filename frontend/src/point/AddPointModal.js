@@ -1,17 +1,20 @@
-
 import React from 'react'
-
-import AddBaselineForm from "./AddBaselineForm";
 import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import AddPointForm from "./AddPointForm";
 
-export default function AddBaselineModal(props) {
-    let title = (props.baseline) ? 'Edit baseline' : 'Add new baseline';
+
+function AddPointModal(props) {
+
+    let title = (props.title) ? 'Edit point' : 'Add Point';
+
     return (
         <ModalMain isActiveModal={props.isActiveModal}>
             <ModalHeader title={title} closeModal={props.closeModal}/>
             <ModalBody>
-                <AddBaselineForm points={props.points} closeModal={props.closeModal} baseline={props.baseline}/>
+                <AddPointForm closeModal={props.closeModal} point={props.point}/>
             </ModalBody>
         </ModalMain>
-    )
+    );
 }
+
+export default AddPointModal;
