@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import Context from '../Context'
 
 export function FormModalFooter(props){
     return(
@@ -23,21 +24,20 @@ export  function SelectInput(props){
     );
 }
 
-export  function TextInput(props){
+export function TextInput(props){
     return(
         <div className="form-group">
             <label htmlFor="name">{props.label}</label>
-            <input value={props.value} name={props.name} onChange={props.handleChange} type="text" className="form-control" id="name"/>
+            <input value={props.value} name={props.name} onChange={props.handleChange} type={props.type} className="form-control" id="name"/>
         </div>
     );
 }
 export function AddButton(props){
-
+    const {openAddModal} = useContext(Context);
     return(
         <div className="panel-body">
             <button type="button" className="btn btn-dark" data-toggle="modal"
-                    onClick={() => props.openAddModal()}>Add new
-            </button>
+                    onClick={() => openAddModal()}>Add new</button>
         </div>
     );
 }

@@ -39,6 +39,8 @@ class App extends Component {
     }
 
     savePoint(point) {
+        console.log('дебажим');
+        console.log(point);
         if (point.id) {
             axios.post('/api/point/edit/' + point.id, point).then(res => {
                 console.log(res.data);
@@ -95,7 +97,7 @@ class App extends Component {
                                 <PointTable points={this.state.points}/>
                             </div>
                             <div className="panel-body">
-                                <AddButton openAddModal={this.openAddModal}/>
+                                <AddButton/>
                                 <AddPointModal isActiveModal={this.state.isActiveAddModal}
                                                closeModal={this.closeAddModal}
                                                point={this.state.point}/>

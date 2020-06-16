@@ -5,7 +5,7 @@ import AddPointForm from "./AddPointForm";
 
 function AddPointModal(props) {
 
-    let title = (props.title) ? 'Edit point' : 'Add Point';
+    let title = (props.point && props.point.id) ? 'Edit point' : 'Add Point';
 
     return (
         <ModalMain isActiveModal={props.isActiveModal}>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import Menu from "../template/Menu";
-import BaseLineTable from "./BaselineTable";
+import BaseLineTable, {Table} from "./BaselineTable";
 import '../App.css';
 import DeleteModal from "../template/DeleteModal";
 import AddBaselineModal from "./AddBaselineModal";
@@ -102,10 +102,10 @@ class BaselinePage extends Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
-                            <BaseLineTable baselines={this.state.baselines}/>
+                            <Table baselines={this.state.baselines}/>
                         </div>
                     </div>
-                    <AddButton openAddModal={this.openAddModal}/>
+                    <AddButton/>
                     <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
                                       closeModal={this.closeAddModal}
                                       points={this.state.points}

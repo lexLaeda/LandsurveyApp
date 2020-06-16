@@ -8,9 +8,9 @@ class AddPointForm extends React.Component{
         this.state = {
             id : '',
             name : '',
-            x : '',
-            y : '',
-            h : ''
+            x : 0,
+            y : 0,
+            h : 0
         };
         if (props.point && props.point.id){
             this.state.id = props.point.id;
@@ -44,10 +44,10 @@ class AddPointForm extends React.Component{
     render() {
         return(
             <form onSubmit={this.handleSubmit}>
-                <TextInput label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
-                <TextInput label="X Coordinate" value={this.state.x} name="x" handleChange={this.handleChange}/>
-                <TextInput label="Y Coordinate" value={this.state.y} name="y" handleChange={this.handleChange}/>
-                <TextInput label="H Coordinate" value={this.state.h} name="h" handleChange={this.handleChange}/>
+                <TextInput type="text" label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
+                <TextInput type="number" label="X Coordinate" value={this.state.x} name="x" handleChange={this.handleChange}/>
+                <TextInput type="number" label="Y Coordinate" value={this.state.y} name="y" handleChange={this.handleChange}/>
+                <TextInput type="number" label="H Coordinate" value={this.state.h} name="h" handleChange={this.handleChange}/>
                 <FormModalFooter closeModal={this.props.closeModal}/>
             </form>
         )

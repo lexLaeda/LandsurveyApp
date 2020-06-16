@@ -41,7 +41,7 @@ class AddBaselineForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextInput label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
+                <TextInput type="text" label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
                 <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
                 <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
                 <FormModalFooter closeModal={this.props.closeModal}/>

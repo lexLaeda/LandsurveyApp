@@ -12,11 +12,13 @@ export default function LevelReferenceTable(props) {
                 <th>Elevation</th>
                 <th>Created</th>
                 <th>Updated</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {props.levelReferenceList.map((levelReference, index) => {
-                return <LevelReferenceItem levelReference={levelReference} key={levelReference.id} index={index} openDeleteModal={props.openDeleteModal}/>
+                return <LevelReferenceItem levelReference={levelReference} key={levelReference.id} index={index}/>
             })}
             </tbody>
         </table>
