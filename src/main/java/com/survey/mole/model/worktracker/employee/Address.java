@@ -29,8 +29,8 @@ public class Address extends AbstractEntity {
     @Column(name = "house")
     private String house;
 
-    @Column(name = "flat")
-    private String flat;
+    @Column(name = "apartment")
+    private String apartment;
 
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private Employee employee;

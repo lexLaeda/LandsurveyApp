@@ -32,7 +32,7 @@ export function TextInput(props){
         </div>
     );
 }
-export function AddButton(props){
+export function AddButton(){
     const {openAddModal} = useContext(Context);
     return(
         <div className="panel-body">

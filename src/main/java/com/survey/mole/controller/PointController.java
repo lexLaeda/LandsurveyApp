@@ -31,14 +31,14 @@ public class PointController {
     }
 
     @PostMapping("/add")
-    public PointDto savePoint(PointDto pointDto) {
+    public PointDto savePoint(@RequestBody  PointDto pointDto) {
         Point point = pointMapper.toEntity(pointDto);
         Point save = pointService.save(point);
         return pointMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public PointDto editPoint(@PathVariable("id") Long id, PointDto pointDto) {
+    public PointDto editPoint(@PathVariable("id") Long id,@RequestBody  PointDto pointDto) {
         Point point = pointMapper.toEntity(pointDto);
         Point update = pointService.update(id, point);
         return pointMapper.toDto(update);

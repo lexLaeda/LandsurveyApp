@@ -29,5 +29,5 @@ public class EmployeeDto extends AbstractDto {
 
     private Long postId;
 
-    private Long  departmentId;
+    private Long departmentId;
 }

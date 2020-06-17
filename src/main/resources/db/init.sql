@@ -438,7 +438,7 @@ CREATE TABLE address
     city       CHARACTER VARYING(100),
     street     CHARACTER VARYING(100),
     house      CHARACTER VARYING(100),
-    flat       CHARACTER VARYING(100),
+    apartment  CHARACTER VARYING(100),
     created    TIMESTAMP             NOT NULL,
     updated    TIMESTAMP
 );

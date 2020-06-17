@@ -32,6 +32,7 @@ public class BaselineController {
 
     @GetMapping("/list")
     public List<BaselineDto> findAll() {
+        System.out.println("А сюда заходитп");
         return baselineService.findAll().stream()
                 .map(baseline -> baselineMapper.toDto(baseline))
                 .peek(System.out::println)

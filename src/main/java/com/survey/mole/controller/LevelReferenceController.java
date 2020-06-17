@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/level-reference/")
+@RequestMapping("/api/level-reference")
 public class LevelReferenceController {
 
     private LevelReferenceService levelReferenceService;
@@ -38,15 +38,15 @@ public class LevelReferenceController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/new")
-    public LevelReferenceDto addNewBaseline(LevelReferenceDto levelReferenceDto) {
+    @PostMapping("/add")
+    public LevelReferenceDto addNewBaseline(@RequestBody LevelReferenceDto levelReferenceDto) {
         LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         LevelReference save = levelReferenceService.save(levelReference);
         return levelReferenceMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public LevelReferenceDto editBaseline(@PathVariable("id") Long id, LevelReferenceDto levelReferenceDto) {
+    public LevelReferenceDto editBaseline(@PathVariable("id") Long id,@RequestBody  LevelReferenceDto levelReferenceDto) {
         LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         LevelReference save = levelReferenceService.update(id, levelReference);
         return levelReferenceMapper.toDto(save);

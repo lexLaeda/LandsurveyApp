@@ -6,6 +6,7 @@ import App from './App';
 import BaselinePage from './baseline/BaselinePage'
 import LevelReferencePage from './levelreferenses/LevelReferencePage'
 import './App.css';
+import EmployeePage from "./employee/EmployeePage";
 
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
             <Route exact path='/' component={App}/>
             <Route path='/pvo/baseline' component={BaselinePage}/>
             <Route path='/pvo/level-reference' component={LevelReferencePage}/>
+            <Route path='/tracking/employee/list' component={EmployeePage}/>
         </div>
     </Router>,
     document.getElementById('root')

@@ -33,7 +33,7 @@ export default function Menu() {
                                 Employee Tracking
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <a className="dropdown-item" href="/">Employee list</a>
+                                <Link className="dropdown-item" to="/tracking/employee/list">Employee list</Link>
                                 <a className="dropdown-item" href="/">Department table</a>
                                 <a className="dropdown-item" href="/">Department holidays</a>
                             </div>

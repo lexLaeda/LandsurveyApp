@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import LevelReferenceItem from "./LevelReferenceItem"
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 

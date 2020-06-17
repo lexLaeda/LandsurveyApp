@@ -1,6 +1,6 @@
-import React from 'react'
-import {SelectInput, TextInput} from "../template/Control";
-
+import React, {useContext, useState} from 'react'
+import {FormModalFooter, SelectInput, TextInput} from "../template/Control";
+import Context from '../Context'
 
 class EmployeeForm extends React.Component{
 
@@ -21,23 +21,71 @@ class EmployeeForm extends React.Component{
             department : '',
             email : '',
             phone : ''
+        };
+
+        if (props.employee && props.employee.id){
+            const employee = props.employee;
+            const address = employee.address;
+            const contact = employee.contact;
+            this.state = {
+                id : employee.id,
+                firstName : employee.firstName,
+                lastName : employee.lastName,
+                birthday : employee.birthday,
+                gender : employee.gender,
+                city : address.city,
+                street : address.street,
+                house : address.house,
+                apartment : address.apartment,
+                num : address.num,
+                post : employee.post,
+                department : employee.department,
+                email : contact.email,
+                phone : contact.phone
+            };
         }
-    }
-    handleSubmit(){
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
+    handleSubmit(event){
+        event.preventDefault();
+        const employee = {
+            id : this.state.id,
+            num : this.state.num,
+            firstName : this.state.firstName,
+            lastName : this.state.lastName,
+            birthday : this.state.birthday,
+            gender : this.state.gender,
+            address :{
+                city : this.state.city,
+                street : this.state.street,
+                house : this.state.house,
+                apartment : this.state.apartment
+            },
+            contact : {
+                email : this.state.email,
+                phone : this.state.phone
+            },
+            post : this.state.post,
+            department : this.state.department,
+        };
+        this.props.closeModal(employee, true);
+    }
 
-    handleChange(){
-
+    handleChange(event){
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState({[name]: value} )
     }
 
     render() {
+        const {departments, posts} = useState(Context);
         return(
             <div className="container">
-                <h1 className="text-center mt-5">
-                    Личная карточка сотрудника
-                </h1>
-                <!--/*@thymesVar id="employeeDto" type="com.tracking.dto.EmployeeDto"*/-->
+                <h1 className="text-center mt-5">Employee personal card</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className="row justify-content-end">
                         <div className="col-md-6 col-lg-4 mt-5 text-center">
@@ -64,8 +112,8 @@ class EmployeeForm extends React.Component{
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Professional data</h4>
                             <TextInput value={this.state.num} type="text" label="Tab num" name="num" handleChange={this.handleChange}/>
-                            <SelectInput value={this.state.post} label="Post" name="post" handleChange={this.handleChange} />
-                            <SelectInput value={this.state.department} label="Department" name="department" handleChange={this.handleChange}/>
+                            <SelectInput value={this.state.post} elements={posts} label="Post" name="post" handleChange={this.handleChange} />
+                            <SelectInput value={this.state.department} elements={departments} label="Department" name="department" handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Contact data</h4>
@@ -73,12 +121,10 @@ class EmployeeForm extends React.Component{
                             <TextInput value={this.state.phone} type="tel" label="Phone" name="phone" handleChange={this.handleChange}/>
                         </div>
                     </div>
-                    <div className="text-right mb-4">
-                        <button className="btn btn-info" type="submit">Submit</button>
-                        <button className="btn btn-light" type="submit">Cancel</button>
-                    </div>
+                    <FormModalFooter closeModal={this.props.closeModal}/>
                 </form>
             </div>
         )
     }
 }
+export default EmployeeForm;
