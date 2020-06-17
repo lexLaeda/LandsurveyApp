@@ -22,9 +22,6 @@ class EmployeePage extends Component{
     }
 
     componentDidMount() {
-        axios.get('/api/employee/list').then((res) =>{
-            this.setState({employees : res.data});
-            console.log(this.state.employees);});
         this.setEmployees();
         this.setDepartments();
         this.setPosts();
@@ -73,15 +70,18 @@ class EmployeePage extends Component{
 
     saveEmployee(employee){
         if (employee.id){
-            axios.post('api/employee/edit/' + employee.id, employee).then(res => console.log(res.data));
+            axios.post('/api/employee/edit/' + employee.id, employee).then(res => console.log(res.data));
         } else{
-            axios.post('api/employee/add',employee).then(res => console.log(res.data));
+            axios.post('/api/employee/add',employee).then(res => console.log(res.data));
         }
-
+        this.setState({employee: {}});
+        setTimeout(()=> this.setEmployees(),1000);
     }
 
     deleteEmployee(employee){
-        axios.delete('api/employee/delete/' + employee.id).then(res => console.log(res.data));
+        axios.delete('/api/employee/delete/' + employee.id).then(res => console.log(res.data));
+        this.setState({employee: {}});
+        setTimeout(()=> this.setEmployees(),1000);
     }
 
     render() {
@@ -93,7 +93,7 @@ class EmployeePage extends Component{
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h3 className="panel-title text-center mt-5 mb-5">Employee list</h3>
-
+                                <EmployeeTable employees={this.state.employees}/>
                                 <AddButton openAddModal={this.openAddModal}/>
                             </div>
                         </div>

@@ -24,6 +24,19 @@ export function SelectInput(props){
     );
 }
 
+export function SelectInputText(props){
+
+    return(
+        <div className="form-group">
+            <label htmlFor="firstPointSelect">{props.label}</label>
+            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect">
+                <option>...</option>
+                {props.elements.map((element) => <option value={element}>{element}</option>)}
+            </select>
+        </div>
+    );
+}
+
 export function TextInput(props){
     return(
         <div className="form-group">
@@ -32,8 +45,7 @@ export function TextInput(props){
         </div>
     );
 }
-export function AddButton(){
-    const {openAddModal} = useContext(Context);
+export function AddButton({openAddModal}){
     return(
         <div className="panel-body">
             <button type="button" className="btn btn-dark" data-toggle="modal"

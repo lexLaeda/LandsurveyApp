@@ -44,9 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findByDepartment(Department department) {
-        return employeeRepository.findAll().stream()
-                .filter(employee -> employee.getDepartment().equals(department))
-                .collect(Collectors.toList());
+        return employeeRepository.findAllByDepartment(department);
     }
 
     @Override

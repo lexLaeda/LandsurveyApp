@@ -100,7 +100,7 @@ class LevelReferencePage extends Component {
                             </div>
                         </div>
                         <div className="panel-body">
-                            <AddButton/>
+                            <AddButton  openAddModal={this.openAddModal}/>
                         </div>
                     </div>
                     <AddLevelReferenceModal isActiveModal={this.state.isActiveAddModal}

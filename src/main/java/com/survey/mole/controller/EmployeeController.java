@@ -41,6 +41,8 @@ public class EmployeeController {
 
     @PostMapping("/add")
     public EmployeeDto addNewCode(@RequestBody EmployeeDto employeeDto) {
+        System.out.println("Дебажим добавление!!!!");
+        System.out.println(employeeDto);
         Employee employee = employeeMapper.toEntity(employeeDto);
         Employee save = employeeService.save(employee);
         return employeeMapper.toDto(save);

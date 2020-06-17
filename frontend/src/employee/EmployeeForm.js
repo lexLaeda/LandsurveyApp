@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react'
-import {FormModalFooter, SelectInput, TextInput} from "../template/Control";
+import React, {useContext} from 'react'
+import {FormModalFooter, SelectInput, SelectInputText, TextInput} from "../template/Control";
 import Context from '../Context'
 
 class EmployeeForm extends React.Component{
@@ -37,9 +37,9 @@ class EmployeeForm extends React.Component{
                 street : address.street,
                 house : address.house,
                 apartment : address.apartment,
-                num : address.num,
-                post : employee.post,
-                department : employee.department,
+                num : employee.num,
+                post : employee.postId,
+                department : employee.departmentId,
                 email : contact.email,
                 phone : contact.phone
             };
@@ -51,6 +51,8 @@ class EmployeeForm extends React.Component{
     }
     handleSubmit(event){
         event.preventDefault();
+        console.log('In da submit');
+        console.log(this.state.department);
         const employee = {
             id : this.state.id,
             num : this.state.num,
@@ -68,9 +70,10 @@ class EmployeeForm extends React.Component{
                 email : this.state.email,
                 phone : this.state.phone
             },
-            post : this.state.post,
-            department : this.state.department,
+            postId : this.state.post,
+            departmentId : this.state.department,
         };
+        console.log(employee.departmentId);
         this.props.closeModal(employee, true);
     }
 
@@ -82,7 +85,7 @@ class EmployeeForm extends React.Component{
     }
 
     render() {
-        const {departments, posts} = useState(Context);
+        const genders = ['M','F'];
         return(
             <div className="container">
                 <h1 className="text-center mt-5">Employee personal card</h1>
@@ -100,7 +103,7 @@ class EmployeeForm extends React.Component{
                             <TextInput value={this.state.firstName} type="text" label="First name" name="firstName" handleChange={this.handleChange}/>
                             <TextInput value={this.state.lastName} type="text" label="Last name" name="lastName" handleChange={this.handleChange}/>
                             <TextInput value={this.state.birthday} type="date" label="Birthday" name="birthday" handleChange={this.handleChange}/>
-                            <SelectInput value={this.state.gender} elements={['M','F']} label="Gender" handleChange={this.handleChange}/>
+                            <SelectInputText label="Gender" value={this.state.gender} elements={genders} name="gender" handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Address</h4>
@@ -112,8 +115,8 @@ class EmployeeForm extends React.Component{
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Professional data</h4>
                             <TextInput value={this.state.num} type="text" label="Tab num" name="num" handleChange={this.handleChange}/>
-                            <SelectInput value={this.state.post} elements={posts} label="Post" name="post" handleChange={this.handleChange} />
-                            <SelectInput value={this.state.department} elements={departments} label="Department" name="department" handleChange={this.handleChange}/>
+                            <SelectInput label="Post" value={this.state.post} elements={this.props.posts} name="post" handleChange={this.handleChange} />
+                            <SelectInput label="Department" value={this.state.department} elements={this.props.departments} name="department" handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Contact data</h4>

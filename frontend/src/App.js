@@ -97,7 +97,7 @@ class App extends Component {
                                 <PointTable points={this.state.points}/>
                             </div>
                             <div className="panel-body">
-                                <AddButton/>
+                                <AddButton  openAddModal={this.openAddModal}/>
                                 <AddPointModal isActiveModal={this.state.isActiveAddModal}
                                                closeModal={this.closeAddModal}
                                                point={this.state.point}/>

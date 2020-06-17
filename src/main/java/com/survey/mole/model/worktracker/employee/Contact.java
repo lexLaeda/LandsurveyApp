@@ -1,5 +1,6 @@
 package com.survey.mole.model.worktracker.employee;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.survey.mole.model.AbstractEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Contact extends AbstractEntity {
     @Column(name = "phone")
     private String phone;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
     private Employee employee;
 }

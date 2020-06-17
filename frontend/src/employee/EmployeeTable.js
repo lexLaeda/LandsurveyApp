@@ -3,12 +3,8 @@ import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 
 
-function EmployeeTable(employees) {
-    console.log(typeof employees);
-    if (!employees){
-        employees = [];
-    }
-    console.log(typeof employees);
+function EmployeeTable({employees}) {
+
     return(
         <table className="table table-hover">
             <thead className="thead-light">
@@ -37,11 +33,18 @@ function EmployeeTable(employees) {
 }
 function Item({employee,index}) {
     const {openAddModal, openDeleteModal, departments, posts} = useContext(Context);
-    const fullAddress = concatFullAddress(employee.address.city, employee.address.street, employee.address.house, employee.address.apartment);
-    const now = new Date();
-    const age = now - employee.birthday;
-    const post = getElementName(employee.post, posts);
-    const department = getElementName(employee.department, departments);
+    let fullAddress = '';
+    if (employee && employee.address){
+        fullAddress = concatFullAddress(employee.address.city, employee.address.street, employee.address.house, employee.address.apartment);
+    }
+    let post = '';
+    let department = '';
+    if (departments && posts){
+        console.log(employee.post)
+            post = getElementName(employee.postId, posts);
+        department = getElementName(employee.departmentId, departments);
+    }
+
     return (
         <tr>
             <td>{index}</td>
@@ -50,20 +53,17 @@ function Item({employee,index}) {
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
             <td>{employee.birthday}</td>
-            <td>{age}</td>
+            <td>{employee.age}</td>
             <td>{post}</td>
             <td>{department}</td>
             <td>{fullAddress}</td>
             <td>
-                <button onClick={() => openAddModal(employee)} type="button" className="btn btn-light">
+                <button onClick={()=>openAddModal(employee)} type="button" className="btn btn-light">
                     <Pencil/>
                 </button>
             </td>
             <td>
-                <button onClick={() => openDeleteModal({
-                    id: employee.id,
-                    name: employee.name})}
-                        type="button" className="btn btn-light">
+                <button onClick={()=>openDeleteModal({id : employee.id, name : employee.firstName})} type="button" className="btn btn-light">
                     <Trash/>
                 </button>
             </td>

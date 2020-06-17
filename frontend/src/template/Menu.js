@@ -22,7 +22,7 @@ export default function Menu() {
                                 Horizontal and vertical justification
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link activeClassName="active" className="dropdown-item" to="/pvo/baseline">Baselines</Link>
+                                <Link className="dropdown-item" to="/pvo/baseline">Baselines</Link>
                                 <Link className="dropdown-item" to="/">Points</Link>
                                 <Link className="dropdown-item" to="/pvo/level-reference">Level References</Link>
                             </div>
@@ -39,10 +39,10 @@ export default function Menu() {
                             </div>
                         </li>
                         <li className="nav-item">
-                            <Link activeClassName="active" className="nav-link" to="/pvo/baseline">Baselines</Link>
+                            <Link className="nav-link" to="/pvo/baseline">Baselines</Link>
                         </li>
                         <li className="nav-item">
-                            <Link activeClassName="active" className="nav-link" to="/">Points</Link>
+                            <Link className="nav-link" to="/">Points</Link>
                         </li>
                     </ul>
                 </div>

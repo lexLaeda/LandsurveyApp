@@ -28,6 +28,14 @@ export function ModalHeader(props) {
     );
 }
 export function ModalMain(props){
+    const largeModal = 'modal-dialog modal-xl';
+    const standartModal = 'modal-dialog';
+    let modalSize = '';
+    if (props.size === 'large'){
+        modalSize = largeModal;
+    } else {
+        modalSize =standartModal
+    }
     return(
         <React.Fragment>
             {props.isActiveModal && (
@@ -35,7 +43,7 @@ export function ModalMain(props){
                     <div className="modal-backdrop fade show"></div>
                     <div className="modal show" id="deleteBaseline" tabIndex="-1" role="dialog"
                          style={{display: 'block'}}>
-                        <div className="modal-dialog" role="document">
+                        <div className={modalSize} role="document">
                             <div className="modal-content">{props.children}</div>
                         </div>
                     </div>

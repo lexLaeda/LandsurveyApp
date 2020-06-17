@@ -14,5 +14,5 @@ public class DepartmentDto extends AbstractDto{
 
     private String name;
 
-    private List<Long> employees = new ArrayList<>();
+   // private List<Long> employees = new ArrayList<>();
 }

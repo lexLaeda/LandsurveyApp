@@ -105,7 +105,7 @@ class BaselinePage extends Component {
                             <Table baselines={this.state.baselines}/>
                         </div>
                     </div>
-                    <AddButton/>
+                    <AddButton  openAddModal={this.openAddModal}/>
                     <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
                                       closeModal={this.closeAddModal}
                                       points={this.state.points}

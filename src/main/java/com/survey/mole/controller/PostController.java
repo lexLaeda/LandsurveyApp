@@ -1,44 +1,54 @@
 package com.survey.mole.controller;
 
+import com.survey.mole.dto.PostDto;
+import com.survey.mole.mapper.PostMapper;
 import com.survey.mole.model.worktracker.employee.Post;
 import com.survey.mole.service.worktracker.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("?api/post")
+@RequestMapping("/api/post")
 public class PostController {
 
     private PostService postService;
+    private PostMapper postMapper;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostMapper postMapper) {
         this.postService = postService;
+        this.postMapper = postMapper;
     }
 
 
     @GetMapping("/{id}")
-    public Post findHolidayById(@PathVariable("id") Long id) {
+    public PostDto findHolidayById(@PathVariable("id") Long id) {
         Post byId = postService.findById(id);
-        return byId;
+        return postMapper.toDto(byId);
     }
 
     @GetMapping("/list")
-    public List<Post> findAll() {
-        return postService.findAll();
+    public List<PostDto> findAll() {
+        return postService.findAll().stream()
+                .map(post -> postMapper.toDto(post))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
-    public Post addNewHoliday(@RequestBody Post post) {
-        return postService.save(post);
+    public PostDto addNewHoliday(@RequestBody PostDto postDto) {
+        Post post = postMapper.toEntity(postDto);
+        Post save = postService.save(post);
+        return postMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public Post editBaseline(@PathVariable("id") Long id, @RequestBody Post post) {
-        return postService.update(id, post);
+    public PostDto editBaseline(@PathVariable("id") Long id, @RequestBody PostDto postDto) {
+        Post post = postMapper.toEntity(postDto);
+        Post update = postService.update(id, post);
+        return postMapper.toDto(update);
     }
 
     @DeleteMapping("/delete/{id}")

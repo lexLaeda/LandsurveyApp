@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 @Service
 public class LevelReferenceMapper extends AbstractMapper<LevelReference, LevelReferenceDto> {
 
-
     private ModelMapper modelMapper;
 
     @Autowired

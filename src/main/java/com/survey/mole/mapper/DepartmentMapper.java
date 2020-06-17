@@ -34,18 +34,18 @@ public class DepartmentMapper extends AbstractMapper<Department, DepartmentDto> 
                 .setPostConverter(toEntityConverter());
     }
 
-    @Override
-    protected void mapSpecificFields(Department source, DepartmentDto destination) {
-        List<Long> collect = employeeService.findByDepartment(source).stream()
-                .map(Employee::getId)
-                .collect(Collectors.toList());
-        destination.setEmployees(collect);
-    }
-
-    @Override
-    protected void mapSpecificFields(DepartmentDto source, Department destination) {
-        List<Employee> collect = source.getEmployees().stream()
-                .map(id -> employeeService.findById(id)).collect(Collectors.toList());
-        destination.setEmployees(collect);
-    }
+//    @Override
+//    protected void mapSpecificFields(Department source, DepartmentDto destination) {
+//        List<Long> collect = employeeService.findByDepartment(source).stream()
+//                .map(Employee::getId)
+//                .collect(Collectors.toList());
+//        destination.setEmployees(collect);
+//    }
+//
+//    @Override
+//    protected void mapSpecificFields(DepartmentDto source, Department destination) {
+//        List<Employee> collect = source.getEmployees().stream()
+//                .map(id -> employeeService.findById(id)).collect(Collectors.toList());
+//        destination.setEmployees(collect);
+//    }
 }

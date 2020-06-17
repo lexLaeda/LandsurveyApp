@@ -463,3 +463,4 @@ CREATE TABLE employee
     FOREIGN KEY (post_id) REFERENCES post(post_id),
     FOREIGN KEY (department_id) REFERENCES department (department_id)
 );
+select * from employee;
