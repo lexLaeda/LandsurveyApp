@@ -6,17 +6,21 @@ class AddBaselineForm extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            id: '',
-            name: '',
-            pointStart: 0,
-            pointEnd: 0
-        };
+
         if(props.baseline && props.baseline.id){
-            this.state.id = props.baseline.id;
-            this.state.name = props.baseline.name;
-            this.state.pointStart = props.baseline.pointStart.id;
-            this.state.pointEnd = props.baseline.pointEnd.id;
+            this.state = {
+              id : props.baseline.id,
+              name : props.baseline.name,
+              pointStart : props.baseline.pointStart.id,
+              pointEnd : props.baseline.pointEnd.id
+            }
+        } else {
+            this.state = {
+                id: '',
+                name: '',
+                pointStart: 0,
+                pointEnd: 0
+            };
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,8 +37,8 @@ class AddBaselineForm extends React.Component {
         const id = this.state.id;
         const pointStartId = this.state.pointStart;
         const pointEndId = this.state.pointEnd;
-        const pointStart = this.props.points.filter((point)=> point.id == pointStartId)[0];
-        const pointEnd = this.props.points.filter((point)=> point.id == pointEndId)[0];
+        const pointStart = this.props.points.filter((point)=> point.id ==  pointStartId)[0];
+        const pointEnd = this.props.points.filter((point)=> point.id ==  pointEndId)[0];
         const baseline = {id,name,pointStart,pointEnd};
         this.props.closeModal(baseline, true);
     }

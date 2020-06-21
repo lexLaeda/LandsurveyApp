@@ -48,9 +48,7 @@ public class AvatarController {
         if (id == null) {
             return fileStorageService.loadFile(DEFAULT_IMAGE);
         }
-
         InputStreamResource resource = fileStorageService.loadFile(ROOT + dir + "/" + id + SUF);
-
         if (resource == null) {
             return fileStorageService.loadFile(DEFAULT_IMAGE);
         }

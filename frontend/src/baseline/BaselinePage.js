@@ -27,47 +27,42 @@ class BaselinePage extends Component {
     }
 
     componentDidMount() {
-        this.setBaselines();
-        this.setPoints();
+        axios.get('/api/baseline/list').then(res => this.setState({baselines : res.data}));
+        axios.get('/api/point/list').then(res => this.setState({points : res.data}));
+
     }
 
-    setBaselines() {
-        axios.get('/api/baseline/list')
-            .then(res => {
-                this.setState({baselines: res.data});
-                console.log(this.state.baselines);
-            });
-    }
-
-    setPoints() {
-        axios.get('/api/point/list')
-            .then(res => {
-                this.setState({points: res.data});
-                console.log(this.state.points);
-            });
-    }
     saveBaseline(baseline) {
         if (baseline.id){
             axios.post('/api/baseline/edit/' + baseline.id ,baseline).then(res => {
-                console.log(res.data);
+                if (res.status === 200){
+                    const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
+                    baselines.push(res.data);
+                    this.setState({baselines : baselines});
+                }
             });
         } else {
             axios.post('/api/baseline/add',baseline).then(res => {
-                console.log(res.data);
+                if (res.status === 200){
+                    const baselines = this.state.baselines;
+                    baselines.push(res.data);
+                    this.setState({baselines : baselines});
+                }
             })
         }
     }
 
     deleteBaseline(baseline) {
         axios.delete('/api/baseline/delete/' + baseline.id).then(res => {
-            console.log(res.data);
+            if (res.status === 200){
+                const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
+                this.setState({baselines : baselines});
+            }
         })
     }
 
     openDeleteModal = (baseline) => {
-        console.log("вызывается");
-        this.setState({baseline: baseline});
-        this.setState({isActiveDeleteModal: true})
+        this.setState({isActiveDeleteModal: true, baseline: baseline})
     };
 
     closeDeleteModal = (baseline, isEnable) => {
@@ -75,21 +70,20 @@ class BaselinePage extends Component {
             this.deleteBaseline(baseline);
         }
         this.setState({isActiveDeleteModal: false, baseline : {} });
-        setTimeout(()=> this.setBaselines(),1000);
     };
+
     openAddModal = (baseline) => {
-        console.log('Приходит');
         if (baseline && baseline.id){
             this.setState({baseline : baseline});
         }
         this.setState({isActiveAddModal: true});
     };
+
     closeAddModal = (baseline, isEnable) => {
         if(isEnable){
             this.saveBaseline(baseline);
         }
         this.setState({isActiveAddModal : false , baseline : {}});
-        setTimeout(()=> this.setBaselines(),1000);
     };
 
 

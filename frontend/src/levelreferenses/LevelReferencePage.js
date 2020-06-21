@@ -31,12 +31,10 @@ class LevelReferencePage extends Component {
         axios.get('/api/level-reference/list')
             .then(res => {
                 this.setState({levelReferenceList: res.data});
-                console.log(this.state.levelReferenceList)
             });
     }
 
     openDeleteModal = (levelReference) => {
-        console.log("вызывается");
         this.setState({levelReference: levelReference});
         this.setState({isActiveDeleteModal: true})
     };
@@ -46,13 +44,10 @@ class LevelReferencePage extends Component {
             this.deleteLevelReference(levelReference);
         }
         this.setState({isActiveDeleteModal: false, levelReference: {}});
-        setTimeout(() => this.setLevelReferences(), 1000);
     };
 
     openAddModal = (levelReference) => {
-        console.log(levelReference);
         if (levelReference && levelReference.id) {
-            console.log('стейт подходит');
             this.setState({levelReference: levelReference});
         }
         this.setState({isActiveAddModal: true});
@@ -63,24 +58,30 @@ class LevelReferencePage extends Component {
             this.saveLevelReference(levelReference);
         }
         this.setState({isActiveAddModal: false, levelReference: {}});
-        setTimeout(() => this.setLevelReferences(), 1000);
     };
 
     saveLevelReference(levelReference) {
         if (levelReference.id) {
             axios.post('/api/level-reference/edit/' + levelReference.id, levelReference).then(res => {
-                console.log(res.data);
+                const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
+                levelReferenceList.push(res.data);
+                this.setState({levelReferenceList : levelReferenceList});
             });
         } else {
             axios.post('/api/level-reference/add', levelReference).then(res => {
-                console.log(res.data);
+                const levelReferenceList = this.state.levelReferenceList;
+                levelReferenceList.push(res.data);
+                this.setState({levelReferenceList : levelReferenceList});
             })
         }
     }
 
     deleteLevelReference(levelReference) {
         axios.delete('/api/level-reference/delete/' + levelReference.id).then(res => {
-            console.log(res.data);
+            if (res.status === 200){
+                const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
+                this.setState({levelReferenceList : levelReferenceList});
+            }
         })
     }
 

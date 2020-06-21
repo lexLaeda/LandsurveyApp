@@ -9,7 +9,6 @@ import Context from "./Context";
 import AddPointModal from "./point/AddPointModal";
 
 class App extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,10 +26,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.setPoints();
-    }
-
-    setPoints() {
         axios.get('/api/point/list')
             .then(res => {
                 this.setState({points: res.data});
@@ -41,16 +36,29 @@ class App extends Component {
     savePoint(point) {
         if (point.id) {
             axios.post('/api/point/edit/' + point.id, point).then(res => {
-                console.log(res.data);
+                if (res.status === 200){
+                    const points = this.state.points.filter(p => p.id !== point.id);
+                    points.push(res.data);
+                    this.setState({points : points});
+                }
             });
         } else {
-            axios.post('/api/point/add', point).then(res => console.log(res));
+            axios.post('/api/point/add', point).then(res => {
+                if (res.status === 200){
+                    const points = this.state.points;
+                    points.push(res.data);
+                    this.setState(points);
+                }
+            });
         }
     }
 
     delete(point) {
         axios.delete('/api/point/delete/' + point.id).then(res => {
-            console.log(res.data);
+            if (res.status === 200){
+                const points = this.state.points.filter(p => p.id !== point.id);
+                this.setState(points);
+            }
         });
     }
 
@@ -71,7 +79,7 @@ class App extends Component {
             this.savePoint(point);
         }
         this.setState({isActiveAddModal: false, point : {}});
-        setTimeout(()=> this.setPoints(),1000);
+
     };
 
     closeDeleteModal = (point, isEnable) => {
@@ -79,7 +87,6 @@ class App extends Component {
             this.delete(point);
         }
         this.setState({isActiveDeleteModal: false, point: {} });
-        setTimeout(()=> this.setPoints(),1000);
     };
 
 

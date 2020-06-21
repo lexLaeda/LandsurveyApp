@@ -15,7 +15,7 @@ export function SelectInput(props){
     return(
         <div className="form-group">
             <label htmlFor="firstPointSelect">{props.label}</label>
-            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect">
+            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect" required>
                 <option>...</option>
                 {props.elements.map((element) => <option value={element.id} key={element.id}>{element.name}</option>)}
             </select>
@@ -28,7 +28,7 @@ export function SelectInputText(props){
     return(
         <div className="form-group">
             <label htmlFor="firstPointSelect">{props.label}</label>
-            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect">
+            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect" required>
                 <option>...</option>
                 {props.elements.map((element,index) => <option key={index} value={element}>{element}</option>)}
             </select>
@@ -40,7 +40,7 @@ export function TextInput(props){
     return(
         <div className="form-group">
             <label htmlFor="name">{props.label}</label>
-            <input value={props.value} name={props.name} onChange={props.handleChange} type={props.type} className="form-control" id="name"/>
+            <input value={props.value} name={props.name} onChange={props.handleChange} type={props.type} className="form-control" id="name" required/>
         </div>
     );
 }
