@@ -75,8 +75,9 @@ class EmployeePage extends Component{
                 employees.push(res.data);
                 id = res.data.id;
                 this.setState({employees : employees});
+                this.saveImage({id : id,file : file, imagePreviewUrl : imagePreviewUrl});
             });
-            this.saveImage({id : id,file : file, imagePreviewUrl : imagePreviewUrl});
+
         }
     }
 
@@ -88,6 +89,7 @@ class EmployeePage extends Component{
         avatars.push({id : id, imagePreviewUrl : imagePreviewUrl});
         this.setState({avatars : avatars});
     }
+
 
     deleteEmployee(employee){
         axios.delete('/api/employee/delete/' + employee.id).then(res => {
