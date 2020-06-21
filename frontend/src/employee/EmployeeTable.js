@@ -39,8 +39,7 @@ function Item({employee,index}) {
     }
     let post = '';
     let department = '';
-    if (departments && posts){
-        console.log(employee.post)
+    if (departments && departments.leadingComments){
             post = getElementName(employee.postId, posts);
         department = getElementName(employee.departmentId, departments);
     }
@@ -48,7 +47,7 @@ function Item({employee,index}) {
     return (
         <tr>
             <td>{index}</td>
-            <td>Here fill be photo</td>
+            <td><img width="120" src={'/api/image/?id=' + employee.id + "&dir=employee"}/></td>
             <td>{employee.num}</td>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
@@ -75,7 +74,13 @@ function concatFullAddress(city, street, house, flat){
 }
 
 function getElementName(id, elements){
-    return elements.find((element)=>
-    element.id == id).name;
+    const element = elements.find((element)=>
+    element.id == id);
+
+    if (element && element.name){
+        return element.name;
+    } else {
+        return '...';
+    }
 }
 export default EmployeeTable;

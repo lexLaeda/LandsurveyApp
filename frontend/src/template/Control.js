@@ -12,13 +12,12 @@ export function FormModalFooter(props){
 }
 
 export function SelectInput(props){
-
     return(
         <div className="form-group">
             <label htmlFor="firstPointSelect">{props.label}</label>
             <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect">
                 <option>...</option>
-                {props.elements.map((element) => <option value={element.id}>{element.name}</option>)}
+                {props.elements.map((element) => <option value={element.id} key={element.id}>{element.name}</option>)}
             </select>
         </div>
     );
@@ -31,7 +30,7 @@ export function SelectInputText(props){
             <label htmlFor="firstPointSelect">{props.label}</label>
             <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control" id="firstPointSelect">
                 <option>...</option>
-                {props.elements.map((element) => <option value={element}>{element}</option>)}
+                {props.elements.map((element,index) => <option key={index} value={element}>{element}</option>)}
             </select>
         </div>
     );

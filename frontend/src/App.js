@@ -39,8 +39,6 @@ class App extends Component {
     }
 
     savePoint(point) {
-        console.log('дебажим');
-        console.log(point);
         if (point.id) {
             axios.post('/api/point/edit/' + point.id, point).then(res => {
                 console.log(res.data);
@@ -93,7 +91,7 @@ class App extends Component {
                     <div className="container">
                         <div className="panel panel-default">
                             <div className="panel-heading">
-                                <h3 className="panel-title text-center mt-5 mb-5">POINTS LIST</h3>
+                                <h3 className="panel-title text-center mt-5 mb-5">My Points List</h3>
                                 <PointTable points={this.state.points}/>
                             </div>
                             <div className="panel-body">

@@ -7,6 +7,8 @@ class EmployeeForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            file: '',
+            imagePreviewUrl: '',
             id : '',
             firstName : '',
             lastName : '',
@@ -28,6 +30,8 @@ class EmployeeForm extends React.Component{
             const address = employee.address;
             const contact = employee.contact;
             this.state = {
+                file: '',
+                imagePreviewUrl: '',
                 id : employee.id,
                 firstName : employee.firstName,
                 lastName : employee.lastName,
@@ -49,10 +53,9 @@ class EmployeeForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
 
     }
+
     handleSubmit(event){
         event.preventDefault();
-        console.log('In da submit');
-        console.log(this.state.department);
         const employee = {
             id : this.state.id,
             num : this.state.num,
@@ -83,9 +86,33 @@ class EmployeeForm extends React.Component{
         const value = target.value;
         this.setState({[name]: value} )
     }
+    handleImageChange(event){
+        event.preventDefault();
+        console.log('image event!');
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        };
+
+        reader.readAsDataURL(file);
+        console.log(this.state.imagePreviewUrl)
+    };
 
     render() {
         const genders = ['M','F'];
+        let {imagePreviewUrl} = this.state;
+        let imagePreview;
+        if (imagePreviewUrl) {
+            imagePreview = imagePreviewUrl;
+            console.log(this.state.imagePreviewUrl)
+        } else {
+            imagePreview = '/api/image/?id=' + this.state.id + '&dir=employee';
+        }
+        console.log(this.state.imagePreviewUrl)
         return(
             <div className="container">
                 <h1 className="text-center mt-5">Employee personal card</h1>
@@ -94,6 +121,7 @@ class EmployeeForm extends React.Component{
                         <div className="col-md-6 col-lg-4 mt-5 text-center">
                             <div className="avatar">
                                 <div className="avatar-img">
+                                    <img width="120" src={imagePreview} alt="..." onChange={(e)=> this.handleImageChange(e)}/>
                                 </div>
                                 <input className="avatar-file" name="file" type="file"/>
                             </div>
