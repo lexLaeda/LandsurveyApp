@@ -76,8 +76,7 @@ class EmployeeForm extends React.Component{
             postId : this.state.post,
             departmentId : this.state.department,
         };
-        console.log(employee.departmentId);
-        this.props.closeModal(employee, true);
+        this.props.closeModal(employee,this.state.file,this.state.imagePreviewUrl, true);
     }
 
     handleChange(event){
@@ -88,7 +87,6 @@ class EmployeeForm extends React.Component{
     }
     handleImageChange(event){
         event.preventDefault();
-        console.log('image event!');
         let reader = new FileReader();
         let file = event.target.files[0];
         reader.onloadend = () => {
@@ -99,7 +97,6 @@ class EmployeeForm extends React.Component{
         };
 
         reader.readAsDataURL(file);
-        console.log(this.state.imagePreviewUrl)
     };
 
     render() {
@@ -108,11 +105,9 @@ class EmployeeForm extends React.Component{
         let imagePreview;
         if (imagePreviewUrl) {
             imagePreview = imagePreviewUrl;
-            console.log(this.state.imagePreviewUrl)
         } else {
             imagePreview = '/api/image/?id=' + this.state.id + '&dir=employee';
         }
-        console.log(this.state.imagePreviewUrl)
         return(
             <div className="container">
                 <h1 className="text-center mt-5">Employee personal card</h1>
@@ -121,9 +116,9 @@ class EmployeeForm extends React.Component{
                         <div className="col-md-6 col-lg-4 mt-5 text-center">
                             <div className="avatar">
                                 <div className="avatar-img">
-                                    <img width="120" src={imagePreview} alt="..." onChange={(e)=> this.handleImageChange(e)}/>
+                                    <img width="200" src={imagePreview} alt="..." />
                                 </div>
-                                <input className="avatar-file" name="file" type="file"/>
+                                <input className="avatar-file" name="file" type="file" onChange={(e)=> this.handleImageChange(e)}/>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">

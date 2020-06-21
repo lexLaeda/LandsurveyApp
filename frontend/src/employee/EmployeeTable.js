@@ -4,7 +4,10 @@ import {Pencil, Trash} from "../template/Icons";
 
 
 function EmployeeTable({employees}) {
-
+    let elements = [];
+    if (employees){
+        elements = employees;
+    }
     return(
         <table className="table table-hover">
             <thead className="thead-light">
@@ -24,7 +27,7 @@ function EmployeeTable({employees}) {
             </tr>
             </thead>
             <tbody>
-            {employees.map((employee, index) => {
+            {elements.map((employee, index) => {
                 return <Item employee={employee} key={employee.id} index={index}/>})
             }
             </tbody>
@@ -32,7 +35,7 @@ function EmployeeTable({employees}) {
     );
 }
 function Item({employee,index}) {
-    const {openAddModal, openDeleteModal, departments, posts} = useContext(Context);
+    const {openAddModal, openDeleteModal, departments, posts, avatars} = useContext(Context);
     let fullAddress = '';
     if (employee && employee.address){
         fullAddress = concatFullAddress(employee.address.city, employee.address.street, employee.address.house, employee.address.apartment);
@@ -43,11 +46,24 @@ function Item({employee,index}) {
             post = getElementName(employee.postId, posts);
         department = getElementName(employee.departmentId, departments);
     }
+    let imageSrc;
+
+    let employeeAvatars = [];
+    if (avatars){
+        employeeAvatars = avatars.filter(element=> element.id === employee.id);
+    }
+
+    if (employeeAvatars && employeeAvatars.length === 1){
+        imageSrc = employeeAvatars[0].imagePreviewUrl;
+    } else {
+        imageSrc = '/api/image/?id=' + employee.id + "&dir=employee";
+    }
+
 
     return (
         <tr>
-            <td>{index}</td>
-            <td><img width="120" src={'/api/image/?id=' + employee.id + "&dir=employee"}/></td>
+            <td>{index + 1}</td>
+            <td><img width="200" src={imageSrc}/></td>
             <td>{employee.num}</td>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
