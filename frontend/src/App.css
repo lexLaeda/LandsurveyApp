@@ -36,3 +36,20 @@
         transform: rotate(360deg);
     }
 }
+
+.carousel {
+    padding-bottom: 60px;
+}
+
+.carousel-control-prev-icon {
+
+}
+
+.carousel-control-next-icon {
+
+}
+
+
+.carousel-indicators li {
+    background-color: #000;
+}

@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import Menu from "../template/Menu";
-import BaseLineTable, {Table} from "./BaselineTable";
+import {AddBaselineModal, Table} from "./BaslineContent";
 import '../App.css';
-import DeleteModal from "../template/DeleteModal";
-import AddBaselineModal from "./AddBaselineModal";
+
 import {AddButton} from "../template/Control";
 import Context from "../Context"
+import {DeleteModal} from "../template/Modal";
 
 class BaselinePage extends Component {
 
@@ -27,26 +26,26 @@ class BaselinePage extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/baseline/list').then(res => this.setState({baselines : res.data}));
-        axios.get('/api/point/list').then(res => this.setState({points : res.data}));
+        axios.get('/api/baseline/list').then(res => this.setState({baselines: res.data}));
+        axios.get('/api/point/list').then(res => this.setState({points: res.data}));
 
     }
 
     saveBaseline(baseline) {
-        if (baseline.id){
-            axios.post('/api/baseline/edit/' + baseline.id ,baseline).then(res => {
-                if (res.status === 200){
+        if (baseline.id) {
+            axios.post('/api/baseline/edit/' + baseline.id, baseline).then(res => {
+                if (res.status === 200) {
                     const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
                     baselines.push(res.data);
-                    this.setState({baselines : baselines});
+                    this.setState({baselines: baselines});
                 }
             });
         } else {
-            axios.post('/api/baseline/add',baseline).then(res => {
-                if (res.status === 200){
+            axios.post('/api/baseline/add', baseline).then(res => {
+                if (res.status === 200) {
                     const baselines = this.state.baselines;
                     baselines.push(res.data);
-                    this.setState({baselines : baselines});
+                    this.setState({baselines: baselines});
                 }
             })
         }
@@ -54,9 +53,9 @@ class BaselinePage extends Component {
 
     deleteBaseline(baseline) {
         axios.delete('/api/baseline/delete/' + baseline.id).then(res => {
-            if (res.status === 200){
+            if (res.status === 200) {
                 const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
-                this.setState({baselines : baselines});
+                this.setState({baselines: baselines});
             }
         })
     }
@@ -69,48 +68,47 @@ class BaselinePage extends Component {
         if (isEnable) {
             this.deleteBaseline(baseline);
         }
-        this.setState({isActiveDeleteModal: false, baseline : {} });
+        this.setState({isActiveDeleteModal: false, baseline: {}});
     };
 
     openAddModal = (baseline) => {
-        if (baseline && baseline.id){
-            this.setState({baseline : baseline});
+        if (baseline && baseline.id) {
+            this.setState({baseline: baseline});
         }
         this.setState({isActiveAddModal: true});
     };
 
     closeAddModal = (baseline, isEnable) => {
-        if(isEnable){
+        if (isEnable) {
             this.saveBaseline(baseline);
         }
-        this.setState({isActiveAddModal : false , baseline : {}});
+        this.setState({isActiveAddModal: false, baseline: {}});
     };
 
 
     render() {
         return (
-            <Context.Provider value={{openAddModal : this.openAddModal, openDeleteModal : this.openDeleteModal}}>
-            <div>
-                <Menu/>
-                <div className="container">
-                    <div className="panel panel-default">
-                        <div className="panel-heading">
-                            <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
-                            <Table baselines={this.state.baselines}/>
+            <Context.Provider value={{openAddModal: this.openAddModal, openDeleteModal: this.openDeleteModal}}>
+                <div>
+                    <div className="container">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">
+                                <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
+                                <Table baselines={this.state.baselines}/>
+                            </div>
                         </div>
-                    </div>
-                    <AddButton  openAddModal={this.openAddModal}/>
-                    <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
-                                      closeModal={this.closeAddModal}
-                                      points={this.state.points}
-                                      baseline={this.state.baseline}/>
+                        <AddButton openAddModal={this.openAddModal}/>
+                        <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
+                                          closeModal={this.closeAddModal}
+                                          points={this.state.points}
+                                          baseline={this.state.baseline}/>
 
-                    <DeleteModal title="Delete baseline"
-                                 element={this.state.baseline}
-                                 isActiveModal={this.state.isActiveDeleteModal}
-                                 closeModal={this.closeDeleteModal}/>;
+                        <DeleteModal title="Delete baseline"
+                                     element={this.state.baseline}
+                                     isActiveModal={this.state.isActiveDeleteModal}
+                                     closeModal={this.closeDeleteModal}/>
+                    </div>
                 </div>
-            </div>
             </Context.Provider>
         );
     }

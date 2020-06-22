@@ -1,26 +1,24 @@
-
-import React, {Component, useState} from 'react'
+import React, {Component} from 'react'
 import Context from "../Context";
 import Menu from "../template/Menu";
-import EmployeeTable from "./EmployeeTable";
+import EmployeeTable, {AddEmployeeModal} from "./EmployeeContent";
 import axios from 'axios';
 import {AddButton} from "../template/Control";
-import DeleteModal from "../template/DeleteModal";
-import AddEmployeeModal from "./AddEmployeeModal";
-import ApiService from "../template/ApiService";
+import {DeleteModal} from "../template/Modal";
 
-class EmployeePage extends Component{
 
-    constructor(props){
+class EmployeePage extends Component {
+
+    constructor(props) {
         super(props);
         this.state = {
-            avatars : [],
-            employees : [],
-            departments : [],
-            posts : [],
-            employee : {},
-            isActiveAddModal : false,
-            isActiveDeleteModal : false
+            avatars: [],
+            employees: [],
+            departments: [],
+            posts: [],
+            employee: {},
+            isActiveAddModal: false,
+            isActiveDeleteModal: false
         };
 
     };
@@ -31,83 +29,89 @@ class EmployeePage extends Component{
         axios.get('/api/post/list').then(res => this.setState({posts: res.data}));
     }
 
-    openDeleteModal = (employee)=> {
-        this.setState({employee : employee, isActiveDeleteModal : true});
+    openDeleteModal = (employee) => {
+        this.setState({employee: employee, isActiveDeleteModal: true});
     };
 
     closeDeleteModal = (employee, isEnable) => {
-        if(isEnable){
+        if (isEnable) {
             this.deleteEmployee(employee);
         }
-        this.setState({employee : {}, isActiveDeleteModal : false});
+        this.setState({employee: {}, isActiveDeleteModal: false});
     };
 
     openAddModal = (employee) => {
-        if (employee && employee.id){
-            this.setState({employee : employee, isActiveAddModal : true})
+        if (employee && employee.id) {
+            this.setState({employee: employee, isActiveAddModal: true})
         } else {
-            this.setState({isActiveAddModal : true, employee : {}});
+            this.setState({isActiveAddModal: true, employee: {}});
         }
     };
 
-    closeAddModal = (employee,file, imagePreviewUrl,isEnable) => {
+    closeAddModal = (employee, file, imagePreviewUrl, isEnable) => {
         if (isEnable) {
-            this.saveEmployee(employee,file,imagePreviewUrl);
+            this.saveEmployee(employee, file, imagePreviewUrl);
         }
-        this.setState({isActiveAddModal : false, employee : {}});
+        this.setState({isActiveAddModal: false, employee: {}});
     };
 
-    saveEmployee(employee, file, imagePreviewUrl){
-        if (employee.id){
+    saveEmployee(employee, file, imagePreviewUrl) {
+        if (employee.id) {
             axios.post('/api/employee/edit/' + employee.id, employee).then(res => {
                 let employees = this.state.employees;
-                employees = this.getFilteredArray({array : employees, id : employee.id});
+                employees = this.getFilteredArray({array: employees, id: employee.id});
                 employees.push(employee);
-                this.setState({employees : employees});
+                this.setState({employees: employees});
             });
-            if (file){
-                this.saveImage({id : employee.id, file : file, imagePreviewUrl: imagePreviewUrl});
+            if (file) {
+                this.saveImage({id: employee.id, file: file, imagePreviewUrl: imagePreviewUrl});
             }
-        } else{
+        } else {
             let id;
-            axios.post('/api/employee/add',employee).then(res => {
+            axios.post('/api/employee/add', employee).then(res => {
                 let employees = this.state.employees;
                 employees.push(res.data);
                 id = res.data.id;
-                this.setState({employees : employees});
-                this.saveImage({id : id,file : file, imagePreviewUrl : imagePreviewUrl});
+                this.setState({employees: employees});
+                this.saveImage({id: id, file: file, imagePreviewUrl: imagePreviewUrl});
             });
 
         }
     }
 
-    saveImage({id,file,imagePreviewUrl}){
+    saveImage({id, file, imagePreviewUrl}) {
         const data = new FormData();
-        data.append('file',file);
-        axios.post('/api/image/?id=' + id + '&dir=employee',data).then(res=>console.log(res.data));
-        const avatars = this.getFilteredArray({ array :  this.state.avatars, id : id});
-        avatars.push({id : id, imagePreviewUrl : imagePreviewUrl});
-        this.setState({avatars : avatars});
+        data.append('file', file);
+        axios.post('/api/image/?id=' + id + '&dir=employee', data).then(res => console.log(res.data));
+        const avatars = this.getFilteredArray({array: this.state.avatars, id: id});
+        avatars.push({id: id, imagePreviewUrl: imagePreviewUrl});
+        this.setState({avatars: avatars});
     }
 
 
-    deleteEmployee(employee){
+    deleteEmployee(employee) {
         axios.delete('/api/employee/delete/' + employee.id).then(res => {
-            if (res.status === 200){
+            if (res.status === 200) {
                 let employees = this.state.employees;
-                employees = this.getFilteredArray({array : employees, id : employee.id});
-                this.setState({employees : employees});
+                employees = this.getFilteredArray({array: employees, id: employee.id});
+                this.setState({employees: employees});
             }
         });
     }
 
-    getFilteredArray({array,id}){
-        return array.filter((el)=>el.id !== id);
+    getFilteredArray({array, id}) {
+        return array.filter((el) => el.id !== id);
     }
 
     render() {
-        return(
-            <Context.Provider value={{avatars: this.state.avatars, posts : this.state.posts, departments : this.state.departments, openDeleteModal : this.openDeleteModal, openAddModal : this.openAddModal}}>
+        return (
+            <Context.Provider value={{
+                avatars: this.state.avatars,
+                posts: this.state.posts,
+                departments: this.state.departments,
+                openDeleteModal: this.openDeleteModal,
+                openAddModal: this.openAddModal
+            }}>
                 <div>
                     <Menu/>
                     <div className="container">
@@ -123,7 +127,7 @@ class EmployeePage extends Component{
                                       closeModal={this.closeAddModal}
                                       employee={this.state.employee}/>
                     <DeleteModal title="Delete employee"
-                                 element={{id : this.state.employee.id, name : this.state.employee.fullName}}
+                                 element={{id: this.state.employee.id, name: this.state.employee.fullName}}
                                  isActiveModal={this.state.isActiveDeleteModal}
                                  closeModal={this.closeDeleteModal}/>
                 </div>
@@ -131,4 +135,5 @@ class EmployeePage extends Component{
         );
     }
 }
+
 export default EmployeePage;

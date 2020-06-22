@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import Menu from "../template/Menu";
-import LevelReferenceTable, {Table} from "./LevelReferenceTable";
-import DeleteModal from "../template/DeleteModal";
+import {AddLevelReferenceModal, Table} from "./LevelReferenceTable";
 import {AddButton} from "../template/Control";
 import Context from "../Context";
-import AddLevelReferenceModal from "./AddLevelReverenceModal";
+import {DeleteModal} from "../template/Modal";
 
 
 class LevelReferencePage extends Component {
@@ -65,22 +63,22 @@ class LevelReferencePage extends Component {
             axios.post('/api/level-reference/edit/' + levelReference.id, levelReference).then(res => {
                 const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
                 levelReferenceList.push(res.data);
-                this.setState({levelReferenceList : levelReferenceList});
+                this.setState({levelReferenceList: levelReferenceList});
             });
         } else {
             axios.post('/api/level-reference/add', levelReference).then(res => {
                 const levelReferenceList = this.state.levelReferenceList;
                 levelReferenceList.push(res.data);
-                this.setState({levelReferenceList : levelReferenceList});
+                this.setState({levelReferenceList: levelReferenceList});
             })
         }
     }
 
     deleteLevelReference(levelReference) {
         axios.delete('/api/level-reference/delete/' + levelReference.id).then(res => {
-            if (res.status === 200){
+            if (res.status === 200) {
                 const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
-                this.setState({levelReferenceList : levelReferenceList});
+                this.setState({levelReferenceList: levelReferenceList});
             }
         })
     }
@@ -90,7 +88,6 @@ class LevelReferencePage extends Component {
         return (
             <Context.Provider value={{openAddModal: this.openAddModal, openDeleteModal: this.openDeleteModal}}>
                 <div>
-                    <Menu/>
                     <div className="container">
                         <div className="panel panel-default">
                             <div className="panel-heading">
@@ -101,7 +98,7 @@ class LevelReferencePage extends Component {
                             </div>
                         </div>
                         <div className="panel-body">
-                            <AddButton  openAddModal={this.openAddModal}/>
+                            <AddButton openAddModal={this.openAddModal}/>
                         </div>
                     </div>
                     <AddLevelReferenceModal isActiveModal={this.state.isActiveAddModal}

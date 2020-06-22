@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
+import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import AddLevelReferenceForm from "./AddLevelReferenceForm";
 
 export function Table(props) {
 
@@ -25,7 +27,8 @@ export function Table(props) {
         </table>
     )
 }
-function Item({levelReference,index}) {
+
+function Item({levelReference, index}) {
 
     const {openAddModal, openDeleteModal} = useContext(Context);
     return (
@@ -36,15 +39,28 @@ function Item({levelReference,index}) {
             <td>{levelReference.created}</td>
             <td>{levelReference.updated}</td>
             <td>
-                <button type="button" onClick={()=>openAddModal(levelReference)} className="btn btn-light">
+                <button type="button" onClick={() => openAddModal(levelReference)} className="btn btn-light">
                     <Pencil/>
                 </button>
             </td>
             <td>
-                <button onClick={()=>openDeleteModal({id : levelReference.id, name : levelReference.name})} type="button" className="btn btn-light">
+                <button onClick={() => openDeleteModal({id: levelReference.id, name: levelReference.name})}
+                        type="button" className="btn btn-light">
                     <Trash/>
                 </button>
             </td>
         </tr>
     )
+}
+
+export function AddLevelReferenceModal(props) {
+    let title = (props.levelReference && props.levelReference.id) ? 'Edit Level Reference' : 'Add new Level Reference';
+    return (
+        <ModalMain isActiveModal={props.isActiveModal}>
+            <ModalHeader title={title} closeModal={props.closeModal}/>
+            <ModalBody>
+                <AddLevelReferenceForm closeModal={props.closeModal} levelReference={props.levelReference}/>
+            </ModalBody>
+        </ModalMain>
+    );
 }

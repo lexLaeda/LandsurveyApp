@@ -2,8 +2,10 @@ import React, {useContext} from 'react';
 
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
+import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import AddPointForm from "./AddPointForm";
 
-export default function PointTable(props) {
+export function PointTable(props) {
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -27,9 +29,10 @@ export default function PointTable(props) {
         </table>
     )
 }
+
 function Item({point, index}) {
 
-    const{openAddModal, openDeleteModal} = useContext(Context);
+    const {openAddModal, openDeleteModal} = useContext(Context);
     return (<tr>
             <td>{index + 1}</td>
             <td>{point.name}</td>
@@ -39,19 +42,33 @@ function Item({point, index}) {
             <td>{point.created}</td>
             <td>{point.updated}</td>
             <td>
-                <button type="button" onClick={()=>openAddModal(point)} className="btn btn-light">
+                <button type="button" onClick={() => openAddModal(point)} className="btn btn-light">
                     <Pencil/>
                 </button>
             </td>
             <td>
-                <button type="button" onClick={()=>{
+                <button type="button" onClick={() => {
                     console.log(point);
                     openDeleteModal({
                         id: point.id,
-                        name: point.name})}} className="btn btn-light">
+                        name: point.name
+                    })
+                }} className="btn btn-light">
                     <Trash/>
                 </button>
             </td>
         </tr>
     )
+}
+
+export function AddPointModal(props) {
+    let title = (props.point && props.point.id) ? 'Edit point' : 'Add Point';
+    return (
+        <ModalMain isActiveModal={props.isActiveModal}>
+            <ModalHeader title={title} closeModal={props.closeModal}/>
+            <ModalBody>
+                <AddPointForm closeModal={props.closeModal} point={props.point}/>
+            </ModalBody>
+        </ModalMain>
+    );
 }

@@ -1,51 +1,50 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {FormModalFooter, SelectInput, SelectInputText, TextInput} from "../template/Control";
-import Context from '../Context'
 
-class EmployeeForm extends React.Component{
+class EmployeeForm extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             file: '',
             imagePreviewUrl: '',
-            id : '',
-            firstName : '',
-            lastName : '',
-            birthday : '',
-            gender : '',
-            city : '',
-            street : '',
-            house : '',
-            apartment : '',
-            num : '',
-            post : '',
-            department : '',
-            email : '',
-            phone : ''
+            id: '',
+            firstName: '',
+            lastName: '',
+            birthday: '',
+            gender: '',
+            city: '',
+            street: '',
+            house: '',
+            apartment: '',
+            num: '',
+            post: '',
+            department: '',
+            email: '',
+            phone: ''
         };
 
-        if (props.employee && props.employee.id){
+        if (props.employee && props.employee.id) {
             const employee = props.employee;
             const address = employee.address;
             const contact = employee.contact;
             this.state = {
                 file: '',
                 imagePreviewUrl: '',
-                id : employee.id,
-                firstName : employee.firstName,
-                lastName : employee.lastName,
-                birthday : employee.birthday,
-                gender : employee.gender,
-                city : address.city,
-                street : address.street,
-                house : address.house,
-                apartment : address.apartment,
-                num : employee.num,
-                post : employee.postId,
-                department : employee.departmentId,
-                email : contact.email,
-                phone : contact.phone
+                id: employee.id,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                birthday: employee.birthday,
+                gender: employee.gender,
+                city: address.city,
+                street: address.street,
+                house: address.house,
+                apartment: address.apartment,
+                num: employee.num,
+                post: employee.postId,
+                department: employee.departmentId,
+                email: contact.email,
+                phone: contact.phone
             };
         }
 
@@ -54,38 +53,39 @@ class EmployeeForm extends React.Component{
 
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
         const employee = {
-            id : this.state.id,
-            num : this.state.num,
-            firstName : this.state.firstName,
-            lastName : this.state.lastName,
-            birthday : this.state.birthday,
-            gender : this.state.gender,
-            address :{
-                city : this.state.city,
-                street : this.state.street,
-                house : this.state.house,
-                apartment : this.state.apartment
+            id: this.state.id,
+            num: this.state.num,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            birthday: this.state.birthday,
+            gender: this.state.gender,
+            address: {
+                city: this.state.city,
+                street: this.state.street,
+                house: this.state.house,
+                apartment: this.state.apartment
             },
-            contact : {
-                email : this.state.email,
-                phone : this.state.phone
+            contact: {
+                email: this.state.email,
+                phone: this.state.phone
             },
-            postId : this.state.post,
-            departmentId : this.state.department,
+            postId: this.state.post,
+            departmentId: this.state.department,
         };
-        this.props.closeModal(employee,this.state.file,this.state.imagePreviewUrl, true);
+        this.props.closeModal(employee, this.state.file, this.state.imagePreviewUrl, true);
     }
 
-    handleChange(event){
+    handleChange(event) {
         const target = event.target;
         const name = target.name;
         const value = target.value;
-        this.setState({[name]: value} )
+        this.setState({[name]: value})
     }
-    handleImageChange(event){
+
+    handleImageChange(event) {
         event.preventDefault();
         let reader = new FileReader();
         let file = event.target.files[0];
@@ -100,7 +100,7 @@ class EmployeeForm extends React.Component{
     };
 
     render() {
-        const genders = ['M','F'];
+        const genders = ['M', 'F'];
         let {imagePreviewUrl} = this.state;
         let imagePreview;
         if (imagePreviewUrl) {
@@ -108,7 +108,7 @@ class EmployeeForm extends React.Component{
         } else {
             imagePreview = '/api/image/?id=' + this.state.id + '&dir=employee';
         }
-        return(
+        return (
             <div className="container">
                 <h1 className="text-center mt-5">Employee personal card</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -116,35 +116,50 @@ class EmployeeForm extends React.Component{
                         <div className="col-md-6 col-lg-4 mt-5 text-center">
                             <div className="avatar">
                                 <div className="avatar-img">
-                                    <img width="200" src={imagePreview} alt="..." />
+                                    <img width="200" src={imagePreview} alt="..."/>
                                 </div>
-                                <input className="avatar-file" name="file" type="file" onChange={(e)=> this.handleImageChange(e)}/>
+                                <input className="avatar-file" name="file" type="file"
+                                       onChange={(e) => this.handleImageChange(e)}/>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Personal data</h4>
-                            <TextInput value={this.state.firstName} type="text" label="First name" name="firstName" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.lastName} type="text" label="Last name" name="lastName" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.birthday} type="date" label="Birthday" name="birthday" handleChange={this.handleChange}/>
-                            <SelectInputText label="Gender" value={this.state.gender} elements={genders} name="gender" handleChange={this.handleChange}/>
+                            <TextInput value={this.state.firstName} type="text" label="First name" name="firstName"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.lastName} type="text" label="Last name" name="lastName"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.birthday} type="date" label="Birthday" name="birthday"
+                                       handleChange={this.handleChange}/>
+                            <SelectInputText label="Gender" value={this.state.gender} elements={genders} name="gender"
+                                             handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Address</h4>
-                            <TextInput value={this.state.city} type="text" label="City" name="city" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.street} type="text" label="Street" name="street" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.house} type="text" label="House" name="house" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.apartment} type="text" label="Flat" name="apartment" handleChange={this.handleChange}/>
+                            <TextInput value={this.state.city} type="text" label="City" name="city"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.street} type="text" label="Street" name="street"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.house} type="text" label="House" name="house"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.apartment} type="text" label="Flat" name="apartment"
+                                       handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Professional data</h4>
-                            <TextInput value={this.state.num} type="text" label="Tab num" name="num" handleChange={this.handleChange}/>
-                            <SelectInput label="Post" value={this.state.post} elements={this.props.posts} name="post" handleChange={this.handleChange} />
-                            <SelectInput label="Department" value={this.state.department} elements={this.props.departments} name="department" handleChange={this.handleChange}/>
+                            <TextInput value={this.state.num} type="text" label="Tab num" name="num"
+                                       handleChange={this.handleChange}/>
+                            <SelectInput label="Post" value={this.state.post} elements={this.props.posts} name="post"
+                                         handleChange={this.handleChange}/>
+                            <SelectInput label="Department" value={this.state.department}
+                                         elements={this.props.departments} name="department"
+                                         handleChange={this.handleChange}/>
                         </div>
                         <div className="col-md-6 col-lg-4 mt-5">
                             <h4>Contact data</h4>
-                            <TextInput value={this.state.email} type="email" label="Email" name="email" handleChange={this.handleChange}/>
-                            <TextInput value={this.state.phone} type="tel" label="Phone" name="phone" handleChange={this.handleChange}/>
+                            <TextInput value={this.state.email} type="email" label="Email" name="email"
+                                       handleChange={this.handleChange}/>
+                            <TextInput value={this.state.phone} type="tel" label="Phone" name="phone"
+                                       handleChange={this.handleChange}/>
                         </div>
                     </div>
                     <FormModalFooter closeModal={this.props.closeModal}/>
@@ -153,4 +168,5 @@ class EmployeeForm extends React.Component{
         )
     }
 }
+
 export default EmployeeForm;

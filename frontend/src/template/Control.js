@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import Context from '../Context'
+import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "./Modal";
 
 export function FormModalFooter(props){
     return(
