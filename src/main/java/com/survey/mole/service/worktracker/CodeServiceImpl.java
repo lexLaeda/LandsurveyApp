@@ -1,6 +1,7 @@
 package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.CodeNotFoundException;
+import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Code;
 import com.survey.mole.repository.worktracker.CodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class CodeServiceImpl implements CodeService {
     public Code update(Long id, Code code) {
         Code byId = findById(id);
         code.setId(id);
-        return repository.save(code);
+        return repository.saveAndFlush(code);
     }
 
     @Override
     public Code findById(Long id) {
-        return repository.findById(id).orElseThrow(CodeNotFoundException::new);
+        return repository.findById(id).orElseThrow(()-> new ElementNotFoundException("Code with id " + id + " not found"));
     }
 
     @Override

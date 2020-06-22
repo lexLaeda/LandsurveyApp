@@ -2,9 +2,7 @@ package com.survey.mole.model.worktracker;
 
 
 import com.survey.mole.model.AbstractEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +11,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Code extends AbstractEntity {
 
     @Id
