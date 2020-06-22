@@ -1,5 +1,6 @@
 package com.survey.mole.service;
 
+import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.exception.LevelReferenceException;
 import com.survey.mole.model.survey.LevelReference;
 import com.survey.mole.repository.LevelReferenceRepository;
@@ -27,13 +28,13 @@ public class LevelReferenceServiceImpl implements LevelReferenceService {
     public LevelReference update(Long id, LevelReference levelReference) {
         LevelReference byId = findById(id);
         levelReference.setId(id);
-        return levelReferenceRepository.save(levelReference);
+        return levelReferenceRepository.saveAndFlush(levelReference);
     }
 
     @Override
     public LevelReference findById(Long id) {
         return levelReferenceRepository.findById(id)
-                .orElseThrow(LevelReferenceException::new);
+                .orElseThrow(()-> new ElementNotFoundException("LevelReference with id " + id + " not found"));
     }
 
     @Override

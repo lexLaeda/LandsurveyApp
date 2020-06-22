@@ -1,9 +1,7 @@
 package com.survey.mole.model.survey;
 
 import com.survey.mole.model.AbstractEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "level_reference")
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@NoArgsConstructor
 public class LevelReference extends AbstractEntity {
 
     @Id

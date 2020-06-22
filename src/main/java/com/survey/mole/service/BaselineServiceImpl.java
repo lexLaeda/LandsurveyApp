@@ -1,6 +1,7 @@
 package com.survey.mole.service;
 
 import com.survey.mole.exception.BaselineNotFoundException;
+import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Baseline;
 import com.survey.mole.repository.BaselineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +22,20 @@ public class BaselineServiceImpl implements BaselineService {
 
     @Override
     public Baseline save(Baseline baseline) {
-        return baselineRepository.save(baseline);
+        return baselineRepository.saveAndFlush(baseline);
     }
 
     @Override
     public Baseline update(Long id, Baseline baseline) {
-        System.out.println(baseline.getName());
         Baseline byId = findById(id);
         baseline.setId(id);
         Baseline save = baselineRepository.saveAndFlush(baseline);
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(save.getName());
         return save;
     }
 
     @Override
     public Baseline findById(Long id) {
-        return baselineRepository.findById(id).orElseThrow(BaselineNotFoundException::new);
+        return baselineRepository.findById(id).orElseThrow(()-> new ElementNotFoundException("Baseline with id " + id + " not found"));
     }
 
     @Override

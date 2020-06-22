@@ -1,5 +1,6 @@
 package com.survey.mole.service;
 
+import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.exception.PointNotFoundException;
 import com.survey.mole.model.survey.Point;
 import com.survey.mole.repository.PointRepository;
@@ -33,7 +34,7 @@ public class PointServiceImpl implements PointService {
     @Override
     public Point findById(Long id) {
         return pointRepository.findById(id)
-                .orElseThrow(PointNotFoundException::new);
+                .orElseThrow(()->new ElementNotFoundException("Point with id " + id + " not found"));
     }
 
     @Override

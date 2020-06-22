@@ -1,21 +1,18 @@
 package com.survey.mole.service;
 
+import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Point;
 import com.survey.mole.repository.PointRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,11 +25,13 @@ class PointServiceImplTest {
     @InjectMocks
     private PointServiceImpl pointService;
 
-    private static List<Point> points  = new ArrayList<>();
+    private static List<Point> points = new ArrayList<>();
+    private static Point one;
+    private static Point two;
 
     static {
-        Point one = new Point(1L,"one",1.0,1.0,1.0);
-        Point two = new Point(1L,"one",1.0,1.0,1.0);
+        one = new Point(1L, "one", 1.0, 1.0, 1.0);
+        two = new Point(2L, "one", 2.0, 2.0, 2.0);
         points.add(one);
         points.add(two);
     }
@@ -44,23 +43,37 @@ class PointServiceImplTest {
 
     @Test
     void testSave() {
-        Mockito.when(pointRepository.findAll()).thenReturn(points);
+        Point three = new Point(3L, "two", 3.0, 3.0, 3.0);
+        Mockito.when(pointRepository.saveAndFlush(three)).thenReturn(three);
+        assertEquals(three, pointService.save(three));
     }
 
     @Test
     void update() {
-
+        Point upTwo = new Point(3L, "two", 3.0, 3.0, 3.0);
+        Mockito.when(pointRepository.saveAndFlush(upTwo)).thenReturn(upTwo);
+        Mockito.when(pointRepository.findById(2L)).thenReturn(Optional.of(two));
+        assertEquals(upTwo, pointService.update(2L, upTwo));
     }
 
     @Test
     void findById() {
+        Mockito.when(pointRepository.findById(1L)).thenReturn(Optional.of(one));
+        assertEquals(one, pointService.findById(1L));
+    }
+
+    @Test
+    void findByFakeId() {
+        Mockito.when(pointRepository.findById(3L)).thenReturn(Optional.ofNullable(null));
+        ElementNotFoundException elementNotFoundException = assertThrows(ElementNotFoundException.class, () -> pointService.findById(3L));
+        assertTrue(elementNotFoundException.getMessage().contains("3"));
+        assertTrue(elementNotFoundException.getMessage().contains("Point"));
     }
 
     @Test
     void findAll() {
+        Mockito.when(pointRepository.findAll()).thenReturn(points);
+        assertEquals(points, pointService.findAll());
     }
 
-    @Test
-    void delete() {
-    }
 }
