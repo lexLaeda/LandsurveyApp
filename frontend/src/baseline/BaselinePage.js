@@ -101,7 +101,8 @@ class BaselinePage extends Component {
                         <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
                                           closeModal={this.closeAddModal}
                                           points={this.state.points}
-                                          baseline={this.state.baseline}/>
+                                          baseline={this.state.baseline}
+                                          baselines={this.state.baselines}/>
 
                         <DeleteModal title="Delete baseline"
                                      element={this.state.baseline}

@@ -62,7 +62,7 @@ export function AddBaselineModal(props) {
         <ModalMain isActiveModal={props.isActiveModal}>
             <ModalHeader title={title} closeModal={props.closeModal}/>
             <ModalBody>
-                <AddBaselineForm points={props.points} closeModal={props.closeModal} baseline={props.baseline}/>
+                <AddBaselineForm baselines={props.baselines} points={props.points} closeModal={props.closeModal} baseline={props.baseline}/>
             </ModalBody>
         </ModalMain>
     )

@@ -1,9 +1,7 @@
 package com.survey.mole.model.survey;
 
 import com.survey.mole.model.AbstractEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +10,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "point")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Point extends AbstractEntity {
 
     @Id
