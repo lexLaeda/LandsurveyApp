@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(()->new ElementNotFoundException(String.valueOf(id)));
+        return employeeRepository.findById(id).orElseThrow(()->new ElementNotFoundException("Employee with id " + id + " not found"));
     }
 
     @Override

@@ -32,7 +32,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department findById(Long id) {
-        return repository.findById(id).orElseThrow(()->new ElementNotFoundException(String.valueOf(id)));
+        return repository.findById(id).orElseThrow(()->new ElementNotFoundException("Department with id " + id + " not found"));
     }
 
     @Override
