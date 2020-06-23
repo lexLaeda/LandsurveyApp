@@ -28,12 +28,10 @@ class PointServiceImplTest {
     private PointServiceImpl pointService;
 
     private static List<Point> points = new ArrayList<>();
-    private static Point one;
-    private static Point two;
+    private static Point one = new Point(1L, "one", 1.0, 1.0, 1.0);
+    private static Point two = new Point(2L, "one", 2.0, 2.0, 2.0);
 
     static {
-        one = new Point(1L, "one", 1.0, 1.0, 1.0);
-        two = new Point(2L, "one", 2.0, 2.0, 2.0);
         points.add(one);
         points.add(two);
     }

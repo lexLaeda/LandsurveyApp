@@ -4,15 +4,17 @@ import com.survey.mole.model.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Getter
 @Setter
 @Entity
 @Table(name = "level_reference")
-@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@ToString
 public class LevelReference extends AbstractEntity {
 
     @Id
@@ -25,5 +27,6 @@ public class LevelReference extends AbstractEntity {
 
     @Column(name = "elevation")
     private Double elevation;
+
 
 }

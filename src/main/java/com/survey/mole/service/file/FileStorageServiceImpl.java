@@ -31,9 +31,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public void regStorage(String... paths) {
-        System.out.println(paths);
         Arrays.stream(paths).forEach(path->{
-            System.out.println(path);
             File file = new File(path);
             file.mkdirs();
         });
