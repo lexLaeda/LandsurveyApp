@@ -3,7 +3,6 @@ package com.survey.mole.service.worktracker;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.employee.Post;
 import com.survey.mole.repository.worktracker.PostRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,9 +24,9 @@ class PostServiceImplTest {
     @InjectMocks
     private PostServiceImpl postService;
 
-    private static Post one = new Post(1L,"one",new ArrayList<>());
-    private static Post two = new Post(2L,"two",new ArrayList<>());
-    private static Post three = new Post(3L,"three",new ArrayList<>());
+    private static Post one = new Post(1L, "one", new ArrayList<>());
+    private static Post two = new Post(2L, "two", new ArrayList<>());
+    private static Post three = new Post(3L, "three", new ArrayList<>());
 
     private static List<Post> posts = new ArrayList<>();
 
@@ -45,7 +44,7 @@ class PostServiceImplTest {
     void save() {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
 
-        assertEquals(three,postService.save(three));
+        assertEquals(three, postService.save(three));
     }
 
     @Test
@@ -54,13 +53,13 @@ class PostServiceImplTest {
         Mockito.when(repository.saveAndFlush(two)).thenReturn(two);
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
 
-        assertEquals(two,postService.update(2L,two));
+        assertEquals(two, postService.update(2L, two));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(one));
-        assertEquals(one,postService.findById(1L));
+        assertEquals(one, postService.findById(1L));
     }
 
     @Test
@@ -77,7 +76,7 @@ class PostServiceImplTest {
     @Test
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(posts);
-        assertEquals(posts,postService.findAll());
+        assertEquals(posts, postService.findAll());
     }
 
     @Test
@@ -87,6 +86,6 @@ class PostServiceImplTest {
             post.setId(-1L);
             return null;
         }).when(repository).delete(two);
-        Assert.assertFalse(postService.delete(two));
+        assertFalse(postService.delete(two));
     }
 }

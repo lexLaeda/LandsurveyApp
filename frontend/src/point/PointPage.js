@@ -41,7 +41,7 @@ class PointPage extends Component {
                 }
             });
         } else {
-            axios.post('/api/point/add', point).then(res => {
+            axios.post(`/api/point/add/?is_lr=${point.isLevelReference}`, point).then(res => {
                 if (res.status === 200) {
                     const points = this.state.points;
                     points.push(res.data);
@@ -53,9 +53,10 @@ class PointPage extends Component {
 
     delete(point) {
         axios.delete('/api/point/delete/' + point.id).then(res => {
+            console.log(res.status);
             if (res.status === 200) {
                 const points = this.state.points.filter(p => p.id !== point.id);
-                this.setState(points);
+                this.setState({points : points});
             }
         });
     }
@@ -107,7 +108,7 @@ class PointPage extends Component {
                                 <DeleteModal title="Delete point"
                                              element={this.state.point}
                                              isActiveModal={this.state.isActiveDeleteModal}
-                                             closeModal={this.closeDeleteModal}/>;
+                                             closeModal={this.closeDeleteModal}/>
                             </div>
                         </div>
                     </div>

@@ -3,9 +3,8 @@ package com.survey.mole.service;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Baseline;
 import com.survey.mole.model.survey.Point;
-import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.BaselineRepository;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class BaselineServiceImplTest {
 
     @Mock
@@ -30,9 +30,9 @@ class BaselineServiceImplTest {
     private static List<Point> points = new ArrayList<>();
     private static List<Baseline> baselines = new ArrayList<>();
 
-    private static Baseline one = new Baseline(1L,"one",points);
-    private static Baseline two = new Baseline(2L,"two",points);
-    private static Baseline three = new Baseline(3L,"three",points);
+    private static Baseline one = new Baseline(1L, "one", points);
+    private static Baseline two = new Baseline(2L, "two", points);
+    private static Baseline three = new Baseline(3L, "three", points);
 
     static {
         points.add(new Point());
@@ -58,14 +58,14 @@ class BaselineServiceImplTest {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
         Mockito.when(repository.findById(3L)).thenReturn(Optional.of(three));
 
-        assertEquals(three, baselineService.update(3L,three));
+        assertEquals(three, baselineService.update(3L, three));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(one));
 
-        assertEquals(one,baselineService.findById(1L));
+        assertEquals(one, baselineService.findById(1L));
     }
 
     @Test
@@ -82,7 +82,7 @@ class BaselineServiceImplTest {
     void findAll() {
 
         Mockito.when(repository.findAll()).thenReturn(baselines);
-        assertEquals(baselines,baselineService.findAll());
+        assertEquals(baselines, baselineService.findAll());
     }
 
     @Test
@@ -94,6 +94,6 @@ class BaselineServiceImplTest {
             return null;
         }).when(repository).delete(two);
 
-        Assert.assertFalse(baselineService.delete(two));
+        assertFalse(baselineService.delete(two));
     }
 }

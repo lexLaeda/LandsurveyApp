@@ -3,15 +3,12 @@ package com.survey.mole.service.worktracker;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.worktracker.HolidayRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,9 +25,9 @@ class HolidayServiceImplTest {
     @InjectMocks
     private HolidayServiceImpl holidayService;
 
-    private static Holiday one = new Holiday(1L,"one", LocalDate.of(2020,1,1));
-    private static Holiday two = new Holiday(1L,"two", LocalDate.of(2020,2,2));
-    private static Holiday three = new Holiday(3L,"three", LocalDate.of(2020,3,3));
+    private static Holiday one = new Holiday(1L, "one", LocalDate.of(2020, 1, 1));
+    private static Holiday two = new Holiday(1L, "two", LocalDate.of(2020, 2, 2));
+    private static Holiday three = new Holiday(3L, "three", LocalDate.of(2020, 3, 3));
 
     private static List<Holiday> holidayList = new ArrayList<>();
 
@@ -48,7 +45,7 @@ class HolidayServiceImplTest {
     void save() {
         Mockito.when(repository.saveAndFlush(one)).thenReturn(one);
 
-        assertEquals(one,holidayService.save(one));
+        assertEquals(one, holidayService.save(one));
     }
 
     @Test
@@ -57,14 +54,14 @@ class HolidayServiceImplTest {
         Mockito.when(repository.saveAndFlush(two)).thenReturn(two);
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
 
-        assertEquals(two,holidayService.update(2L,two));
+        assertEquals(two, holidayService.update(2L, two));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
 
-        assertEquals(two,holidayService.findById(2L));
+        assertEquals(two, holidayService.findById(2L));
     }
 
     @Test
@@ -79,7 +76,7 @@ class HolidayServiceImplTest {
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(holidayList);
 
-        assertEquals(holidayList,holidayService.findAll());
+        assertEquals(holidayList, holidayService.findAll());
     }
 
     @Test
@@ -91,7 +88,7 @@ class HolidayServiceImplTest {
             return null;
         }).when(repository).delete(two);
 
-        Assert.assertFalse(holidayService.delete(two));
+        assertFalse(holidayService.delete(two));
     }
 
 

@@ -2,6 +2,7 @@ package com.survey.mole.controller;
 
 import com.survey.mole.dto.PointDto;
 import com.survey.mole.mapper.PointMapper;
+import com.survey.mole.model.survey.LevelReference;
 import com.survey.mole.model.survey.Point;
 import com.survey.mole.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,18 @@ public class PointController {
                 .map(point -> pointMapper.toDto(point)).collect(Collectors.toList());
     }
 
-    @PostMapping("/add")
-    public PointDto savePoint(@RequestBody  PointDto pointDto) {
+    @PostMapping("/add/")
+    public PointDto savePoint(@RequestBody  PointDto pointDto, @RequestParam("is_lr") Boolean isLevelReference) {
+
+        System.out.println(isLevelReference);
         Point point = pointMapper.toEntity(pointDto);
+        if (isLevelReference){
+            LevelReference levelReference = new LevelReference();
+            levelReference.setName(point.getName());
+            levelReference.setElevation(point.getX());
+            point.setLevelReference(levelReference);
+        }
+
         Point save = pointService.save(point);
         return pointMapper.toDto(save);
     }

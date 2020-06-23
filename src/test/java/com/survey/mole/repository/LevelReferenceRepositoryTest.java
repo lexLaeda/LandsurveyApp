@@ -1,8 +1,6 @@
 package com.survey.mole.repository;
 
 import com.survey.mole.model.survey.LevelReference;
-import com.survey.mole.model.survey.Point;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -13,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.MethodOrderer.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 @SpringBootTest
 @TestMethodOrder(value = OrderAnnotation.class)
@@ -43,14 +42,14 @@ class LevelReferenceRepositoryTest {
     void savePoint() {
         LevelReference levelReference = levelReferenceRepository.saveAndFlush(one);
 
-        assertEquals(one,levelReference);
+        assertEquals(one, levelReference);
     }
 
     @Test
     @Order(2)
     void findById() {
 
-        assertEquals(one,levelReferenceRepository.findById(1L).get());
+        assertEquals(one.getName(), levelReferenceRepository.findById(1L).get().getName());
 
     }
 
@@ -68,7 +67,7 @@ class LevelReferenceRepositoryTest {
         List<LevelReference> lrList = new ArrayList<>();
         lrList.add(one);
         lrList.add(levelReferenceRepository.saveAndFlush(two));
-        assertEquals(lrList,levelReferenceRepository.findAll());
+        assertEquals(lrList, levelReferenceRepository.findAll());
     }
 
     @Test
@@ -79,6 +78,6 @@ class LevelReferenceRepositoryTest {
         two.setId(2L);
         levelReferenceRepository.delete(two);
 
-        assertEquals(lrList,levelReferenceRepository.findAll());
+        assertEquals(lrList, levelReferenceRepository.findAll());
     }
 }

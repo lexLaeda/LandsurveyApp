@@ -2,9 +2,8 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Code;
-import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.worktracker.CodeRepository;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,9 +25,9 @@ class CodeServiceImplTest {
     @InjectMocks
     private CodeServiceImpl codeService;
 
-    private static Code one = new Code(1L,"one","description one");
-    private static Code two = new Code(2L,"two","description two");
-    private static Code three = new Code(3L,"three","description three");
+    private static Code one = new Code(1L, "one", "description one");
+    private static Code two = new Code(2L, "two", "description two");
+    private static Code three = new Code(3L, "three", "description three");
 
     private static List<Code> codeList = new ArrayList<>();
 
@@ -45,21 +44,21 @@ class CodeServiceImplTest {
     @Test
     void save() {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
-        assertEquals(three,codeService.save(three));
+        assertEquals(three, codeService.save(three));
     }
 
     @Test
     void update() {
         Mockito.when(repository.findById(3L)).thenReturn(Optional.of(three));
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
-        assertEquals(three, codeService.update(3L,three));
+        assertEquals(three, codeService.update(3L, three));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(one));
 
-        assertEquals(one,codeService.findById(1L));
+        assertEquals(one, codeService.findById(1L));
     }
 
     @Test
@@ -77,7 +76,7 @@ class CodeServiceImplTest {
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(codeList);
 
-        assertEquals(codeList,codeService.findAll());
+        assertEquals(codeList, codeService.findAll());
     }
 
     @Test
@@ -89,6 +88,6 @@ class CodeServiceImplTest {
             return null;
         }).when(repository).delete(two);
 
-        Assert.assertFalse(codeService.delete(two));
+        assertFalse(codeService.delete(two));
     }
 }

@@ -21,7 +21,10 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public Point save(Point point) {
-        return pointRepository.saveAndFlush(point);
+        System.out.println(point.getLevelReference());
+        Point point1 = pointRepository.saveAndFlush(point);
+        System.out.println(point1.getLevelReference());
+        return point1;
     }
 
     @Override

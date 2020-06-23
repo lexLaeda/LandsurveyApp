@@ -1,5 +1,6 @@
 package com.survey.mole.dto;
 
+import com.survey.mole.model.survey.LevelReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,4 +13,5 @@ public class PointDto extends AbstractDto {
     private Double x;
     private Double y;
     private Double h;
+    private Long levelReferenceId;
 }

@@ -2,9 +2,8 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Department;
-import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.worktracker.employee.DepartmentRepository;
-import org.junit.Assert;
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,9 +25,9 @@ class DepartmentServiceImplTest {
     @InjectMocks
     private DepartmentServiceImpl departmentService;
 
-    private static Department one = new Department(1L,"one",new ArrayList<>());
-    private static Department two = new Department(2L,"two",new ArrayList<>());
-    private static Department three = new Department(3L,"three",new ArrayList<>());
+    private static Department one = new Department(1L, "one", new ArrayList<>());
+    private static Department two = new Department(2L, "two", new ArrayList<>());
+    private static Department three = new Department(3L, "three", new ArrayList<>());
 
     private static List<Department> departments = new ArrayList<>();
 
@@ -45,7 +44,7 @@ class DepartmentServiceImplTest {
     @Test
     void save() {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
-        assertEquals(three,departmentService.save(three));
+        assertEquals(three, departmentService.save(three));
     }
 
     @Test
@@ -53,13 +52,13 @@ class DepartmentServiceImplTest {
         two.setName("update");
         Mockito.when(repository.saveAndFlush(two)).thenReturn(two);
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
-        assertEquals(two,departmentService.update(2L,two));
+        assertEquals(two, departmentService.update(2L, two));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
-        assertEquals(two,departmentService.findById(2L));
+        assertEquals(two, departmentService.findById(2L));
     }
 
     @Test
@@ -73,7 +72,7 @@ class DepartmentServiceImplTest {
     @Test
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(departments);
-        assertEquals(departments,departmentService.findAll());
+        assertEquals(departments, departmentService.findAll());
     }
 
     @Test
@@ -85,7 +84,7 @@ class DepartmentServiceImplTest {
             return null;
         }).when(repository).delete(two);
 
-        Assert.assertFalse(departmentService.delete(two));
+       assertFalse(departmentService.delete(two));
     }
 
 }

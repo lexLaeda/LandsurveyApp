@@ -11,11 +11,15 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "level_reference")
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
 public class LevelReference extends AbstractEntity {
+
+    public LevelReference(String name, Double elevation) {
+        this.name = name;
+        this.elevation = elevation;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +32,7 @@ public class LevelReference extends AbstractEntity {
     @Column(name = "elevation")
     private Double elevation;
 
-
+    @OneToOne(mappedBy = "levelReference",fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    private Point point;
 }

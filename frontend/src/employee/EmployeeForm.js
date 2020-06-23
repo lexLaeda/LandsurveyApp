@@ -5,6 +5,7 @@ class EmployeeForm extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             file: '',
             imagePreviewUrl: '',
@@ -98,6 +99,8 @@ class EmployeeForm extends React.Component {
 
         reader.readAsDataURL(file);
     };
+
+
 
     render() {
         const genders = ['M', 'F'];

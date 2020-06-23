@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import Context from '../Context'
 import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "./Modal";
+import ReactTooltip from 'react-tooltip';
 
 export function FormModalFooter(props){
     return(
@@ -50,6 +51,14 @@ export function AddButton({openAddModal}){
         <div className="panel-body">
             <button type="button" className="btn btn-dark" data-toggle="modal"
                     onClick={() => openAddModal()}>Add new</button>
+        </div>
+    );
+}
+export function CheckBox({label, onChange}){
+    return(
+        <div className="form-group form-check" data-tip="hello world">
+            <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={onChange} />
+                <label className="form-check-label" htmlFor="exampleCheck1">{label}</label>
         </div>
     );
 }

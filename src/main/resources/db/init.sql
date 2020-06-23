@@ -1,5 +1,14 @@
 DROP TABLE IF EXISTS point,baseline,baseline_point,level_reference,code,holiday,post,address,contact,employee,department CASCADE;
 
+CREATE TABLE level_reference
+(
+    level_reference_id BIGSERIAL PRIMARY KEY,
+    name               CHARACTER VARYING(255),
+    elevation          DOUBLE PRECISION,
+    created            TIMESTAMP,
+    updated            TIMESTAMP
+);
+
 CREATE TABLE point
 (
     point_id BIGSERIAL PRIMARY KEY,
@@ -8,7 +17,9 @@ CREATE TABLE point
     y        DOUBLE PRECISION,
     h        DOUBLE PRECISION,
     created  TIMESTAMP,
-    updated  TIMESTAMP
+    updated  TIMESTAMP,
+    level_reference_id BIGINT,
+    FOREIGN KEY (level_reference_id) REFERENCES level_reference(level_reference_id)
 );
 
 INSERT INTO point (name, x, y, h, created)
@@ -34,15 +45,6 @@ CREATE TABLE baseline_point
     point_id    BIGINT,
     FOREIGN KEY (baseline_id) REFERENCES baseline (baseline_id),
     FOREIGN KEY (point_id) REFERENCES point (point_id)
-);
-
-CREATE TABLE level_reference
-(
-    level_reference_id BIGSERIAL PRIMARY KEY,
-    name               CHARACTER VARYING(255),
-    elevation          DOUBLE PRECISION,
-    created            TIMESTAMP,
-    updated            TIMESTAMP
 );
 
 INSERT INTO baseline(name, created)

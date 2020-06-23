@@ -2,9 +2,8 @@ package com.survey.mole.service;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Point;
-import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.PointRepository;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,12 +27,25 @@ class PointServiceImplTest {
     private PointServiceImpl pointService;
 
     private static List<Point> points = new ArrayList<>();
-    private static Point one = new Point(1L, "one", 1.0, 1.0, 1.0);
-    private static Point two = new Point(2L, "one", 2.0, 2.0, 2.0);
+    private static Point one = new Point();
+    private static Point two = new Point();
 
     static {
         points.add(one);
         points.add(two);
+        one.setId(1L);
+        one.setName("one");
+        one.setX(1.0);
+        one.setY(1.0);
+        one.setH(1.0);
+
+        two.setId(2L);
+        two.setName("two");
+        two.setX(2.0);
+        two.setY(2.0);
+        two.setH(2.0);
+
+
     }
 
     @BeforeEach
@@ -43,17 +55,21 @@ class PointServiceImplTest {
 
     @Test
     void testSave() {
-        Point three = new Point(3L, "two", 3.0, 3.0, 3.0);
+        Point three = new Point();
+        three.setId(3L);
+        three.setName("three");
+        three.setX(3.0);
+        three.setY(3.0);
+        three.setH(3.0);
         Mockito.when(pointRepository.saveAndFlush(three)).thenReturn(three);
         assertEquals(three, pointService.save(three));
     }
 
     @Test
     void update() {
-        Point upTwo = new Point(3L, "two", 3.0, 3.0, 3.0);
-        Mockito.when(pointRepository.saveAndFlush(upTwo)).thenReturn(upTwo);
+        Mockito.when(pointRepository.saveAndFlush(two)).thenReturn(two);
         Mockito.when(pointRepository.findById(2L)).thenReturn(Optional.of(two));
-        assertEquals(upTwo, pointService.update(2L, upTwo));
+        assertEquals(two, pointService.update(2L, two));
     }
 
     @Test
@@ -85,7 +101,7 @@ class PointServiceImplTest {
             return null;
         }).when(pointRepository).delete(two);
 
-        Assert.assertFalse(pointService.delete(two));
+        assertFalse(pointService.delete(two));
     }
 
 }

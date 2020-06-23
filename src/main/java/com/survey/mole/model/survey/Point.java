@@ -31,4 +31,9 @@ public class Point extends AbstractEntity {
     @Column(name = "h")
     private Double h;
 
+    @JoinColumn(name = "level_reference_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    private LevelReference levelReference;
+
 }

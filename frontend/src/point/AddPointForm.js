@@ -1,16 +1,24 @@
 import * as React from "react";
-import {FormModalFooter, TextInput} from "../template/Control";
-
+import {CheckBox, FormModalFooter, TextInput} from "../template/Control";
+import ReactTooltip from 'react-tooltip';
 
 class AddPointForm extends React.Component {
     constructor(props) {
         super(props);
+        this.rules ={
+            isEnableToCreateLevelReference : false,
+            setIsEnable(){
+                this.isEnableToCreateLevelReference = !this.isEnableToCreateLevelReference;
+            }
+        };
+
         this.state = {
             id: '',
             name: '',
             x: 0,
             y: 0,
-            h: 0
+            h: 0,
+            isNewPoint : true
         };
         if (props.point && props.point.id) {
             this.state.id = props.point.id;
@@ -18,6 +26,7 @@ class AddPointForm extends React.Component {
             this.state.x = props.point.x;
             this.state.y = props.point.y;
             this.state.h = props.point.h;
+            this.state.isNewPoint = false;
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,11 +46,23 @@ class AddPointForm extends React.Component {
         const x = this.state.x;
         const y = this.state.y;
         const h = this.state.h;
-        this.props.closeModal({id, name, x, y, h}, true);
+        const isLevelReference = this.rules.isEnableToCreateLevelReference;
+        this.props.closeModal({id, name, x, y, h, isLevelReference}, true);
     }
 
 
+    handleCheckBoxChange = () =>{
+        this.rules.setIsEnable();
+    };
+
+
     render() {
+
+        let $isEnableLevelReference;
+
+        if (this.state.isNewPoint){
+            $isEnableLevelReference = <CheckBox data-tip="hello world" label="Point is LevelReference" onChange={this.handleCheckBoxChange} />
+        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <TextInput type="text" label="name" value={this.state.name} name="name"
@@ -52,6 +73,8 @@ class AddPointForm extends React.Component {
                            handleChange={this.handleChange}/>
                 <TextInput type="number" label="H Coordinate" value={this.state.h} name="h"
                            handleChange={this.handleChange}/>
+                {$isEnableLevelReference}
+                <ReactTooltip />
                 <FormModalFooter closeModal={this.props.closeModal}/>
             </form>
         )

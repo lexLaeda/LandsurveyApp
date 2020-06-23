@@ -2,10 +2,8 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Department;
-import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.model.worktracker.employee.Employee;
 import com.survey.mole.repository.worktracker.employee.EmployeeRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -56,7 +54,7 @@ class EmployeeServiceImplTest {
     @Test
     void save() {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
-        assertEquals(three,employeeService.save(three));
+        assertEquals(three, employeeService.save(three));
     }
 
     @Test
@@ -64,14 +62,15 @@ class EmployeeServiceImplTest {
         two.setFirstName("update");
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
         Mockito.when(repository.saveAndFlush(two)).thenReturn(two);
-        assertEquals(two,employeeService.update(2L,two));
+        assertEquals(two, employeeService.update(2L, two));
     }
 
     @Test
     void findById() {
         Mockito.when(repository.findById(2L)).thenReturn(Optional.of(two));
-        assertEquals(two,employeeService.findById(2L));
+        assertEquals(two, employeeService.findById(2L));
     }
+
     @Test
     void findByFakeId() {
         Mockito.when(repository.findById(4L)).thenReturn(Optional.ofNullable(null));
@@ -83,13 +82,13 @@ class EmployeeServiceImplTest {
     @Test
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(employees);
-        assertEquals(employees,employeeService.findAll());
+        assertEquals(employees, employeeService.findAll());
     }
 
     @Test
     void findByDepartment() {
         Mockito.when(repository.findAllByDepartment(department)).thenReturn(employees);
-        assertEquals(employees,employeeService.findByDepartment(department));
+        assertEquals(employees, employeeService.findByDepartment(department));
     }
 
 
@@ -97,11 +96,11 @@ class EmployeeServiceImplTest {
     void delete() {
         Mockito.when(repository.count()).thenReturn(2L);
         Mockito.doAnswer(invocation -> {
-            Employee employee= invocation.getArgument(0);
+            Employee employee = invocation.getArgument(0);
             employee.setId(-1L);
             return null;
         }).when(repository).delete(two);
 
-        Assert.assertFalse(employeeService.delete(two));
+        assertFalse(employeeService.delete(two));
     }
 }

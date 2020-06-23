@@ -1,11 +1,7 @@
 package com.survey.mole.repository;
 
+import com.survey.mole.model.survey.LevelReference;
 import com.survey.mole.model.survey.Point;
-import com.survey.mole.model.worktracker.Department;
-import com.survey.mole.model.worktracker.employee.Post;
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 @TestMethodOrder(value = OrderAnnotation.class)
@@ -27,14 +24,19 @@ class PointRepositoryTest {
     private PointRepository pointRepository;
 
     private static Point one = new Point();
-    private static Point two = new Point(11L, "one", 2.0, 2.0, 2.0);
+    private static LevelReference lr = new LevelReference();
     private static Point three = new Point();
+    private static Point two = new Point();
 
     static {
         one.setName("one");
         one.setX(1.0);
         one.setY(1.0);
         one.setH(1.0);
+        lr.setName(one.getName());
+        lr.setElevation(one.getH());
+        one.setLevelReference(lr);
+        two.setName("two");
     }
 
 
@@ -43,14 +45,15 @@ class PointRepositoryTest {
     void savePoint() {
         Point point = pointRepository.saveAndFlush(one);
         one.setId(1L);
-        assertEquals(one,point);
+        assertEquals(one, point);
+        assertEquals(one.getLevelReference(),point.getLevelReference());
     }
 
     @Test
     @Order(2)
     void findById() {
         Optional<Point> byId = pointRepository.findById(1L);
-        assertEquals(one,byId.get());
+        assertEquals(one, byId.get());
     }
 
     @Test
@@ -68,7 +71,7 @@ class PointRepositoryTest {
         two.setId(2L);
         points.add(one);
         points.add(two);
-        assertEquals(points,pointRepository.findAll());
+        assertEquals(points, pointRepository.findAll());
     }
 
     @Test
@@ -77,6 +80,6 @@ class PointRepositoryTest {
         List<Point> points = new ArrayList<>();
         pointRepository.delete(two);
         points.add(one);
-        assertEquals(points,pointRepository.findAll());
+        assertEquals(points, pointRepository.findAll());
     }
 }
