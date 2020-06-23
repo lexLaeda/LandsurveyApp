@@ -2,7 +2,9 @@ package com.survey.mole.service;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Point;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.PointRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -74,6 +76,18 @@ class PointServiceImplTest {
     void findAll() {
         Mockito.when(pointRepository.findAll()).thenReturn(points);
         assertEquals(points, pointService.findAll());
+    }
+
+    @Test
+    void delete() {
+        Mockito.when(pointRepository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            Point point = invocation.getArgument(0);
+            point.setId(-1L);
+            return null;
+        }).when(pointRepository).delete(two);
+
+        Assert.assertFalse(pointService.delete(two));
     }
 
 }

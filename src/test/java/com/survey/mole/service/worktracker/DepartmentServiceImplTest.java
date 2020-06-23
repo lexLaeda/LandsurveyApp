@@ -2,7 +2,9 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Department;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.worktracker.employee.DepartmentRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -74,5 +76,16 @@ class DepartmentServiceImplTest {
         assertEquals(departments,departmentService.findAll());
     }
 
+    @Test
+    void delete() {
+        Mockito.when(repository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            Department department = invocation.getArgument(0);
+            department.setId(-1L);
+            return null;
+        }).when(repository).delete(two);
+
+        Assert.assertFalse(departmentService.delete(two));
+    }
 
 }

@@ -3,7 +3,9 @@ package com.survey.mole.service;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Baseline;
 import com.survey.mole.model.survey.Point;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.BaselineRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -81,5 +83,17 @@ class BaselineServiceImplTest {
 
         Mockito.when(repository.findAll()).thenReturn(baselines);
         assertEquals(baselines,baselineService.findAll());
+    }
+
+    @Test
+    void delete() {
+        Mockito.when(repository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            Baseline baseline = invocation.getArgument(0);
+            baseline.setId(-1L);
+            return null;
+        }).when(repository).delete(two);
+
+        Assert.assertFalse(baselineService.delete(two));
     }
 }

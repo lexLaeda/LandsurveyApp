@@ -2,7 +2,9 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Code;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.worktracker.CodeRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -76,5 +78,17 @@ class CodeServiceImplTest {
         Mockito.when(repository.findAll()).thenReturn(codeList);
 
         assertEquals(codeList,codeService.findAll());
+    }
+
+    @Test
+    void delete() {
+        Mockito.when(repository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            Code code = invocation.getArgument(0);
+            code.setId(-1L);
+            return null;
+        }).when(repository).delete(two);
+
+        Assert.assertFalse(codeService.delete(two));
     }
 }

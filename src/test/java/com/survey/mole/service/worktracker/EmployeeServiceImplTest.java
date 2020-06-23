@@ -2,8 +2,10 @@ package com.survey.mole.service.worktracker;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Department;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.model.worktracker.employee.Employee;
 import com.survey.mole.repository.worktracker.employee.EmployeeRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -88,5 +90,18 @@ class EmployeeServiceImplTest {
     void findByDepartment() {
         Mockito.when(repository.findAllByDepartment(department)).thenReturn(employees);
         assertEquals(employees,employeeService.findByDepartment(department));
+    }
+
+
+    @Test
+    void delete() {
+        Mockito.when(repository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            Employee employee= invocation.getArgument(0);
+            employee.setId(-1L);
+            return null;
+        }).when(repository).delete(two);
+
+        Assert.assertFalse(employeeService.delete(two));
     }
 }

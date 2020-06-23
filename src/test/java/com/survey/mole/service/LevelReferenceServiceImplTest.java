@@ -2,7 +2,9 @@ package com.survey.mole.service;
 
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.LevelReference;
+import com.survey.mole.model.worktracker.Holiday;
 import com.survey.mole.repository.LevelReferenceRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -77,5 +79,17 @@ class LevelReferenceServiceImplTest {
     void findAll() {
         Mockito.when(repository.findAll()).thenReturn(LRlist);
         assertEquals(LRlist,levelReferenceService.findAll());
+    }
+
+    @Test
+    void delete() {
+        Mockito.when(repository.count()).thenReturn(2L);
+        Mockito.doAnswer(invocation -> {
+            LevelReference levelReference = invocation.getArgument(0);
+            levelReference.setId(-1L);
+            return null;
+        }).when(repository).delete(two);
+
+        Assert.assertFalse(levelReferenceService.delete(two));
     }
 }

@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post save(Post post) {
-        return repository.save(post);
+        return repository.saveAndFlush(post);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(Long id) {
-        return repository.findById(id).orElseThrow(()->new ElementNotFoundException(String.valueOf(id)));
+        return repository.findById(id).orElseThrow(()->new ElementNotFoundException("Post with id " + id + " not found"));
     }
 
     @Override
