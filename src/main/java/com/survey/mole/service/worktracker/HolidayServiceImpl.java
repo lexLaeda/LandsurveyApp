@@ -33,7 +33,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public Holiday findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException(String.valueOf(id)));
+                .orElseThrow(() -> new ElementNotFoundException("Holiday with id " + id + " not found!!!"));
     }
 
     @Override
@@ -46,6 +46,6 @@ public class HolidayServiceImpl implements HolidayService {
         long before = repository.count();
         repository.delete(holiday);
         long after = repository.count();
-        return after - before == 0;
+        return after - before == 1;
     }
 }

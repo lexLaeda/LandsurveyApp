@@ -1,9 +1,7 @@
 package com.survey.mole.model.worktracker;
 
 import com.survey.mole.model.AbstractEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +11,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Holiday extends AbstractEntity {
 
     @Id
