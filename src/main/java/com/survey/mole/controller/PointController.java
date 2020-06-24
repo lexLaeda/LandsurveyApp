@@ -31,10 +31,17 @@ public class PointController {
                 .map(point -> pointMapper.toDto(point)).collect(Collectors.toList());
     }
 
-    @PostMapping("/add/")
-    public PointDto savePoint(@RequestBody  PointDto pointDto, @RequestParam("is_lr") Boolean isLevelReference) {
 
-        System.out.println(isLevelReference);
+    @PostMapping("/add")
+    public PointDto savePoint(@RequestBody  PointDto pointDto) {
+        Point point = pointMapper.toEntity(pointDto);
+        Point save = pointService.save(point);
+        return pointMapper.toDto(save);
+    }
+
+    @PostMapping("/add/")
+    public PointDto savePointAndLR(@RequestBody  PointDto pointDto, @RequestParam("is_lr") Boolean isLevelReference) {
+
         Point point = pointMapper.toEntity(pointDto);
         if (isLevelReference){
             LevelReference levelReference = new LevelReference();

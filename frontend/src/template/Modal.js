@@ -68,5 +68,13 @@ export function DeleteModal(props) {
             <ModalFooter closeModal={props.closeModal} element={props.element}/>
         </ModalMain>
     );
+}
 
+export function ModalComplete(props){
+    return(
+        <ModalMain isActiveModal={props.isActive}>
+            <ModalHeader title={props.title} closeModal={props.close}/>
+            {props.children}
+        </ModalMain>
+    )
 }

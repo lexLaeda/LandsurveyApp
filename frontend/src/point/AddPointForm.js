@@ -1,6 +1,7 @@
 import * as React from "react";
 import {CheckBox, FormModalFooter, TextInput} from "../template/Control";
 import ReactTooltip from 'react-tooltip';
+import {ModalBody} from "../template/Modal";
 
 class AddPointForm extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class AddPointForm extends React.Component {
         const y = this.state.y;
         const h = this.state.h;
         const isLevelReference = this.rules.isEnableToCreateLevelReference;
-        this.props.closeModal({id, name, x, y, h, isLevelReference}, true);
+        this.props.close({id, name, x, y, h}, true);
     }
 
 
@@ -59,25 +60,29 @@ class AddPointForm extends React.Component {
     render() {
 
         let $isEnableLevelReference;
-
         if (this.state.isNewPoint) {
             $isEnableLevelReference =
                 <CheckBox data-tip="hello world" label="Point is LevelReference" onChange={this.handleCheckBoxChange}/>
         }
         return (
-            <form onSubmit={this.handleSubmit}>
-                <TextInput type="text" label="name" value={this.state.name} name="name"
-                           handleChange={this.handleChange}/>
-                <TextInput type="number" label="X Coordinate" value={this.state.x} name="x"
-                           handleChange={this.handleChange}/>
-                <TextInput type="number" label="Y Coordinate" value={this.state.y} name="y"
-                           handleChange={this.handleChange}/>
-                <TextInput type="number" label="H Coordinate" value={this.state.h} name="h"
-                           handleChange={this.handleChange}/>
-                {$isEnableLevelReference}
-                <ReactTooltip/>
-                <FormModalFooter closeModal={this.props.closeModal}/>
-            </form>
+            <div>
+                <ModalBody>
+                    <form onSubmit={this.handleSubmit}>
+                        <TextInput type="text" label="name" value={this.state.name} name="name"
+                                   handleChange={this.handleChange}/>
+                        <TextInput type="number" label="X Coordinate" value={this.state.x} name="x"
+                                   handleChange={this.handleChange}/>
+                        <TextInput type="number" label="Y Coordinate" value={this.state.y} name="y"
+                                   handleChange={this.handleChange}/>
+                        <TextInput type="number" label="H Coordinate" value={this.state.h} name="h"
+                                   handleChange={this.handleChange}/>
+                        {$isEnableLevelReference}
+                        <ReactTooltip/>
+                        <FormModalFooter closeModal={this.props.close}/>
+                    </form>
+                </ModalBody>
+
+        </div>
         )
     }
 }

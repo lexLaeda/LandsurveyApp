@@ -4,8 +4,10 @@ import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
 import AddPointForm from "./AddPointForm";
+import {ModalContext} from "./PPage";
 
-export function PointTable(props) {
+export function PointTable() {
+    const {points} = useContext(Context);
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -22,7 +24,7 @@ export function PointTable(props) {
             </tr>
             </thead>
             <tbody>
-            {props.points.map((point, index) => {
+            {points.map((point, index) => {
                 return <Item point={point} key={point.id} index={index}/>
             })}
             </tbody>
@@ -32,7 +34,7 @@ export function PointTable(props) {
 
 function Item({point, index}) {
 
-    const {openAddModal, openDeleteModal} = useContext(Context);
+    const {openAddModal, openDeleteModal} = useContext(ModalContext);
     return (<tr>
             <td>{index + 1}</td>
             <td>{point.name}</td>

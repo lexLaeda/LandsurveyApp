@@ -3,7 +3,7 @@ import React from 'react'
 export function FormModalFooter(props) {
     return (
         <div className="modal-footer">
-            <button onClick={() => props.closeModal(props.element, false)} type="button"
+            <button onClick={() => props.closeModal(false)} type="button"
                     className="btn btn-secondary">Close
             </button>
             <button type="submit" className="btn btn-primary">Save changes</button>
@@ -48,11 +48,11 @@ export function TextInput(props) {
     );
 }
 
-export function AddButton({openAddModal}) {
+export function AddButton({onClick}) {
     return (
         <div className="panel-body">
             <button type="button" className="btn btn-dark" data-toggle="modal"
-                    onClick={() => openAddModal()}>Add new
+                    onClick={() => onClick()}>Add new
             </button>
         </div>
     );
@@ -65,4 +65,20 @@ export function CheckBox({label, onChange}) {
             <label className="form-check-label" htmlFor="exampleCheck1">{label}</label>
         </div>
     );
+}
+export function Container(props){
+    return (
+        <div className="container">
+            <div className="panel panel-default">
+                <div className="panel-heading">
+                    {props.children}
+                </div>
+            </div>
+        </div>
+    );
+}
+export function TableTitle(props) {
+    return(
+        <h3 className="panel-title text-center mt-5 mb-5">{props.title}</h3>
+    )
 }

@@ -157,8 +157,7 @@ class PointPage extends Component {
                                             element={this.state.element}
                                             isActiveModal={this.state.isActiveAlertModal}
                                             closeModal={this.closeAlertModal}
-                                            message={alertMessage}
-                                />
+                                            message={alertMessage}/>
                             </div>
                         </div>
                     </div>
