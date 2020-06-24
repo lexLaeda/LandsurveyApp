@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import Menu from './template/Menu';
 import './App.css';
-import PointPage from "./point/PointPage";
 import BaselinePage from "./baseline/BaselinePage";
-import LevelReferencePage from "./levelreferenses/LevelReferencePage";
 import axios from "axios";
 import Context from "./Context";
-import PPage from "./point/PPage";
+import PointPage from "./point/PointPage";
+import LevelReferencePage from "./levelreferenses/LevelReferencePage";
 
 class App extends Component {
     constructor(props) {
@@ -16,7 +15,7 @@ class App extends Component {
             points: [],
             baselines: [],
             levelReferences: [],
-            types: [{root :'baseline',name : 'baselines'}, {root : 'level-reference'}, {root : 'point', name : 'points'}],
+            types: [{root :'baseline',name : 'baselines'}, {root : 'level-reference', name : 'levelReferences'}, {root : 'point', name : 'points'}],
             element: {},
             isActiveDeleteModal: false,
             isActiveAddModal: false,
@@ -97,7 +96,7 @@ class App extends Component {
                         </ol>
                         <div className="carousel-inner">
                             <div className="carousel-item active" data-interval="10000">
-                                <PPage/>
+                                <PointPage/>
                             </div>
                             <div className="carousel-item" data-interval="2000">
                                 <BaselinePage/>

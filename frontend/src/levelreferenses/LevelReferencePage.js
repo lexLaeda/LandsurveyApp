@@ -1,118 +1,74 @@
-import React, {Component} from 'react'
-import axios from 'axios';
-import {AddLevelReferenceModal, Table} from "./LevelReferenceTable";
-import {AddButton} from "../template/Control";
+import {AddButton, Container, TableTitle} from "../template/Control";
+import React, {useContext, useState} from "react";
+import {LevelReferenceTable} from "./LevelReferenceTable";
+import {ModalBody, ModalComplete, ModalFooter, ModalHeader} from "../template/Modal";
+import AddLevelReferenceForm from "./AddLevelReferenceForm";
 import Context from "../Context";
-import {DeleteModal} from "../template/Modal";
 
+export const LRModelContext = React.createContext({});
 
-class LevelReferencePage extends Component {
+export default function LevelReferencePage(){
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            levelReferenceList: [],
-            isActiveDeleteModal: false,
-            isActiveAddModal: false,
-            levelReference: {
-                id: '',
-                name: ''
+    const{points, addElement, deleteElement} = useContext(Context);
+    const[levelReference,setLevelReference] = useState({});
+    const[isActiveAddModal, setIsActiveAddModal] = useState(false);
+    const[isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
+
+    const openAddModal = (levelReference) => {
+        if (levelReference && levelReference.id){
+            setLevelReference(levelReference);
+        }
+        setIsActiveAddModal(true);
+    };
+
+    const closeAddModal = (levelReference, isEnable) => {
+          if(isEnable){
+              addElement({element : levelReference, type : 'levelReferences', root : 'level-reference'});
+          }
+          setLevelReference({});
+          setIsActiveAddModal(false);
+    };
+
+    const getAssociatedPoints = (levelReference) => {
+        return  points.filter(point => point.name === levelReference.name);
+    };
+
+    const openDeleteModal = (levelReference) => {
+        setLevelReference(levelReference);
+        setIsActiveDeleteModal(true);
+    };
+
+    const closeDeleteModal = (levelReference,isEnable) =>{
+        if(isEnable){
+            if (getAssociatedPoints(levelReference).length === 0){
+                deleteElement({element: levelReference, type : 'levelReferences', root : 'level-reference'});
             }
-        };
-    }
-
-    componentDidMount() {
-        this.setLevelReferences();
-    }
-
-    setLevelReferences() {
-        axios.get('/api/level-reference/list')
-            .then(res => {
-                this.setState({levelReferenceList: res.data});
-            });
-    }
-
-    openDeleteModal = (levelReference) => {
-        this.setState({levelReference: levelReference});
-        this.setState({isActiveDeleteModal: true})
+        }
+        setLevelReference({});
+        setIsActiveDeleteModal(false);
     };
 
-    closeDeleteModal = (levelReference, isEnable) => {
-        if (isEnable) {
-            this.deleteLevelReference(levelReference);
-        }
-        this.setState({isActiveDeleteModal: false, levelReference: {}});
-    };
+    const tableTitle = 'Level reference Table';
+    const addTitle = (levelReference && levelReference.id) ? `Edit level reference ${levelReference.name}` : 'Add new level reference';
+    const deleteTitle = `Delete level reference ${levelReference.name}`;
+    const deleteBody = <p>Are you really want to delete level reference {levelReference.name}?</p>;
 
-    openAddModal = (levelReference) => {
-        if (levelReference && levelReference.id) {
-            this.setState({levelReference: levelReference});
-        }
-        this.setState({isActiveAddModal: true});
-    };
-
-    closeAddModal = (levelReference, isEnable) => {
-        if (isEnable) {
-            this.saveLevelReference(levelReference);
-        }
-        this.setState({isActiveAddModal: false, levelReference: {}});
-    };
-
-    saveLevelReference(levelReference) {
-        if (levelReference.id) {
-            axios.post('/api/level-reference/edit/' + levelReference.id, levelReference).then(res => {
-                const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
-                levelReferenceList.push(res.data);
-                this.setState({levelReferenceList: levelReferenceList});
-            });
-        } else {
-            axios.post('/api/level-reference/add', levelReference).then(res => {
-                const levelReferenceList = this.state.levelReferenceList;
-                levelReferenceList.push(res.data);
-                this.setState({levelReferenceList: levelReferenceList});
-            })
-        }
-    }
-
-    deleteLevelReference(levelReference) {
-        axios.delete('/api/level-reference/delete/' + levelReference.id).then(res => {
-            if (res.status === 200) {
-                const levelReferenceList = this.state.levelReferenceList.filter(lr => lr.id !== levelReference.id);
-                this.setState({levelReferenceList: levelReferenceList});
-            }
-        })
-    }
-
-    render() {
-
-        return (
-            <Context.Provider value={{openAddModal: this.openAddModal, openDeleteModal: this.openDeleteModal}}>
-                <div>
-                    <div className="container">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title text-center mt-5 mb-5">
-                                    LevelReference List
-                                </h3>
-                                <Table levelReferenceList={this.state.levelReferenceList}/>
-                            </div>
-                        </div>
-                        <div className="panel-body">
-                            <AddButton openAddModal={this.openAddModal}/>
-                        </div>
-                    </div>
-                    <AddLevelReferenceModal isActiveModal={this.state.isActiveAddModal}
-                                            closeModal={this.closeAddModal}
-                                            levelReference={this.state.levelReference}/>
-                    <DeleteModal title="Delete Level Reference"
-                                 element={this.state.levelReference}
-                                 isActiveModal={this.state.isActiveDeleteModal}
-                                 closeModal={this.closeDeleteModal}/>;
-                </div>
-            </Context.Provider>
-        );
-    }
-
+    return(
+        <LRModelContext.Provider value={{openAddModal, openDeleteModal}}>
+        <Container>
+            <TableTitle title={tableTitle}/>
+            <LevelReferenceTable/>
+            <AddButton onClick={openAddModal}/>
+            <ModalComplete isActive={isActiveAddModal} title={addTitle} close={closeAddModal}>
+                <AddLevelReferenceForm close={closeAddModal} levelReference={levelReference}/>
+            </ModalComplete>
+            <ModalComplete isActive={isActiveDeleteModal} title={deleteTitle} close={closeDeleteModal}>
+                <ModalBody>
+                    {deleteBody}
+                </ModalBody>
+                <ModalFooter element={levelReference} closeModal={closeDeleteModal}/>
+            </ModalComplete>
+        </Container>
+        </LRModelContext.Provider>
+    )
 }
-
-export default LevelReferencePage;

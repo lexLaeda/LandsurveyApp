@@ -3,9 +3,10 @@ import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
 import AddLevelReferenceForm from "./AddLevelReferenceForm";
+import {LRModelContext} from "./LevelReferencePage";
 
-export function Table(props) {
-
+export function LevelReferenceTable() {
+    const {levelReferences} = useContext(Context);
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -20,7 +21,7 @@ export function Table(props) {
             </tr>
             </thead>
             <tbody>
-            {props.levelReferenceList.map((levelReference, index) => {
+            {levelReferences.map((levelReference, index) => {
                 return <Item levelReference={levelReference} key={levelReference.id} index={index}/>
             })}
             </tbody>
@@ -30,7 +31,7 @@ export function Table(props) {
 
 function Item({levelReference, index}) {
 
-    const {openAddModal, openDeleteModal} = useContext(Context);
+    const {openAddModal, openDeleteModal} = useContext(LRModelContext);
     return (
         <tr>
             <td>{index + 1}</td>

@@ -1,170 +1,97 @@
-import React, {Component} from "react";
-import axios from "axios";
+import {PointTable} from "./PointContent";
+import React, {useContext, useState} from "react";
+import {AddButton, Container, TableTitle} from "../template/Control";
+import {ModalBody, ModalComplete, ModalFooter} from "../template/Modal";
+import AddPointForm from "./AddPointForm";
 import Context from "../Context";
-import {AddPointModal, AlertModal, PointTable} from "./PointContent";
-import {AddButton} from "../template/Control";
-import {DeleteModal} from "../template/Modal";
 
+export const PointModalContext = React.createContext({});
 
-class PointPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            points: [],
-            isActiveDeleteModal: false,
-            isActiveAddModal: false,
-            isActiveAlertModal : false,
-            element : {},
-            point: {}
-        };
-    }
+export default function PointPage() {
+    const {addElement, deleteElement, baselines, deleteElements} = useContext(Context);
+    const [point, setPoint] = useState({});
+    const [associatedBaselines, setAssociatedBaselines] = useState({});
+    const [isActiveAddModal, setIsActiveAddModal] = useState(false);
+    const [isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
+    const [isActiveAlertModal, setIsActiveAlertModal] = useState(false);
 
-    componentDidMount() {
-        axios.get('/api/point/list')
-            .then(res => {
-                this.setState({points: res.data});
-                console.log(this.state.points);
-            });
-    }
-
-    savePoint(point) {
-        if (point.id) {
-            axios.post('/api/point/edit/' + point.id, point).then(res => {
-                if (res.status === 200) {
-                    const points = this.state.points.filter(p => p.id !== point.id);
-                    points.push(res.data);
-                    this.setState({points: points});
-                }
-            });
-        } else {
-            axios.post(`/api/point/add/?is_lr=${point.isLevelReference}`, point).then(res => {
-                if (res.status === 200) {
-                    const points = this.state.points;
-                    points.push(res.data);
-                    this.setState(points);
-                }
-            });
-        }
-    }
-
-    validateDelete(point){
-        axios.get(`/api/baseline/by_point/${point.id}`).then(res =>{
-            console.log(res);
-            if (res.status === 200){
-                const baselines = res.data;
-                this.openAlertModal(point,baselines);
-            } else {
-                this.delete(point);
-            }
-        })
-
-    }
-
-    openAlertModal(point, baselines){
-        const element = {
-            point : point,
-            baselines : baselines
-        };
-        this.setState({isActiveDeleteModal : false,isActiveAlertModal : true, element : element});
-    }
-
-    closeAlertModal = ({baselines,point},isEnable)=>{
-        console.log(isEnable);
-        console.log(this.state);
-        console.log(point);
-        console.log(baselines);
-        if (isEnable){
-            this.deleteBaseline(baselines);
-            setTimeout(()=>this.delete(point),1000);
-        }
-
-        this.setState({isActiveAlertModal : false, element : {}, point :{}});
-    };
-
-    delete(point) {
-        axios.delete('/api/point/delete/' + point.id).then(res => {
-            console.log(res.status);
-            if (res.status === 200) {
-                const points = this.state.points.filter(p => p.id !== point.id);
-                this.setState({points: points});
-            }
-        });
-    }
-
-    deleteBaseline(baselines){
-        axios.post(`/api/baseline/delete-list`,baselines).then(res=>{
-            console.log(res.data);
-        })
-    }
-
-    openAddModal = (point) => {
+    const openAddModal = (point) => {
         if (point && point.id) {
-            this.setState({point: point});
+            setPoint(point);
         }
-        this.setState({isActiveAddModal: true});
+        setIsActiveAddModal(true);
     };
 
-    openDeleteModal = (point) => {
-        this.setState({point: point});
-        this.setState({isActiveDeleteModal: true});
-    };
-
-    closeAddModal = (point, isEnable) => {
+    const closeAddModal = (point,isEnable) => {
         if (isEnable) {
-            this.savePoint(point);
+            addElement({element: point, type: 'points', root: 'point'});
         }
-        this.setState({isActiveAddModal: false, point: {}});
+        setPoint({});
+        setIsActiveAddModal(false);
     };
 
-    closeDeleteModal = (point, isEnable) => {
-        if (isEnable) {
-            this.validateDelete(point);
-        } else {
-            this.setState({isActiveDeleteModal: false, point: {}});
-        }
-
+    const openDeleteModal = (point) => {
+        setPoint(point);
+        setIsActiveDeleteModal(true);
     };
 
-
-    render() {
-        const element = this.state.element;
-        let alertMessage;
-        if (element.point && element.baselines){
-            let baseline = (element.baselines.length === 1) ? 'baseline' : 'baselines';
-            alertMessage = `If you want to delete point ${element.point.name} this ${baseline} ${element.baselines.map(baseline => baseline.name).join()} will also be deleted! `
+    const closeDeleteModal = (point, isEnable) => {
+        if (isEnable){
+            const associatedBaselines = getAssociatedBaselines(point);
+            if (associatedBaselines.length === 0){
+                deleteElement({element : point, type : 'points', root: 'point'});
+                setPoint({});
+            } else {
+                setAssociatedBaselines(associatedBaselines);
+                setIsActiveAlertModal(true);
+            }
         }
+        setIsActiveDeleteModal(false);
+    };
 
-        return (
-            <Context.Provider value={{openAddModal: this.openAddModal, openDeleteModal: this.openDeleteModal}}>
-                <div>
-                    <div className="container">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title text-center mt-5 mb-5">My Points List</h3>
-                                <PointTable points={this.state.points}/>
-                            </div>
-                            <div className="panel-body">
-                                <AddButton openAddModal={this.openAddModal}/>
-                                <AddPointModal isActiveModal={this.state.isActiveAddModal}
-                                               closeModal={this.closeAddModal}
-                                               point={this.state.point}/>
+    const closeAlertModal = (isEnable) =>{
+        if(isEnable){
+            deleteElements({elements : associatedBaselines, type : 'baselines', root : 'baseline'});
+            setTimeout(()=>deleteElement({element : point, type : 'points', root: 'point'}),500);
+        }
+        setIsActiveAlertModal(false);
+        setAssociatedBaselines([]);
+        setPoint({});
+    };
 
-                                <DeleteModal title="Delete point"
-                                             element={this.state.point}
-                                             isActiveModal={this.state.isActiveDeleteModal}
-                                             closeModal={this.closeDeleteModal}/>
-                                <AlertModal title="Delete baseline"
-                                            element={this.state.element}
-                                            isActiveModal={this.state.isActiveAlertModal}
-                                            closeModal={this.closeAlertModal}
-                                            message={alertMessage}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Context.Provider>
-        );
-    }
+    const getAssociatedBaselines = (point) =>{
+       return baselines.filter(bl => bl.pointStart.name === point.name || bl.pointEnd.name === point.name);
+    };
+
+    const tableTitle = 'Points Table';
+    const addTitle = (point && point.id) ? `Edit point ${point.name}` : 'Add new point';
+    const deleteTitle = `Delete point ${point.name}`;
+    const deleteBody = <p>Are you really want to delete point {point.name}?</p>;
+    const alertBody = <div>Baselines {baselines.map(bl => bl.name).join()} are associated with point {point.name}, they wil also be deleted</div>;
+
+    return (
+        <PointModalContext.Provider value={{openAddModal, openDeleteModal}}>
+            <Container>
+                <TableTitle title={tableTitle}/>
+                <PointTable/>
+                <AddButton onClick={openAddModal}/>
+                <ModalComplete isActive={isActiveAddModal} title={addTitle} close={closeAddModal}>
+                    <AddPointForm point={point} close={closeAddModal}/>
+                </ModalComplete>
+                <ModalComplete isActive={isActiveDeleteModal} title={deleteTitle} close={closeDeleteModal}>
+                    <ModalBody>
+                        {deleteBody}
+                    </ModalBody>
+                    <ModalFooter element={point} closeModal={closeDeleteModal}/>
+                </ModalComplete>
+                <ModalComplete isActive={isActiveAlertModal} title={deleteTitle} close={closeAlertModal}>
+                    <ModalBody>
+                        {alertBody}
+                    </ModalBody>
+                    <ModalFooter element={point} closeModal={closeAlertModal}/>
+                </ModalComplete>
+
+            </Container>
+        </PointModalContext.Provider>
+    )
 }
-
-export default PointPage;

@@ -4,7 +4,7 @@ import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
 import AddPointForm from "./AddPointForm";
-import {ModalContext} from "./PPage";
+import {PointModalContext} from "./PointPage";
 
 export function PointTable() {
     const {points} = useContext(Context);
@@ -34,7 +34,7 @@ export function PointTable() {
 
 function Item({point, index}) {
 
-    const {openAddModal, openDeleteModal} = useContext(ModalContext);
+    const {openAddModal, openDeleteModal} = useContext(PointModalContext);
     return (<tr>
             <td>{index + 1}</td>
             <td>{point.name}</td>
@@ -63,27 +63,3 @@ function Item({point, index}) {
     )
 }
 
-export function AddPointModal(props) {
-    let title = (props.point && props.point.id) ? 'Edit point' : 'Add Point';
-    return (
-        <ModalMain isActiveModal={props.isActiveModal}>
-            <ModalHeader title={title} closeModal={props.closeModal}/>
-            <ModalBody>
-                <AddPointForm closeModal={props.closeModal} point={props.point}/>
-            </ModalBody>
-        </ModalMain>
-    );
-}
-
-export function AlertModal(props){
-    console.log(props);
-    return(
-        <ModalMain isActiveModal={props.isActiveModal}>
-            <ModalHeader title={props.title} closeModal={props.closeModal} element={props.element}/>
-            <ModalBody>
-                {props.message}
-            </ModalBody>
-            <ModalFooter closeModal={props.closeModal} element={props.element}/>
-        </ModalMain>
-    )
-}
