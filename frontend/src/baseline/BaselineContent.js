@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
 import AddBaselineForm from "./AddBaselineForm";
 
 export function Table({baselines}) {
@@ -62,8 +62,10 @@ export function AddBaselineModal(props) {
         <ModalMain isActiveModal={props.isActiveModal}>
             <ModalHeader title={title} closeModal={props.closeModal}/>
             <ModalBody>
-                <AddBaselineForm baselines={props.baselines} points={props.points} closeModal={props.closeModal} baseline={props.baseline}/>
+                <AddBaselineForm baselines={props.baselines} points={props.points} closeModal={props.closeModal}
+                                 baseline={props.baseline}/>
             </ModalBody>
         </ModalMain>
     )
 }
+

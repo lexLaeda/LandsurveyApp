@@ -5,9 +5,9 @@ import ReactTooltip from 'react-tooltip';
 class AddPointForm extends React.Component {
     constructor(props) {
         super(props);
-        this.rules ={
-            isEnableToCreateLevelReference : false,
-            setIsEnable(){
+        this.rules = {
+            isEnableToCreateLevelReference: false,
+            setIsEnable() {
                 this.isEnableToCreateLevelReference = !this.isEnableToCreateLevelReference;
             }
         };
@@ -18,7 +18,7 @@ class AddPointForm extends React.Component {
             x: 0,
             y: 0,
             h: 0,
-            isNewPoint : true
+            isNewPoint: true
         };
         if (props.point && props.point.id) {
             this.state.id = props.point.id;
@@ -51,7 +51,7 @@ class AddPointForm extends React.Component {
     }
 
 
-    handleCheckBoxChange = () =>{
+    handleCheckBoxChange = () => {
         this.rules.setIsEnable();
     };
 
@@ -60,8 +60,9 @@ class AddPointForm extends React.Component {
 
         let $isEnableLevelReference;
 
-        if (this.state.isNewPoint){
-            $isEnableLevelReference = <CheckBox data-tip="hello world" label="Point is LevelReference" onChange={this.handleCheckBoxChange} />
+        if (this.state.isNewPoint) {
+            $isEnableLevelReference =
+                <CheckBox data-tip="hello world" label="Point is LevelReference" onChange={this.handleCheckBoxChange}/>
         }
         return (
             <form onSubmit={this.handleSubmit}>
@@ -74,7 +75,7 @@ class AddPointForm extends React.Component {
                 <TextInput type="number" label="H Coordinate" value={this.state.h} name="h"
                            handleChange={this.handleChange}/>
                 {$isEnableLevelReference}
-                <ReactTooltip />
+                <ReactTooltip/>
                 <FormModalFooter closeModal={this.props.closeModal}/>
             </form>
         )

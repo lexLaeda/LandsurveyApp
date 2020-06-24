@@ -13,8 +13,8 @@ class AddBaselineForm extends React.Component {
                 name: props.baseline.name,
                 pointStart: props.baseline.pointStart.id,
                 pointEnd: props.baseline.pointEnd.id,
-                errors : {},
-                baselines : []
+                errors: {},
+                baselines: []
             }
         } else {
             this.state = {
@@ -22,8 +22,8 @@ class AddBaselineForm extends React.Component {
                 name: '',
                 pointStart: 0,
                 pointEnd: 0,
-                errors : {},
-                baselines : []
+                errors: {},
+                baselines: []
             };
         }
         this.handleChange = this.handleChange.bind(this);
@@ -49,24 +49,24 @@ class AddBaselineForm extends React.Component {
         this.props.closeModal(baseline, true);
     }
 
-    handleValidation(){
+    handleValidation() {
         let isValid = true;
         const name = this.state.name;
         const errors = this.state.errors;
-        if(typeof name !== "undefined"){
-            if(!name.match(/^[a-zA-Z0-9]+$/)){
+        if (typeof name !== "undefined") {
+            if (!name.match(/^[a-zA-Z0-9]+$/)) {
                 isValid = false;
                 errors["name"] = "Only letters or nums";
             }
 
-            if (name.length >= 30){
+            if (name.length >= 30) {
                 isValid = false;
                 errors["name"] = "Maximum length of name is 30 symbols";
             }
 
             let sameName = this.state.baselines.filter((bl) => bl.name === name);
 
-            if (sameName.length === 1){
+            if (sameName.length === 1) {
                 isValid = false;
                 errors["name"] = "Baseline with this name already exists";
             }
@@ -78,11 +78,14 @@ class AddBaselineForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextInput type="text" label="name" value={this.state.name} name="name" handleChange={this.handleChange}/>
+                <TextInput type="text" label="name" value={this.state.name} name="name"
+                           handleChange={this.handleChange}/>
                 <span className="text-danger">{this.state.errors.name}</span>
-                <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart" elements={this.props.points} handleChange={this.handleChange}/>
+                <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart"
+                             elements={this.props.points} handleChange={this.handleChange}/>
                 <span className="text-danger">{this.state.errors.pointStart}</span>
-                <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd" elements={this.props.points} handleChange={this.handleChange}/>
+                <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd" elements={this.props.points}
+                             handleChange={this.handleChange}/>
                 <span className="text-danger">{this.state.error.pointEnd}</span>
                 <FormModalFooter closeModal={this.props.closeModal}/>
             </form>

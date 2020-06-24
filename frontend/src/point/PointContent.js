@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
 import AddPointForm from "./AddPointForm";
 
 export function PointTable(props) {
@@ -71,4 +71,17 @@ export function AddPointModal(props) {
             </ModalBody>
         </ModalMain>
     );
+}
+
+export function AlertModal(props){
+    console.log(props);
+    return(
+        <ModalMain isActiveModal={props.isActiveModal}>
+            <ModalHeader title={props.title} closeModal={props.closeModal} element={props.element}/>
+            <ModalBody>
+                {props.message}
+            </ModalBody>
+            <ModalFooter closeModal={props.closeModal} element={props.element}/>
+        </ModalMain>
+    )
 }

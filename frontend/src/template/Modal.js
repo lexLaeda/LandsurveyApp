@@ -7,36 +7,42 @@ export function ModalBody(props) {
         </div>
     );
 }
+
 export function ModalFooter(props) {
     return (
         <div className="modal-footer">
-            <button onClick={() => props.closeModal(props.element,false)} type="button"
-                    className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button onClick={() => props.closeModal(props.element,true)} type="button" className="btn btn-primary">Confirm delete</button>
+            <button onClick={() => props.closeModal(props.element, false)} type="button"
+                    className="btn btn-secondary" data-dismiss="modal">Cancel
+            </button>
+            <button onClick={() => props.closeModal(props.element, true)} type="button"
+                    className="btn btn-primary">Confirm delete
+            </button>
         </div>
     )
 }
+
 export function ModalHeader(props) {
     return (
         <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">{props.title}</h5>
-            <button onClick={() => props.closeModal(props.element,false)} type="button"
+            <button onClick={() => props.closeModal(props.element, false)} type="button"
                     className="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     );
 }
-export function ModalMain(props){
+
+export function ModalMain(props) {
     const largeModal = 'modal-dialog modal-xl';
     const standartModal = 'modal-dialog';
     let modalSize = '';
-    if (props.size === 'large'){
+    if (props.size === 'large') {
         modalSize = largeModal;
     } else {
-        modalSize =standartModal
+        modalSize = standartModal
     }
-    return(
+    return (
         <React.Fragment>
             {props.isActiveModal && (
                 <div>
@@ -51,6 +57,7 @@ export function ModalMain(props){
         </React.Fragment>
     );
 }
+
 export function DeleteModal(props) {
     return (
         <ModalMain isActiveModal={props.isActiveModal}>

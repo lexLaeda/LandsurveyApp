@@ -1,15 +1,14 @@
-
-function validateField(rule){
+function validateField(rule) {
     let errors = {};
-    if (rule.hasOwnProperty('length')){
-        if (!isValidLength({field})){
+    if (rule.hasOwnProperty('length')) {
+        if (!isValidLength({field})) {
 
         }
     }
 
-    return {errors : errors, isValid : true}
+    return {errors: errors, isValid: true}
 }
 
-function isValidLength({field, length}){
+function isValidLength({field, length}) {
 
 }

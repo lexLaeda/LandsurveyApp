@@ -3,6 +3,7 @@ package com.survey.mole.service;
 import com.survey.mole.exception.BaselineNotFoundException;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.survey.Baseline;
+import com.survey.mole.model.survey.Point;
 import com.survey.mole.repository.BaselineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,16 @@ public class BaselineServiceImpl implements BaselineService {
         baselineRepository.delete(baseline);
         long after = baselineRepository.count();
         return before - after == 1L;
+    }
+
+    @Override
+    public List<Baseline> findByPoint(Point point) {
+        return baselineRepository.findAllByPointsContains(point);
+    }
+
+    @Override
+    public Boolean deleteList(List<Baseline> baselines) {
+        baselineRepository.deleteAll(baselines);
+        return true;
     }
 }

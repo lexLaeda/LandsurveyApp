@@ -101,7 +101,6 @@ class EmployeeForm extends React.Component {
     };
 
 
-
     render() {
         const genders = ['M', 'F'];
         let {imagePreviewUrl} = this.state;

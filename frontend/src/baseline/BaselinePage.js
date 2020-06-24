@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import {AddBaselineModal, Table} from "./BaslineContent";
+import {AddBaselineModal, Table} from "./BaselineContent";
 import '../App.css';
 
 import {AddButton} from "../template/Control";
