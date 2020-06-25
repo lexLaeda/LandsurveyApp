@@ -37,8 +37,12 @@ export default function BLFrom({baseline, closeModal}) {
         setEqualPoints(pointStartId === pointEndId);
         setIsEmptyStart(!isPointStart);
         setIsEmptyEnd(!isPointEnd);
-        
-        if(isPointStart && isPointEnd && !pointStartId === pointEndId) {
+        console.log(isPointStart);
+        console.log(isPointEnd);
+        console.log(pointStartId === pointEndId);
+
+        if(isPointStart && isPointEnd && pointStartId !== pointEndId) {
+            console.log('сюда заходит');
             closeModal({
                 id: data.id,
                 name: data.name,
