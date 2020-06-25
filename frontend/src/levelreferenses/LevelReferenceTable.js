@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
-import AddLevelReferenceForm from "./AddLevelReferenceForm";
-import {LRModelContext} from "./LevelReferencePage";
+import {LRModalContext} from "./LevelReferencePage";
 
 export function LevelReferenceTable() {
     const {levelReferences} = useContext(Context);
@@ -31,7 +29,7 @@ export function LevelReferenceTable() {
 
 function Item({levelReference, index}) {
 
-    const {openAddModal, openDeleteModal} = useContext(LRModelContext);
+    const {openAddModal, openDeleteModal} = useContext(LRModalContext);
     return (
         <tr>
             <td>{index + 1}</td>
@@ -54,14 +52,3 @@ function Item({levelReference, index}) {
     )
 }
 
-export function AddLevelReferenceModal(props) {
-    let title = (props.levelReference && props.levelReference.id) ? 'Edit Level Reference' : 'Add new Level Reference';
-    return (
-        <ModalMain isActiveModal={props.isActiveModal}>
-            <ModalHeader title={title} closeModal={props.closeModal}/>
-            <ModalBody>
-                <AddLevelReferenceForm closeModal={props.closeModal} levelReference={props.levelReference}/>
-            </ModalBody>
-        </ModalMain>
-    );
-}

@@ -1,10 +1,12 @@
 import React, {useContext} from 'react';
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
+import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
 import AddBaselineForm from "./AddBaselineForm";
+import {BLModalContext} from "./BaselinePage";
 
-export function Table({baselines}) {
+export function BaselineTable() {
+    const {baselines} = useContext(Context);
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -29,7 +31,7 @@ export function Table({baselines}) {
 }
 
 function Item(props) {
-    const {openAddModal, openDeleteModal} = useContext(Context);
+    const {openAddModal, openDeleteModal} = useContext(BLModalContext);
     return (
         <tr>
             <td>{props.index + 1}</td>
@@ -56,16 +58,4 @@ function Item(props) {
     )
 }
 
-export function AddBaselineModal(props) {
-    let title = (props.baseline && props.baseline.id) ? 'Edit baseline' : 'Add new baseline';
-    return (
-        <ModalMain isActiveModal={props.isActiveModal}>
-            <ModalHeader title={title} closeModal={props.closeModal}/>
-            <ModalBody>
-                <AddBaselineForm baselines={props.baselines} points={props.points} closeModal={props.closeModal}
-                                 baseline={props.baseline}/>
-            </ModalBody>
-        </ModalMain>
-    )
-}
 

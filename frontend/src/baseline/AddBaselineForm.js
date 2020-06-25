@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormModalFooter, SelectInput, TextInput} from "../template/Control";
+import {ModalBody} from "../template/Modal";
 
 
 class AddBaselineForm extends React.Component {
@@ -43,6 +44,7 @@ class AddBaselineForm extends React.Component {
         const id = this.state.id;
         const pointStartId = this.state.pointStart;
         const pointEndId = this.state.pointEnd;
+        console.log(this.props.points);
         const pointStart = this.props.points.filter((point) => point.id == pointStartId)[0];
         const pointEnd = this.props.points.filter((point) => point.id == pointEndId)[0];
         const baseline = {id, name, pointStart, pointEnd};
@@ -77,18 +79,23 @@ class AddBaselineForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <TextInput type="text" label="name" value={this.state.name} name="name"
-                           handleChange={this.handleChange}/>
-                <span className="text-danger">{this.state.errors.name}</span>
-                <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart"
-                             elements={this.props.points} handleChange={this.handleChange}/>
-                <span className="text-danger">{this.state.errors.pointStart}</span>
-                <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd" elements={this.props.points}
-                             handleChange={this.handleChange}/>
-                <span className="text-danger">{this.state.error.pointEnd}</span>
-                <FormModalFooter closeModal={this.props.closeModal}/>
-            </form>
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <ModalBody>
+                        <TextInput type="text" label="name" value={this.state.name} name="name"
+                                   handleChange={this.handleChange}/>
+                        <span className="text-danger"></span>
+                        <SelectInput label="StartPoint" value={this.state.pointStart} name="pointStart"
+                                     elements={this.props.points} handleChange={this.handleChange}/>
+                        <span className="text-danger"></span>
+                        <SelectInput label="EndPoint" value={this.state.pointEnd} name="pointEnd"
+                                     elements={this.props.points}
+                                     handleChange={this.handleChange}/>
+                        <span className="text-danger"></span>
+                    </ModalBody>
+                    <FormModalFooter closeModal={this.props.closeModal}/>
+                </form>
+            </div>
         )
     }
 }

@@ -4,7 +4,6 @@ import Menu from "../template/Menu";
 import EmployeeTable, {AddEmployeeModal} from "./EmployeeContent";
 import axios from 'axios';
 import {AddButton} from "../template/Control";
-import {DeleteModal} from "../template/Modal";
 
 
 class EmployeePage extends Component {
@@ -126,10 +125,7 @@ class EmployeePage extends Component {
                     <AddEmployeeModal isActiveModal={this.state.isActiveAddModal}
                                       closeModal={this.closeAddModal}
                                       employee={this.state.employee}/>
-                    <DeleteModal title="Delete employee"
-                                 element={{id: this.state.employee.id, name: this.state.employee.fullName}}
-                                 isActiveModal={this.state.isActiveDeleteModal}
-                                 closeModal={this.closeDeleteModal}/>
+
                 </div>
             </Context.Provider>
         );

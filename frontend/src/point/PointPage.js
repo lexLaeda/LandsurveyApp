@@ -22,7 +22,7 @@ export default function PointPage() {
         setIsActiveAddModal(true);
     };
 
-    const closeAddModal = (point,isEnable) => {
+    const closeAddModal = (point, isEnable) => {
         if (isEnable) {
             addElement({element: point, type: 'points', root: 'point'});
         }
@@ -36,10 +36,10 @@ export default function PointPage() {
     };
 
     const closeDeleteModal = (point, isEnable) => {
-        if (isEnable){
+        if (isEnable) {
             const associatedBaselines = getAssociatedBaselines(point);
-            if (associatedBaselines.length === 0){
-                deleteElement({element : point, type : 'points', root: 'point'});
+            if (associatedBaselines.length === 0) {
+                deleteElement({element: point, type: 'points', root: 'point'});
                 setPoint({});
             } else {
                 setAssociatedBaselines(associatedBaselines);
@@ -49,25 +49,26 @@ export default function PointPage() {
         setIsActiveDeleteModal(false);
     };
 
-    const closeAlertModal = (isEnable) =>{
-        if(isEnable){
-            deleteElements({elements : associatedBaselines, type : 'baselines', root : 'baseline'});
-            setTimeout(()=>deleteElement({element : point, type : 'points', root: 'point'}),500);
+    const closeAlertModal = (isEnable) => {
+        if (isEnable) {
+            deleteElements({elements: associatedBaselines, type: 'baselines', root: 'baseline'});
+            setTimeout(() => deleteElement({element: point, type: 'points', root: 'point'}), 500);
         }
         setIsActiveAlertModal(false);
         setAssociatedBaselines([]);
         setPoint({});
     };
 
-    const getAssociatedBaselines = (point) =>{
-       return baselines.filter(bl => bl.pointStart.name === point.name || bl.pointEnd.name === point.name);
+    const getAssociatedBaselines = (point) => {
+        return baselines.filter(bl => bl.pointStart.name === point.name || bl.pointEnd.name === point.name);
     };
 
     const tableTitle = 'Points Table';
     const addTitle = (point && point.id) ? `Edit point ${point.name}` : 'Add new point';
     const deleteTitle = `Delete point ${point.name}`;
     const deleteBody = <p>Are you really want to delete point {point.name}?</p>;
-    const alertBody = <div>Baselines {baselines.map(bl => bl.name).join()} are associated with point {point.name}, they wil also be deleted</div>;
+    const alertBody = <div>Baselines {baselines.map(bl => bl.name).join()} are associated with point {point.name}, they
+        wil also be deleted</div>;
 
     return (
         <PointModalContext.Provider value={{openAddModal, openDeleteModal}}>

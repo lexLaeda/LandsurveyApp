@@ -1,118 +1,71 @@
-import React, {Component} from 'react'
-import axios from 'axios';
-import {AddBaselineModal, Table} from "./BaselineContent";
-import '../App.css';
+import {AddButton, Container, TableTitle} from "../template/Control";
+import React, {useContext, useState} from "react";
+import {BaselineTable} from "./BaselineContent";
+import Context from "../Context";
+import {ModalBody, ModalComplete, ModalFooter} from "../template/Modal";
+import BLForm from "./BLForm";
 
-import {AddButton} from "../template/Control";
-import Context from "../Context"
-import {DeleteModal} from "../template/Modal";
+export const BLModalContext = React.createContext({});
 
-class BaselinePage extends Component {
+export default function BaselinePage() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            baselines: [],
-            points: [],
-            isActiveDeleteModal: false,
-            isActiveAddModal: false,
-            baseline: {
-                id: '',
-                name: '',
-                pointStart: {},
-                pointEnd: {}
-            }
-        };
-    }
+    const {addElement, deleteElement, points} = useContext(Context);
+    const [baseline, setBaseline] = useState({});
+    const [isActiveAddModal, setIsActiveAddModal] = useState(false);
+    const [isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
 
-    componentDidMount() {
-        axios.get('/api/baseline/list').then(res => this.setState({baselines: res.data}));
-        axios.get('/api/point/list').then(res => this.setState({points: res.data}));
-
-    }
-
-    saveBaseline(baseline) {
-        if (baseline.id) {
-            axios.post('/api/baseline/edit/' + baseline.id, baseline).then(res => {
-                if (res.status === 200) {
-                    const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
-                    baselines.push(res.data);
-                    this.setState({baselines: baselines});
-                }
-            });
-        } else {
-            axios.post('/api/baseline/add', baseline).then(res => {
-                if (res.status === 200) {
-                    const baselines = this.state.baselines;
-                    baselines.push(res.data);
-                    this.setState({baselines: baselines});
-                }
-            })
-        }
-    }
-
-    deleteBaseline(baseline) {
-        axios.delete('/api/baseline/delete/' + baseline.id).then(res => {
-            if (res.status === 200) {
-                const baselines = this.state.baselines.filter(bl => bl.id !== baseline.id);
-                this.setState({baselines: baselines});
-            }
-        })
-    }
-
-    openDeleteModal = (baseline) => {
-        this.setState({isActiveDeleteModal: true, baseline: baseline})
-    };
-
-    closeDeleteModal = (baseline, isEnable) => {
-        if (isEnable) {
-            this.deleteBaseline(baseline);
-        }
-        this.setState({isActiveDeleteModal: false, baseline: {}});
-    };
-
-    openAddModal = (baseline) => {
+    const openAddModal = (baseline) => {
         if (baseline && baseline.id) {
-            this.setState({baseline: baseline});
+            setBaseline(baseline);
         }
-        this.setState({isActiveAddModal: true});
+        setIsActiveAddModal(true);
     };
 
-    closeAddModal = (baseline, isEnable) => {
+    const closeAddModal = (baseline, isEnable) => {
         if (isEnable) {
-            this.saveBaseline(baseline);
+            addElement({element: baseline, type: 'baselines', root: 'baseline'});
         }
-        this.setState({isActiveAddModal: false, baseline: {}});
+        setBaseline({});
+        setIsActiveAddModal(false);
     };
 
+    const openDeleteModal = (baseline) => {
+        setBaseline(baseline);
+        setIsActiveDeleteModal(true);
+    };
 
-    render() {
-        return (
-            <Context.Provider value={{openAddModal: this.openAddModal, openDeleteModal: this.openDeleteModal}}>
-                <div>
-                    <div className="container">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title text-center mt-5 mb-5">Baseline list</h3>
-                                <Table baselines={this.state.baselines}/>
-                            </div>
-                        </div>
-                        <AddButton openAddModal={this.openAddModal}/>
-                        <AddBaselineModal isActiveModal={this.state.isActiveAddModal}
-                                          closeModal={this.closeAddModal}
-                                          points={this.state.points}
-                                          baseline={this.state.baseline}
-                                          baselines={this.state.baselines}/>
+    const closeDeleteModal = (baseline, isEnable) => {
+        if (isEnable) {
+            deleteElement({element: baseline, type: 'baselines', root: 'baseline'});
+        }
+        setBaseline({});
+        setIsActiveDeleteModal(false);
+    };
 
-                        <DeleteModal title="Delete baseline"
-                                     element={this.state.baseline}
-                                     isActiveModal={this.state.isActiveDeleteModal}
-                                     closeModal={this.closeDeleteModal}/>
-                    </div>
-                </div>
-            </Context.Provider>
-        );
-    }
+    const tableTitle = 'Baseline Table';
+    const addTitle = (baseline && baseline.id) ? `Edit baseline ${baseline.name}` : 'Add new level reference';
+    console.log(baseline);
+    console.log(baseline.name);
+    const deleteTitle = `Delete baseline ${baseline.name}`;
+    const deleteBody = <p>Are you really want to delete baseline {baseline.name}?</p>;
+
+    return (
+
+        <BLModalContext.Provider value={{openAddModal, openDeleteModal}}>
+            <Container>
+                <TableTitle title={tableTitle}/>
+                <BaselineTable/>
+                <AddButton onClick={openAddModal}/>
+                <ModalComplete isActive={isActiveAddModal} title={addTitle} close={closeAddModal}>
+                    <BLForm baseline={baseline} closeModal={closeAddModal}/>
+                </ModalComplete>
+                <ModalComplete title={deleteTitle} isActive={isActiveDeleteModal} close={closeDeleteModal}>
+                    <ModalBody>
+                        {deleteBody}
+                    </ModalBody>
+                    <ModalFooter element={baseline} closeModal={closeDeleteModal}/>
+                </ModalComplete>
+            </Container>
+        </BLModalContext.Provider>
+    )
 }
-
-export default BaselinePage;

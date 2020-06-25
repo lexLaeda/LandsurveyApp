@@ -82,7 +82,7 @@ class AddPointForm extends React.Component {
                     </form>
                 </ModalBody>
 
-        </div>
+            </div>
         )
     }
 }

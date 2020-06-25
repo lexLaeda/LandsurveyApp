@@ -3,17 +3,14 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
-import BaselinePage from './baseline/BaselinePage'
 import './App.css';
 import EmployeePage from "./employee/EmployeePage";
-
 
 
 ReactDOM.render(
     <Router>
         <div>
             <Route exact path='/' component={App}/>
-            <Route path='/pvo/baseline' component={BaselinePage}/>
             <Route path='/tracking/employee/list' component={EmployeePage}/>
         </div>
     </Router>,

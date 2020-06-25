@@ -23,6 +23,18 @@ export function SelectInput(props) {
         </div>
     );
 }
+export function FuncSelectInput(props) {
+    return (
+        <div className="form-group">
+            <label htmlFor="firstPointSelect">{props.label}</label>
+            <select ref={props.register} name={props.name} className="form-control"
+                    id="firstPointSelect" >
+                <option>...</option>
+                {props.elements.map((element) => <option value={element.id} key={element.id}>{element.name}</option>)}
+            </select>
+        </div>
+    );
+}
 
 export function SelectInputText(props) {
 
@@ -47,6 +59,15 @@ export function TextInput(props) {
         </div>
     );
 }
+export function FuncTextInput(props) {
+    return (
+        <div className="form-group">
+            <label htmlFor="name">{props.label}</label>
+            <input maxLength="20" ref={props.register} name={props.name} type={props.type}
+                   step={props.step} className="form-control" id="name" required/>
+        </div>
+    );
+}
 
 export function AddButton({onClick}) {
     return (
@@ -66,7 +87,8 @@ export function CheckBox({label, onChange}) {
         </div>
     );
 }
-export function Container(props){
+
+export function Container(props) {
     return (
         <div className="container">
             <div className="panel panel-default">
@@ -77,8 +99,9 @@ export function Container(props){
         </div>
     );
 }
+
 export function TableTitle(props) {
-    return(
+    return (
         <h3 className="panel-title text-center mt-5 mb-5">{props.title}</h3>
     )
 }

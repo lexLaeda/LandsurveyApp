@@ -2,8 +2,6 @@ import React, {useContext} from 'react';
 
 import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalFooter, ModalHeader, ModalMain} from "../template/Modal";
-import AddPointForm from "./AddPointForm";
 import {PointModalContext} from "./PointPage";
 
 export function PointTable() {
