@@ -1,14 +1,14 @@
 import {ModalBody} from "../template/Modal";
 import {FormModalFooter, FuncSelectInput, FuncTextInput, SelectInput} from "../template/Control";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {useForm} from "react-hook-form";
 import Context from "../Context";
 
 
 export default function BLFrom({baseline, closeModal}) {
-    let equalPoints = false;
+
     let defaultValue = {};
-    if (baseline  && baseline.id){
+    if (baseline && baseline.id){
         defaultValue = {
             id:  baseline.id,
             name: baseline.name,
@@ -20,6 +20,9 @@ export default function BLFrom({baseline, closeModal}) {
     }
 
     const {points} = useContext(Context);
+    const [equalPoints,setEqualPoints] = useState(false);
+    const [isEmptyStart,setIsEmptyStart] = useState(false);
+    const [isEmptyEnd,setIsEmptyEnd] = useState(false);
 
     const {register, handleSubmit, errors} = useForm({
         defaultValues: defaultValue
@@ -28,32 +31,44 @@ export default function BLFrom({baseline, closeModal}) {
     const onSubmit = (data) => {
         const pointStartId = data.pointStart;
         const pointEndId = data.pointEnd;
-        if (pointStartId === pointEndId){
-            equalPoints = true;
-        } else {
+        const isPointStart = checkSelectInput(pointStartId);
+        const isPointEnd = checkSelectInput(pointEndId);
+
+        setEqualPoints(pointStartId === pointEndId);
+        setIsEmptyStart(!isPointStart);
+        setIsEmptyEnd(!isPointEnd);
+        
+        if(isPointStart && isPointEnd && !pointStartId === pointEndId) {
             closeModal({
                 id: data.id,
                 name: data.name,
                 pointStart: getPointById(data.pointStart),
                 pointEnd: getPointById(data.pointEnd),
                 created: data.created,
-                updated:data.updated
+                updated: data.updated
             },true);
         }
+    };
+
+    const checkSelectInput = (id) =>{
+        return parseInt(id,10);
     };
 
     const getPointById = (id)=>{
       let element = {};
       for (let p of points){
-          if (p.id === id){
+          if (p.id == id){
               element = p;
               return element;
           }
       }
+      return false;
 
     };
 
-    const pointsEqualsAlert = (equalPoints) ? <span className="text-danger">Choose another one, points should be different</span> : '';
+    const pointsEqualsAlert = (equalPoints) ? <p  className="text-danger">Choose another one, points should be different</p > : '';
+    const emptyPointStart = (isEmptyStart) ? <p  className="text-danger">Choose point</p > : '';
+    const emptyPointEnd = (isEmptyEnd) ? <p  className="text-danger">Choose point</p > : '';
 
     return (
         <div>
@@ -70,10 +85,12 @@ export default function BLFrom({baseline, closeModal}) {
                     <FuncSelectInput label="StartPoint" name="pointStart" register={register({
                         required: "Required"
                     })} elements={points}/>
+                    {emptyPointStart}
                     <FuncSelectInput label="EndPoint" name="pointEnd" register={register({
                         required: "Required"
                     })} elements={points}/>
                     {pointsEqualsAlert}
+                    {emptyPointEnd}
                 </ModalBody>
                 <FormModalFooter closeModal={closeModal}/>
             </form>

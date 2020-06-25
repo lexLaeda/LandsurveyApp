@@ -22,7 +22,8 @@ export default function BaselinePage() {
     };
 
     const closeAddModal = (baseline, isEnable) => {
-        if (isEnable) {
+        console.log(baseline);
+        if (isEnable && baseline && baseline.name) {
             addElement({element: baseline, type: 'baselines', root: 'baseline'});
         }
         setBaseline({});
