@@ -17,7 +17,10 @@ export default function Menu() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">Horizontal and Vertical Justification</Link>
+                            <Link className="nav-link" to="/" exact >Horizontal and Vertical Justification</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/tracking/employees">Employees</Link>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" id="navbarDropdown2" role="button"
@@ -25,7 +28,7 @@ export default function Menu() {
                                 Employee Tracking
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <Link className="dropdown-item" to="/tracking/employee/list">Employee list</Link>
+                                <Link className="dropdown-item" to="/tracking/employees">Employee list</Link>
                                 <a className="dropdown-item" href="/">Department table</a>
                                 <a className="dropdown-item" href="/">Department holidays</a>
                             </div>

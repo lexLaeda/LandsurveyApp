@@ -1,7 +1,7 @@
 import * as React from "react";
-import {CheckBox, FormModalFooter, TextInput} from "../template/Control";
+import {CheckBox, FormModalFooter, TextInput} from "../../template/Control";
 import ReactTooltip from 'react-tooltip';
-import {ModalBody} from "../template/Modal";
+import {ModalBody} from "../../template/Modal";
 
 class AddPointForm extends React.Component {
     constructor(props) {

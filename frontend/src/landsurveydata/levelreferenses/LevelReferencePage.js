@@ -1,8 +1,8 @@
-import {AddButton, Container, TableTitle} from "../template/Control";
+import {AddButton, Container, TableTitle} from "../../template/Control";
 import React, {useContext, useState} from "react";
 import {LevelReferenceTable} from "./LevelReferenceTable";
-import {ModalBody, ModalComplete, ModalFooter} from "../template/Modal";
-import Context from "../Context";
+import {ModalBody, ModalComplete, ModalFooter} from "../../template/Modal";
+import Context from "../../Context";
 import LevelReferenceForm from "./LevelReferenceForm";
 
 export const LRModalContext = React.createContext({});

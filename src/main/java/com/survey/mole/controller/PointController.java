@@ -1,6 +1,9 @@
 package com.survey.mole.controller;
 
+import com.survey.mole.dto.LevelReferenceDto;
+import com.survey.mole.dto.PairRequest;
 import com.survey.mole.dto.PointDto;
+import com.survey.mole.mapper.LevelReferenceMapper;
 import com.survey.mole.mapper.PointMapper;
 import com.survey.mole.model.survey.LevelReference;
 import com.survey.mole.model.survey.Point;
@@ -18,11 +21,14 @@ public class PointController {
     private PointService pointService;
 
     private PointMapper pointMapper;
+    private LevelReferenceMapper levelReferenceMapper;
 
     @Autowired
-    public PointController(PointService pointService, PointMapper pointMapper) {
+    public PointController(PointService pointService, PointMapper pointMapper,
+                           LevelReferenceMapper levelReferenceMapper) {
         this.pointService = pointService;
         this.pointMapper = pointMapper;
+        this.levelReferenceMapper = levelReferenceMapper;
     }
 
     @GetMapping("/list")
@@ -39,19 +45,20 @@ public class PointController {
         return pointMapper.toDto(save);
     }
 
-    @PostMapping("/add/")
-    public PointDto savePointAndLR(@RequestBody  PointDto pointDto, @RequestParam("is_lr") Boolean isLevelReference) {
+    @PostMapping("/add-pair")
+    public PairRequest savePointAndLR(@RequestBody PairRequest request) {
 
+        System.out.println(request);
+        PointDto pointDto = request.getPointDto();
+        LevelReferenceDto levelReferenceDto = request.getLevelReferenceDto();
+
+        LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         Point point = pointMapper.toEntity(pointDto);
-        if (isLevelReference){
-            LevelReference levelReference = new LevelReference();
-            levelReference.setName(point.getName());
-            levelReference.setElevation(point.getX());
-            point.setLevelReference(levelReference);
-        }
+        point.setLevelReference(levelReference);
 
-        Point save = pointService.save(point);
-        return pointMapper.toDto(save);
+        Point saveP = pointService.save(point);
+        LevelReference saveLR = saveP.getLevelReference();
+        return new PairRequest(pointMapper.toDto(saveP),levelReferenceMapper.toDto(saveLR));
     }
 
     @PostMapping("/edit/{id}")

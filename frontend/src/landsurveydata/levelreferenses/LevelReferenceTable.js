@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import Context from "../Context";
-import {Pencil, Trash} from "../template/Icons";
+import Context from "../../Context";
+import {Pencil, Trash} from "../../template/Icons";
 import {LRModalContext} from "./LevelReferencePage";
 
 export function LevelReferenceTable() {

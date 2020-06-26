@@ -1,5 +1,5 @@
-import {FormModalFooter, FuncTextInput, TextInput} from "../template/Control";
-import {ModalBody} from "../template/Modal";
+import {FormModalFooter, FuncTextInput, TextInput} from "../../template/Control";
+import {ModalBody} from "../../template/Modal";
 import React from "react";
 import {useForm} from "react-hook-form";
 

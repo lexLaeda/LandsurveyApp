@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 
-import Context from "../Context";
-import {Pencil, Trash} from "../template/Icons";
+import Context from "../../Context";
+import {Pencil, Trash} from "../../template/Icons";
 import {PointModalContext} from "./PointPage";
 
 export function PointTable() {

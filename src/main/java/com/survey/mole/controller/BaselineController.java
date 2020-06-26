@@ -76,7 +76,6 @@ public class BaselineController {
     public Boolean deleteBaselineList(@RequestBody List<BaselineDto> baselines) {
         List<Baseline> collect = baselines.stream().map(baselineDto -> baselineMapper.toEntity(baselineDto)).collect(Collectors.toList());
         Boolean aBoolean = baselineService.deleteList(collect);
-        System.out.println(aBoolean);
         return aBoolean;
     }
 }

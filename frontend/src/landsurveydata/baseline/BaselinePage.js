@@ -1,9 +1,9 @@
-import {AddButton, Container, TableTitle} from "../template/Control";
+import {AddButton, Container, TableTitle} from "../../template/Control";
 import React, {useContext, useState} from "react";
 import {BaselineTable} from "./BaselineContent";
-import Context from "../Context";
-import {ModalBody, ModalComplete, ModalFooter} from "../template/Modal";
-import BLForm from "./BLForm";
+import Context from "../../Context";
+import {ModalBody, ModalComplete, ModalFooter} from "../../template/Modal";
+import BLForm from "./BaselineForm";
 
 export const BLModalContext = React.createContext({});
 

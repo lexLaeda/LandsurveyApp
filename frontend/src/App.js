@@ -3,9 +3,10 @@ import Menu from './template/Menu';
 import './App.css';
 import axios from "axios";
 import Context from "./Context";
-import PointPage from "./point/PointPage";
-import LevelReferencePage from "./levelreferenses/LevelReferencePage";
-import BaselinePage from "./baseline/BaselinePage";
+import DataMainPage from "./landsurveydata/DataMainPage";
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import EmployeePage from "./employee/EmployeePage";
+import EmpPage from "./employee/EmpPage";
 
 class App extends Component {
     constructor(props) {
@@ -15,10 +16,16 @@ class App extends Component {
             points: [],
             baselines: [],
             levelReferences: [],
-            types: [{root: 'baseline', name: 'baselines'}, {
-                root: 'level-reference',
-                name: 'levelReferences'
-            }, {root: 'point', name: 'points'}],
+            employees: [],
+            departments: [],
+            posts: [],
+            types: [{root: 'baseline', name: 'baselines'},
+                {root: 'level-reference', name: 'levelReferences'},
+                {root: 'point', name: 'points'},
+                {root: 'post', name: 'posts'},
+                {root: 'department', name: 'departments'},
+                {root: 'employee', name: 'employees'}],
+
             element: {},
             isActiveDeleteModal: false,
             isActiveAddModal: false,
@@ -40,6 +47,22 @@ class App extends Component {
         })
     }
 
+    addPair = ({point, root}) => {
+        axios.post(`${this.apiRoot}/${root}/add-pair`, {
+            pointDto: point,
+            levelReferenceDto: {
+                name: point.name,
+                elevation: point.x
+            }
+        }).then(res => {
+            if (res.status === 200) {
+                const elementSaved = res.data;
+                this.saveToState({elementSaved: elementSaved.pointDto, type: 'points'});
+                this.saveToState({elementSaved: elementSaved.levelReferenceDto, type: 'levelReferences'});
+            }
+        })
+    };
+
     addElement = ({element, type, root}) => {
         let event;
         if (element.id) {
@@ -51,13 +74,16 @@ class App extends Component {
         axios.post(`${this.apiRoot}/${root}/${event}`, element).then(res => {
             if (res.status === 200) {
                 const elementSaved = res.data;
-                const elements = this.state[type];
-                const filteredElements = elements.filter(el => el.id !== elementSaved.id);
-                filteredElements.push(elementSaved);
-                this.setState({[type]: filteredElements});
+                this.saveToState({elementSaved, type});
             }
 
         })
+    };
+    saveToState = ({elementSaved, type}) => {
+        const elements = this.state[type];
+        const filteredElements = elements.filter(el => el.id !== elementSaved.id);
+        filteredElements.push(elementSaved);
+        this.setState({[type]: filteredElements});
     };
 
     deleteElement = ({element, type, root}) => {
@@ -70,11 +96,9 @@ class App extends Component {
     };
 
     deleteElements = ({elements, type, root}) => {
-
         axios.post(`${this.apiRoot}/${root}/delete-list`, elements).then(res => {
             if (res.status === 200) {
                 const filtered = this.state[type].filter(el => !elements.includes(el));
-                console.log(filtered);
                 this.setState({[type]: filtered})
             }
         });
@@ -86,40 +110,23 @@ class App extends Component {
                 baselines: this.state.baselines,
                 points: this.state.points,
                 levelReferences: this.state.levelReferences,
+                employees: this.state.employees,
+                posts: this.state.posts,
+                departments: this.state.departments,
                 addElement: this.addElement,
                 deleteElement: this.deleteElement,
-                deleteElements: this.deleteElements
+                deleteElements: this.deleteElements,
+                addPair: this.addPair
             }}>
                 <div>
-                    <Menu/>
-                    <div id="carouselExampleInterval" className="carousel slide" data-ride="carousel">
-                        <ol className="carousel-indicators">
-                            <li data-target="#carouselExampleInterval" data-slide-to="0" className="active"></li>
-                            <li data-target="#carouselExampleInterval" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleInterval" data-slide-to="2"></li>
-                        </ol>
-                        <div className="carousel-inner">
-                            <div className="carousel-item active" data-interval="10000">
-                                <PointPage/>
-                            </div>
-                            <div className="carousel-item" data-interval="2000">
-                                <BaselinePage/>
-                            </div>
-                            <div className="carousel-item">
-                                <LevelReferencePage/>
-                            </div>
-                        </div>
-                        <a className="carousel-control-prev" href="#carouselExampleInterval" role="button"
-                           data-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Previous</span>
-                        </a>
-                        <a className="carousel-control-next" href="#carouselExampleInterval" role="button"
-                           data-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Next</span>
-                        </a>
-                    </div>
+
+                    <BrowserRouter>
+                        <Menu/>
+                        <Switch>
+                            <Route path={'/'} exact component={DataMainPage}/>
+                            <Route path={'/tracking/employees'} component={EmpPage}/>
+                        </Switch>
+                    </BrowserRouter>
                 </div>
             </Context.Provider>
 

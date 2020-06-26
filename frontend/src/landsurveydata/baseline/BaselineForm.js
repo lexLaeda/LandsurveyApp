@@ -1,8 +1,8 @@
-import {ModalBody} from "../template/Modal";
-import {FormModalFooter, FuncSelectInput, FuncTextInput, SelectInput} from "../template/Control";
+import {ModalBody} from "../../template/Modal";
+import {FormModalFooter, FuncSelectInput, FuncTextInput, SelectInput} from "../../template/Control";
 import React, {useContext, useState} from "react";
 import {useForm} from "react-hook-form";
-import Context from "../Context";
+import Context from "../../Context";
 
 
 export default function BLFrom({baseline, closeModal}) {
@@ -67,7 +67,6 @@ export default function BLFrom({baseline, closeModal}) {
           }
       }
       return false;
-
     };
 
     const pointsEqualsAlert = (equalPoints) ? <p  className="text-danger">Choose another one, points should be different</p > : '';

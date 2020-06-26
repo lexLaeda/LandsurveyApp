@@ -112,7 +112,6 @@ class EmployeePage extends Component {
                 openAddModal: this.openAddModal
             }}>
                 <div>
-                    <Menu/>
                     <div className="container">
                         <div className="panel panel-default">
                             <div className="panel-heading">

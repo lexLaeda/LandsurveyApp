@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
-import Context from "../Context";
-import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
-import AddBaselineForm from "./AddBaselineForm";
+import Context from "../../Context";
+import {Pencil, Trash} from "../../template/Icons";
 import {BLModalContext} from "./BaselinePage";
 
 export function BaselineTable() {

@@ -79,10 +79,10 @@ export function AddButton({onClick}) {
     );
 }
 
-export function CheckBox({label, onChange}) {
+export function CheckBox({label, register, name}) {
     return (
         <div className="form-group form-check" data-tip="hello world">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={onChange}/>
+            <input type="checkbox" className="form-check-input" name={name} id="exampleCheck1" ref={register}/>
             <label className="form-check-label" htmlFor="exampleCheck1">{label}</label>
         </div>
     );

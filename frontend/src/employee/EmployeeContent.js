@@ -3,13 +3,14 @@ import Context from "../Context";
 import {Pencil, Trash} from "../template/Icons";
 import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
 import EmployeeForm from "./EmployeeForm";
+import {EmpModalContext} from "./EmpPage";
 
 
-function EmployeeTable({employees}) {
-    let elements = [];
-    if (employees) {
-        elements = employees;
-    }
+function EmployeeTable() {
+
+    const {employees} = useContext(Context);
+    console.log('blya');
+    console.log(employees);
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -29,7 +30,7 @@ function EmployeeTable({employees}) {
             </tr>
             </thead>
             <tbody>
-            {elements.map((employee, index) => {
+            {employees.map((employee, index) => {
                 return <Item employee={employee} key={employee.id} index={index}/>
             })
             }
@@ -39,7 +40,8 @@ function EmployeeTable({employees}) {
 }
 
 function Item({employee, index}) {
-    const {openAddModal, openDeleteModal, departments, posts, avatars} = useContext(Context);
+    const {departments, posts} = useContext(Context);
+    const {openAddModal,openDeleteModal,avatars} = useContext(EmpModalContext);
     let fullAddress = '';
     if (employee && employee.address) {
         fullAddress = concatFullAddress(employee.address.city, employee.address.street, employee.address.house, employee.address.apartment);
