@@ -12,18 +12,6 @@ import javax.annotation.PostConstruct;
 @RequestMapping("/api")
 public class AvatarController {
 
-    private static final String ROOT = "app/image/";
-
-    private static final String EMPLOYEE = "employee/";
-
-    private static final String DEPARTMENT = "department/";
-
-    private static final String DEFAULT = "default/";
-
-    private static final String SUF = ".png";
-
-    private static final String DEFAULT_IMAGE = ROOT + DEFAULT + "default" + SUF;
-
     private FileStorageService fileStorageService;
 
     @Autowired
@@ -31,28 +19,23 @@ public class AvatarController {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostConstruct
-    public void initStorage() {
-        this.fileStorageService.regStorage(ROOT + EMPLOYEE, ROOT + DEPARTMENT, ROOT + DEFAULT);
-    }
 
-    @PostMapping(value = "/image/", consumes = "multipart/form-data")
-    public Boolean saveEmployeeImage(@RequestParam("file") MultipartFile file, @RequestParam("dir") String dir, @RequestParam("id") String id) {
-        Boolean isSaved = fileStorageService.saveFile(ROOT + dir + "/" + id + SUF, file);
+
+    @PostMapping(value = "/image/{root}/", consumes = "multipart/form-data")
+    public Boolean saveImage(@PathVariable("root") String root, @RequestParam("file") MultipartFile file, @RequestParam("id") Long id) {
+        Boolean isSaved = fileStorageService.saveImage(root,id, file);
         return isSaved;
     }
 
 
-    @GetMapping("/image/")
-    public InputStreamResource downloadImage(@RequestParam("id") Long id, @RequestParam("dir") String dir) {
-        if (id == null) {
-            return fileStorageService.loadFile(DEFAULT_IMAGE);
-        }
-        InputStreamResource resource = fileStorageService.loadFile(ROOT + dir + "/" + id + SUF);
-        if (resource == null) {
-            return fileStorageService.loadFile(DEFAULT_IMAGE);
-        }
-
-        return resource;
+    @GetMapping("/image/{root}/")
+    public InputStreamResource downloadImage(@PathVariable("root") String root,@RequestParam("id") Long id) {
+        return fileStorageService.loadImage(root,id);
     }
+
+    @DeleteMapping("/image/{root}/{id}")
+    public Boolean deleteFile(@PathVariable("root") String root, @PathVariable("id") Long id){
+        return fileStorageService.deleteFile(root,id);
+    }
+
 }

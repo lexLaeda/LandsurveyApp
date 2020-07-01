@@ -2,14 +2,13 @@ import {PointTable} from "./PointContent";
 import React, {useContext, useState} from "react";
 import {AddButton, Container, TableTitle} from "../../template/Control";
 import {ModalBody, ModalComplete, ModalFooter} from "../../template/Modal";
-import AddPointForm from "./AddPointForm";
 import Context from "../../Context";
 import PForm from "./PForm";
 
 export const PointModalContext = React.createContext({});
 
 export default function PointPage() {
-    const {addElement, deleteElement,addPair, baselines, deleteElements} = useContext(Context);
+    const {addElement, deleteElement, addPair, baselines, deleteElements} = useContext(Context);
     const [point, setPoint] = useState({});
     const [associatedBaselines, setAssociatedBaselines] = useState({});
     const [isActiveAddModal, setIsActiveAddModal] = useState(false);
@@ -25,9 +24,9 @@ export default function PointPage() {
 
     const closeAddModal = (point, isEnable) => {
         if (isEnable) {
-            if (point.isLR){
-                addPair({point : point,root: 'point'});
-            }else {
+            if (point.isLR) {
+                addPair({point: point, root: 'point'});
+            } else {
                 addElement({element: point, type: 'points', root: 'point'});
             }
 

@@ -50,7 +50,7 @@ export function ModalMain(props) {
                     <div className="modal show" id="deleteBaseline" tabIndex="-1" role="dialog"
                          style={{display: 'block'}}>
                         <div className={modalSize} role="document">
-                            <div className="modal-content">{props.children}</div>
+                            <div className="modal-content ">{props.children}</div>
                         </div>
                     </div>
                 </div>)}
@@ -60,7 +60,7 @@ export function ModalMain(props) {
 
 export function ModalComplete(props) {
     return (
-        <ModalMain isActiveModal={props.isActive}>
+        <ModalMain isActiveModal={props.isActive} size={props.size}>
             <ModalHeader title={props.title} closeModal={props.close}/>
             {props.children}
         </ModalMain>

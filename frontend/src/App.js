@@ -5,8 +5,8 @@ import axios from "axios";
 import Context from "./Context";
 import DataMainPage from "./landsurveydata/DataMainPage";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import EmployeePage from "./employee/EmployeePage";
-import EmpPage from "./employee/EmpPage";
+import EmpPage from "./tracking/employee/EmpPage";
+import {Footer} from "./template/Control";
 
 class App extends Component {
     constructor(props) {
@@ -63,13 +63,37 @@ class App extends Component {
         })
     };
 
-    addElement = ({element, type, root}) => {
-        let event;
+    getEventType = ({element}) => {
         if (element.id) {
-            event = `edit/${element.id}`;
+            return `edit/${element.id}`;
         } else {
-            event = 'add';
+            return 'add';
         }
+    };
+
+    addElementWithAvatar = ({element, type, root, formData}) => {
+        const event = this.getEventType({element});
+        axios.post(`${this.apiRoot}/${root}/${event}`, element).then(res => {
+            if (res.status === 200) {
+                const elementSaved = res.data;
+                this.saveToState({elementSaved, type});
+                this.saveFile({file: formData, url: `${this.apiRoot}/image/${root}/?id=${res.data.id}`});
+            }
+        })
+    };
+
+    saveFile = ({file, url}) => {
+        const data = new FormData();
+        data.append('file', file);
+        axios.post(url, data).then(res => {
+            if (res.status === 200) {
+                console.log(res);
+            }
+        })
+    };
+
+    addElement = ({element, type, root}) => {
+        const event = this.getEventType({element});
 
         axios.post(`${this.apiRoot}/${root}/${event}`, element).then(res => {
             if (res.status === 200) {
@@ -95,6 +119,15 @@ class App extends Component {
         });
     };
 
+    deleteElementWithAvatar = ({element, type, root}) => {
+        this.deleteElement({element, type, root});
+        this.deleteAvatar({root,id: element.id});
+    };
+
+    deleteAvatar = ({root,id}) =>{
+        axios.delete(`${this.apiRoot}/image/${root}/${id}`).then(res => console.log(res));
+    };
+
     deleteElements = ({elements, type, root}) => {
         axios.post(`${this.apiRoot}/${root}/delete-list`, elements).then(res => {
             if (res.status === 200) {
@@ -114,18 +147,23 @@ class App extends Component {
                 posts: this.state.posts,
                 departments: this.state.departments,
                 addElement: this.addElement,
+                addElementWithAvatar: this.addElementWithAvatar,
                 deleteElement: this.deleteElement,
+                deleteElementWithAvatar: this.deleteElementWithAvatar,
                 deleteElements: this.deleteElements,
                 addPair: this.addPair
             }}>
-                <div>
-
+                <div className={'main-wrapper'}>
                     <BrowserRouter>
                         <Menu/>
-                        <Switch>
-                            <Route path={'/'} exact component={DataMainPage}/>
-                            <Route path={'/tracking/employees'} component={EmpPage}/>
-                        </Switch>
+                        <div>
+                            <Switch>
+                                <Route path={'/'} exact component={DataMainPage}/>
+                                <Route path={'/tracking/employees'} component={EmpPage}/>
+                                <Route path={'/tracking/departments'} exact component={DataMainPage}/>
+                            </Switch>
+                        </div>
+                        <Footer/>
                     </BrowserRouter>
                 </div>
             </Context.Provider>

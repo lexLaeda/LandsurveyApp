@@ -44,6 +44,9 @@ public class Employee extends AbstractEntity {
     @Column(name = "is_remote")
     private Boolean isRemote;
 
+    @Column
+    private String imagePath;
+
     @JoinColumn(name = "address_id")
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
@@ -59,4 +62,6 @@ public class Employee extends AbstractEntity {
     @JoinColumn(name = "department_id")
     @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
+
+
 }

@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import Context from "../Context";
-import Menu from "../template/Menu";
+import Context from "../../Context";
 import EmployeeTable, {AddEmployeeModal} from "./EmployeeContent";
 import axios from 'axios';
-import {AddButton} from "../template/Control";
+import {AddButton} from "../../template/Control";
 
 
 class EmployeePage extends Component {

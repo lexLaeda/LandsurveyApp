@@ -40,8 +40,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public EmployeeDto addNewCode(@RequestBody EmployeeDto employeeDto) {
-        System.out.println("Дебажим добавление!!!!");
+    public EmployeeDto addNewEmployee(@RequestBody EmployeeDto employeeDto) {
         System.out.println(employeeDto);
         Employee employee = employeeMapper.toEntity(employeeDto);
         Employee save = employeeService.save(employee);
@@ -49,14 +48,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/edit/{id}")
-    public EmployeeDto editBaseline(@PathVariable("id") Long id, @RequestBody EmployeeDto employeeDto) {
+    public EmployeeDto editEmployee(@PathVariable("id") Long id, @RequestBody EmployeeDto employeeDto) {
         Employee employee = employeeMapper.toEntity(employeeDto);
         Employee update = employeeService.update(id, employee);
         return employeeMapper.toDto(update);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deleteEmployee(@PathVariable("id") Long id) {
         Employee byId = employeeService.findById(id);
         return employeeService.delete(byId);
     }

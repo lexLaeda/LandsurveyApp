@@ -17,7 +17,7 @@ export default function Menu() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/" exact >Horizontal and Vertical Justification</Link>
+                            <Link className="nav-link" to="/" exact>Horizontal and Vertical Justification</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/tracking/employees">Employees</Link>

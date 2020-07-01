@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormModalFooter, SelectInput, SelectInputText, TextInput} from "../template/Control";
+import {FormModalFooter, SelectInput, SelectInputText, TextInput} from "../../template/Control";
 
 class EmployeeForm extends React.Component {
 

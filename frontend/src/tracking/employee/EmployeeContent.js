@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
-import Context from "../Context";
-import {Pencil, Trash} from "../template/Icons";
-import {ModalBody, ModalHeader, ModalMain} from "../template/Modal";
+import Context from "../../Context";
+import {Pencil, Trash} from "../../template/Icons";
+import {ModalBody, ModalHeader, ModalMain} from "../../template/Modal";
 import EmployeeForm from "./EmployeeForm";
 import {EmpModalContext} from "./EmpPage";
 
@@ -9,8 +9,6 @@ import {EmpModalContext} from "./EmpPage";
 function EmployeeTable() {
 
     const {employees} = useContext(Context);
-    console.log('blya');
-    console.log(employees);
     return (
         <table className="table table-hover">
             <thead className="thead-light">
@@ -41,7 +39,7 @@ function EmployeeTable() {
 
 function Item({employee, index}) {
     const {departments, posts} = useContext(Context);
-    const {openAddModal,openDeleteModal,avatars} = useContext(EmpModalContext);
+    const {openAddModal, openDeleteModal, avatars} = useContext(EmpModalContext);
     let fullAddress = '';
     if (employee && employee.address) {
         fullAddress = concatFullAddress(employee.address.city, employee.address.street, employee.address.house, employee.address.apartment);
@@ -58,11 +56,11 @@ function Item({employee, index}) {
     if (avatars) {
         employeeAvatars = avatars.filter(element => element.id === employee.id);
     }
-
+    console.log(employee);
     if (employeeAvatars && employeeAvatars.length === 1) {
         imageSrc = employeeAvatars[0].imagePreviewUrl;
     } else {
-        imageSrc = '/api/image/?id=' + employee.id + "&dir=employee";
+        imageSrc = (employee.id) ? `/api/image/employee/?id=${employee.id}` : `/api/image/employee/?id=-1`;
     }
 
 

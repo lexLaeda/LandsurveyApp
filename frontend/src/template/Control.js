@@ -23,12 +23,13 @@ export function SelectInput(props) {
         </div>
     );
 }
+
 export function FuncSelectInput(props) {
     return (
         <div className="form-group">
             <label htmlFor="firstPointSelect">{props.label}</label>
             <select ref={props.register} name={props.name} className="form-control"
-                    id="firstPointSelect" >
+                    id="firstPointSelect">
                 <option>...</option>
                 {props.elements.map((element) => <option value={element.id} key={element.id}>{element.name}</option>)}
             </select>
@@ -41,7 +42,7 @@ export function SelectInputText(props) {
     return (
         <div className="form-group">
             <label htmlFor="firstPointSelect">{props.label}</label>
-            <select value={props.value} name={props.name} onChange={props.handleChange} className="form-control"
+            <select name={props.name} ref={props.register} className="form-control"
                     id="firstPointSelect" required>
                 <option>...</option>
                 {props.elements.map((element, index) => <option key={index} value={element}>{element}</option>)}
@@ -59,6 +60,7 @@ export function TextInput(props) {
         </div>
     );
 }
+
 export function FuncTextInput(props) {
     return (
         <div className="form-group">
@@ -105,3 +107,15 @@ export function TableTitle(props) {
         <h3 className="panel-title text-center mt-5 mb-5">{props.title}</h3>
     )
 }
+
+export const Footer = () => {
+
+    return (
+        <footer className="app-footer">
+            <div className="container p-3 p-md-5">
+                Developed by Aleksey Ermakov. See more projects on <a href={'https://github.com/lexLaeda'}> my
+                Github</a>
+            </div>
+        </footer>
+    )
+};
