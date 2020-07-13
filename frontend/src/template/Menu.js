@@ -29,7 +29,7 @@ export default function Menu() {
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown2">
                                 <Link className="dropdown-item" to="/tracking/employees">Employee list</Link>
-                                <a className="dropdown-item" href="/">Department table</a>
+                                <a className="dropdown-item" href="/tracking/departments">Department table</a>
                                 <a className="dropdown-item" href="/">Department holidays</a>
                             </div>
                         </li>

@@ -73,3 +73,15 @@ body,
 .modal-dialog-size {
     max-width: max-content;
 }
+
+.card {
+    width: 18rem;
+}
+.department-card {
+    height: 100%;
+}
+
+.department-card-body {
+    display: flex;
+    flex-direction: column;
+}

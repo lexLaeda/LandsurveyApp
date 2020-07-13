@@ -7,6 +7,7 @@ import DataMainPage from "./landsurveydata/DataMainPage";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import EmpPage from "./tracking/employee/EmpPage";
 import {Footer} from "./template/Control";
+import DepartmentPage from "./tracking/department/DepartmentPage";
 
 class App extends Component {
     constructor(props) {
@@ -160,7 +161,7 @@ class App extends Component {
                             <Switch>
                                 <Route path={'/'} exact component={DataMainPage}/>
                                 <Route path={'/tracking/employees'} component={EmpPage}/>
-                                <Route path={'/tracking/departments'} exact component={DataMainPage}/>
+                                <Route path={'/tracking/departments'} exact component={DepartmentPage}/>
                             </Switch>
                         </div>
                         <Footer/>

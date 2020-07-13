@@ -119,3 +119,20 @@ export const Footer = () => {
         </footer>
     )
 };
+
+
+export const Tabs = ({elements}) => {
+    return(
+        <ul className="nav nav-tabs mt-4">
+            {elements.map( element => <TabItem element={element}/>)}
+        </ul>
+    );
+};
+
+const TabItem = ({element}) => {
+    return (
+        <li className="nav-item">
+            <a className="nav-link active" href="#">{element}</a>
+        </li>
+    );
+};
