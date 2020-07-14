@@ -85,3 +85,7 @@ body,
     display: flex;
     flex-direction: column;
 }
+
+.table-background {
+    background-color: #D32F2F;
+}

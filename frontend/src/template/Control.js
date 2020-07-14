@@ -101,6 +101,17 @@ export function Container(props) {
         </div>
     );
 }
+export function ContainerFluid(props) {
+    return (
+        <div className="container-fluid">
+            <div className="panel panel-default">
+                <div className="panel-heading">
+                    {props.children}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export function TableTitle(props) {
     return (
@@ -121,18 +132,20 @@ export const Footer = () => {
 };
 
 
-export const Tabs = ({elements}) => {
+export const Tabs = ({elements, activeId, setActiveId}) => {
+    const active = "active";
     return(
         <ul className="nav nav-tabs mt-4">
-            {elements.map( element => <TabItem element={element}/>)}
+            {elements.map( element => <TabItem element={element} active={activeId === element.toString() ? active : ""} setActiveId={setActiveId} key={element.toString()}/>)}
         </ul>
+
     );
 };
 
-const TabItem = ({element}) => {
+const TabItem = ({element,active, setActiveId}) => {
     return (
         <li className="nav-item">
-            <a className="nav-link active" href="#">{element}</a>
+            <a onClick={()=>setActiveId(element.toString())} className={"nav-link " + active} href="#" >{element}</a>
         </li>
     );
 };

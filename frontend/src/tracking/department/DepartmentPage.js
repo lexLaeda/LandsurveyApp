@@ -21,10 +21,12 @@ export default function DepartmentPage() {
         setIsActiveAttendance(false);
     };
     return (
-        <Container>
-            <div className="row">
-                {isActiveAttendance ? <DepartmentAttendance department={department} closeAttendance={closeAttendance}/> : departments.map(department => <DepartmentItem department={department} key={department.id} openAttendance={openAttendance}/>)}
-            </div>
-        </Container>
+        <div>
+        {isActiveAttendance ? <DepartmentAttendance department={department} closeAttendance={closeAttendance}/> : <Container>
+                <div className="row">
+                    {departments.map(department => <DepartmentItem department={department} key={department.id} openAttendance={openAttendance}/>)}
+                </div>
+            </Container>}
+        </div>
     )
 }
