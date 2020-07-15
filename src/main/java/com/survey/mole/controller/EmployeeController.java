@@ -2,7 +2,9 @@ package com.survey.mole.controller;
 
 import com.survey.mole.dto.EmployeeDto;
 import com.survey.mole.mapper.EmployeeMapper;
+import com.survey.mole.model.worktracker.Department;
 import com.survey.mole.model.worktracker.employee.Employee;
+import com.survey.mole.service.worktracker.DepartmentService;
 import com.survey.mole.service.worktracker.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,30 +20,40 @@ public class EmployeeController {
 
     private EmployeeMapper employeeMapper;
 
+    private DepartmentService departmentService;
+
     @Autowired
-    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper, DepartmentService departmentService) {
         this.employeeService = employeeService;
         this.employeeMapper = employeeMapper;
+        this.departmentService = departmentService;
     }
 
 
     @GetMapping("/{id}")
-    public EmployeeDto findCodeById(@PathVariable("id") Long id) {
+    public EmployeeDto findEmployeeById(@PathVariable("id") Long id) {
         Employee byId = employeeService.findById(id);
         return employeeMapper.toDto(byId);
     }
 
     @GetMapping("/list")
     public List<EmployeeDto> findAll() {
-        System.out.println("Тут!!!!!");
+
         return employeeService.findAll().stream()
+                .map(employee -> employeeMapper.toDto(employee))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/list/")
+    public List<EmployeeDto> findAllByDepartment(@RequestParam("dep") Long departmentId){
+        Department department = departmentService.findById(departmentId);
+        return employeeService.findByDepartment(department).stream()
                 .map(employee -> employeeMapper.toDto(employee))
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
     public EmployeeDto addNewEmployee(@RequestBody EmployeeDto employeeDto) {
-        System.out.println(employeeDto);
         Employee employee = employeeMapper.toEntity(employeeDto);
         Employee save = employeeService.save(employee);
         return employeeMapper.toDto(save);

@@ -2,6 +2,7 @@ import {Container, ContainerFluid, Tabs} from "../../../template/Control";
 import React, {useContext, useState} from "react";
 import MonthTable from "./MonthTable";
 import Context from "../../../Context";
+import axios from "axios";
 
 function DepartmentAttendance({department, closeAttendance}) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -11,11 +12,17 @@ function DepartmentAttendance({department, closeAttendance}) {
     }
     const [activeMonth, setActiveMonth] = useState("January");
     const [activeYear, setActiveYear] = useState(2020);
+    const [employees, setEmployees] = useState([]);
     const {holidays} = useContext(Context);
+
+    axios.get(`/api/employee/list/?dep=${department.id}`).then((res) =>{
+        const employees = res.data;
+        setEmployees(employees);
+    });
+
     const handleChange = (event) =>{
         setActiveYear(event.target.value);
     };
-
 
     return (
         <ContainerFluid>
@@ -36,7 +43,7 @@ function DepartmentAttendance({department, closeAttendance}) {
 
             </div>
             <div>
-                <MonthTable employeeHistories={[]} month={months.indexOf(activeMonth)} year={activeYear} yearHolidays={holidays}/>
+                <MonthTable employees={employees} month={months.indexOf(activeMonth)} year={activeYear} yearHolidays={holidays}/>
             </div>
         </ContainerFluid>
     )

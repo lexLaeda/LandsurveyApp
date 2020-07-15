@@ -21,7 +21,7 @@ public class EmployeeDto extends AbstractDto {
 
     private LocalDate birthday;
 
-    private Character gender;
+    private String gender;
 
     private Boolean isRemote;
 
@@ -32,4 +32,6 @@ public class EmployeeDto extends AbstractDto {
     private Long postId;
 
     private Long departmentId;
+
+    private EmployeeHistoryDto employeeHistoryDto;
 }

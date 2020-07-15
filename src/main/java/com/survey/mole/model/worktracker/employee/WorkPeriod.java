@@ -5,6 +5,7 @@ import com.survey.mole.model.worktracker.Department;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
+@ToString
 public class WorkPeriod extends AbstractEntity {
 
     @Id
@@ -24,10 +26,10 @@ public class WorkPeriod extends AbstractEntity {
     @Column(name = "start")
     private LocalDate start;
 
-    @Column(name = "end")
+    @Column(name = "end_data")
     private LocalDate end;
 
-    @EqualsAndHashCode.Exclude
+
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id")
     private Department department;

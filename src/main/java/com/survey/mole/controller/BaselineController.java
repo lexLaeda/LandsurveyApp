@@ -39,7 +39,6 @@ public class BaselineController {
     public List<BaselineDto> findAll() {
         return baselineService.findAll().stream()
                 .map(baseline -> baselineMapper.toDto(baseline))
-                .peek(System.out::println)
                 .collect(Collectors.toList());
     }
 

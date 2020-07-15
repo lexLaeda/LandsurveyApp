@@ -39,13 +39,10 @@ public class Employee extends AbstractEntity {
 
     @Column(name = "gender")
     @EqualsAndHashCode.Include
-    private Character gender;
+    private String gender;
 
     @Column(name = "is_remote")
     private Boolean isRemote;
-
-    @Column
-    private String imagePath;
 
     @JoinColumn(name = "address_id")
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -63,5 +60,8 @@ public class Employee extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.MERGE)
     private Department department;
 
-
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_history")
+    @EqualsAndHashCode.Exclude
+    private EmployeeHistory employeeHistory;
 }

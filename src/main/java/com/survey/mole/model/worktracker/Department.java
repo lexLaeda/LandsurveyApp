@@ -16,6 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Department extends AbstractEntity {
 
     @Id
@@ -26,6 +27,7 @@ public class Department extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();
 }

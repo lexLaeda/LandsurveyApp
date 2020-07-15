@@ -3,6 +3,8 @@ package com.survey.mole.service.worktracker;
 import com.survey.mole.exception.ElementNotFoundException;
 import com.survey.mole.model.worktracker.Department;
 import com.survey.mole.model.worktracker.employee.Employee;
+import com.survey.mole.model.worktracker.employee.EmployeeHistory;
+import com.survey.mole.model.worktracker.employee.WorkPeriod;
 import com.survey.mole.repository.worktracker.employee.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,9 @@ class EmployeeServiceImplTest {
     @Mock
     private EmployeeRepository repository;
 
+    @Mock
+    private EmployeeHistoryService employeeHistoryService;
+
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
@@ -29,6 +35,9 @@ class EmployeeServiceImplTest {
     private static Employee two = new Employee();
     private static Employee three = new Employee();
     private static Department department = new Department();
+    private static EmployeeHistory employeeHistory = new EmployeeHistory();
+    private static WorkPeriod workPeriod = new WorkPeriod();
+    private static LocalDate today = LocalDate.now();
 
     private static List<Employee> employees = new ArrayList<>();
 
@@ -40,10 +49,16 @@ class EmployeeServiceImplTest {
         employees.add(one);
         two.setId(2L);
         two.setFirstName("two");
+        two.setDepartment(department);
         employees.add(two);
         three.setId(3L);
         three.setFirstName("three");
+        three.setDepartment(department);
 
+        employeeHistory.setEmployee(three);
+        workPeriod.setStart(today);
+        workPeriod.setDepartment(department);
+        employeeHistory.addNewPeriod(workPeriod);
     }
 
     @BeforeEach
@@ -54,6 +69,7 @@ class EmployeeServiceImplTest {
     @Test
     void save() {
         Mockito.when(repository.saveAndFlush(three)).thenReturn(three);
+
         assertEquals(three, employeeService.save(three));
     }
 

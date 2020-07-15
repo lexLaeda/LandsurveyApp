@@ -25,7 +25,7 @@ public class LevelReferenceController {
     }
 
     @GetMapping("/{id}")
-    public LevelReferenceDto findBaselineById(@PathVariable("id") Long id) {
+    public LevelReferenceDto findLevelReferenceById(@PathVariable("id") Long id) {
         LevelReference byId = levelReferenceService.findById(id);
         return levelReferenceMapper.toDto(byId);
     }
@@ -34,26 +34,25 @@ public class LevelReferenceController {
     public List<LevelReferenceDto> findAll() {
         return levelReferenceService.findAll().stream()
                 .map(levelReference -> levelReferenceMapper.toDto(levelReference))
-                .peek(System.out::println)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
-    public LevelReferenceDto addNewBaseline(@RequestBody LevelReferenceDto levelReferenceDto) {
+    public LevelReferenceDto addNewLevelReference(@RequestBody LevelReferenceDto levelReferenceDto) {
         LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         LevelReference save = levelReferenceService.save(levelReference);
         return levelReferenceMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public LevelReferenceDto editBaseline(@PathVariable("id") Long id,@RequestBody  LevelReferenceDto levelReferenceDto) {
+    public LevelReferenceDto editLevelReference(@PathVariable("id") Long id,@RequestBody  LevelReferenceDto levelReferenceDto) {
         LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         LevelReference save = levelReferenceService.update(id, levelReference);
         return levelReferenceMapper.toDto(save);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deleteLevelReference(@PathVariable("id") Long id) {
         LevelReference byId = levelReferenceService.findById(id);
         return levelReferenceService.delete(byId);
     }
