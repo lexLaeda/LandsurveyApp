@@ -37,12 +37,12 @@ public class CodeController {
     }
 
     @PostMapping("/edit/{id}")
-    public Code editBaseline(@PathVariable("id") Long id, @RequestBody Code code) {
+    public Code editCode(@PathVariable("id") Long id, @RequestBody Code code) {
         return codeService.update(id, code);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deleteCode(@PathVariable("id") Long id) {
         Code byId = codeService.findById(id);
         return codeService.delete(byId);
     }

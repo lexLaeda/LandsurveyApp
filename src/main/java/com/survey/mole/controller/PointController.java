@@ -47,14 +47,11 @@ public class PointController {
 
     @PostMapping("/add-pair")
     public PairRequest savePointAndLR(@RequestBody PairRequest request) {
-
         PointDto pointDto = request.getPointDto();
         LevelReferenceDto levelReferenceDto = request.getLevelReferenceDto();
-
         LevelReference levelReference = levelReferenceMapper.toEntity(levelReferenceDto);
         Point point = pointMapper.toEntity(pointDto);
         point.setLevelReference(levelReference);
-
         Point saveP = pointService.save(point);
         LevelReference saveLR = saveP.getLevelReference();
         return new PairRequest(pointMapper.toDto(saveP),levelReferenceMapper.toDto(saveLR));

@@ -25,7 +25,7 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-    public PostDto findHolidayById(@PathVariable("id") Long id) {
+    public PostDto findPostById(@PathVariable("id") Long id) {
         Post byId = postService.findById(id);
         return postMapper.toDto(byId);
     }
@@ -38,21 +38,21 @@ public class PostController {
     }
 
     @PostMapping("/add")
-    public PostDto addNewHoliday(@RequestBody PostDto postDto) {
+    public PostDto addNewPost(@RequestBody PostDto postDto) {
         Post post = postMapper.toEntity(postDto);
         Post save = postService.save(post);
         return postMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public PostDto editBaseline(@PathVariable("id") Long id, @RequestBody PostDto postDto) {
+    public PostDto editPost(@PathVariable("id") Long id, @RequestBody PostDto postDto) {
         Post post = postMapper.toEntity(postDto);
         Post update = postService.update(id, post);
         return postMapper.toDto(update);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deletePost(@PathVariable("id") Long id) {
         Post byId = postService.findById(id);
         return postService.delete(byId);
     }

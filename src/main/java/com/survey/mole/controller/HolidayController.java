@@ -36,12 +36,12 @@ public class HolidayController {
     }
 
     @PostMapping("/edit/{id}")
-    public Holiday editBaseline(@PathVariable("id") Long id, @RequestBody Holiday holiday) {
+    public Holiday editHoliday(@PathVariable("id") Long id, @RequestBody Holiday holiday) {
         return holidayService.update(id, holiday);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deleteHoliday(@PathVariable("id") Long id) {
         Holiday byId = holidayService.findById(id);
         return holidayService.delete(byId);
     }

@@ -25,7 +25,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public DepartmentDto findCodeById(@PathVariable("id") Long id) {
+    public DepartmentDto findDepartmentById(@PathVariable("id") Long id) {
         Department byId = departmentService.findById(id);
         return departmentMapper.toDto(byId);
     }
@@ -38,21 +38,21 @@ public class DepartmentController {
     }
 
     @PostMapping("/add")
-    public DepartmentDto addNewCode(@RequestBody DepartmentDto departmentDto) {
+    public DepartmentDto addNewDepartment(@RequestBody DepartmentDto departmentDto) {
         Department department = departmentMapper.toEntity(departmentDto);
         Department save = departmentService.save(department);
         return departmentMapper.toDto(save);
     }
 
     @PostMapping("/edit/{id}")
-    public DepartmentDto editBaseline(@PathVariable("id") Long id, @RequestBody DepartmentDto departmentDto) {
+    public DepartmentDto editDepartment(@PathVariable("id") Long id, @RequestBody DepartmentDto departmentDto) {
         Department department = departmentMapper.toEntity(departmentDto);
         Department update = departmentService.update(id, department);
         return departmentMapper.toDto(update);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Boolean deleteBaseline(@PathVariable("id") Long id) {
+    public Boolean deleteDepartment(@PathVariable("id") Long id) {
         Department byId = departmentService.findById(id);
         return departmentService.delete(byId);
     }

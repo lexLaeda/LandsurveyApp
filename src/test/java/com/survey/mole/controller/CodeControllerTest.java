@@ -116,7 +116,7 @@ class CodeControllerTest {
     }
 
     @Test
-    void editBaseline() throws Exception {
+    void editHoliday() throws Exception {
         Mockito.when(service.update(oneId,codeOne)).thenReturn(codeOne);
         String jsonRequest = jsonMapper.writeValueAsString(codeOne);
         mockMvc.perform(MockMvcRequestBuilders.post(rootURL + "/edit/" + oneId)
@@ -131,7 +131,7 @@ class CodeControllerTest {
     }
 
     @Test
-    void deleteBaseline() throws Exception {
+    void deleteHoliday() throws Exception {
         Mockito.when(service.findById(oneId)).thenReturn(codeOne);
         Mockito.when(service.delete(codeOne)).thenReturn(true);
 
