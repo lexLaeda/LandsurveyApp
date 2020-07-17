@@ -3,6 +3,7 @@ package com.survey.mole.controller;
 import com.survey.mole.dto.LevelReferenceDto;
 import com.survey.mole.dto.PairRequest;
 import com.survey.mole.dto.PointDto;
+import com.survey.mole.dto.PostDto;
 import com.survey.mole.mapper.LevelReferenceMapper;
 import com.survey.mole.mapper.PointMapper;
 import com.survey.mole.model.survey.LevelReference;
@@ -29,6 +30,12 @@ public class PointController {
         this.pointService = pointService;
         this.pointMapper = pointMapper;
         this.levelReferenceMapper = levelReferenceMapper;
+    }
+
+    @GetMapping("/{id}")
+    public PointDto findPointById(@PathVariable("id") Long id) {
+        Point pointFromBd = pointService.findById(id);
+        return pointMapper.toDto(pointFromBd);
     }
 
     @GetMapping("/list")
